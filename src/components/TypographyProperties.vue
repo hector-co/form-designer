@@ -89,7 +89,8 @@ import {
   LabelComponentModel,
   SpanComponentModel,
   InputComponentModel,
-  ButtonComponentModel
+  ButtonComponentModel,
+  TextareaComponentModel
 } from '@/models';
 
 @Component({
@@ -116,7 +117,8 @@ export default class TypographyProperties extends Vue {
       this.model instanceof LabelComponentModel ||
       this.model instanceof SpanComponentModel ||
       this.model instanceof InputComponentModel ||
-      this.model instanceof ButtonComponentModel
+      this.model instanceof ButtonComponentModel ||
+      this.model instanceof TextareaComponentModel
     );
   }
 
