@@ -8,7 +8,8 @@ import {
   CheckPropertiesModel,
   SpanPropertiesModel,
   ButtonPropertiesModel,
-  TextareaPropertiesModel
+  TextareaPropertiesModel,
+  SelectPropertiesModel
 } from '.';
 
 function getSpaces(count: number): string {
@@ -212,5 +213,18 @@ export class TextareaComponentModel extends BaseComponentModel<TextareaPropertie
 
   getHtml(level: number = 0) {
     return getHtml(level, this.tagName, this.autoCloseTag, this.properties, [], this.properties.text);
+  }
+}
+
+export class SelectComponentModel extends BaseComponentModel<SelectPropertiesModel> {
+  properties: SelectPropertiesModel;
+
+  constructor() {
+    super();
+    this.component = 'SelectComponent';
+    this.typeName = 'Select';
+    this.name = 'Select';
+    this.tagName = 'select';
+    this.properties = new SelectPropertiesModel();
   }
 }

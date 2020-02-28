@@ -5,7 +5,7 @@ function getCss(cssMap: Map<ResponsiveSizes, ICssModel>): string {
     cssMap.get(ResponsiveSizes.Small)!.getCss('sm:') +
     cssMap.get(ResponsiveSizes.Medium)!.getCss('md:') +
     cssMap.get(ResponsiveSizes.Large)!.getCss('lg:') +
-    cssMap.get(ResponsiveSizes.Large)!.getCss('xl:')).trim();
+    cssMap.get(ResponsiveSizes.Large)!.getCss('xl:'));
 }
 
 function getAttribute(name: string, value: string) {
@@ -48,14 +48,14 @@ export abstract class PropertiesModel {
   }
 
   getCss() {
-    return `${this.baseCssClasses} ${getCss(this.layouts)} ${getCss(this.backgroundColors)} ${getCss(this.borders)}`;
+    return `${this.baseCssClasses}${getCss(this.layouts)}${getCss(this.backgroundColors)}${getCss(this.borders)} `;
   }
 }
 
 export class ContainerPropertiesModel extends PropertiesModel {
   constructor() {
     super();
-    this.baseCssClasses = 'container mx-auto';
+    this.baseCssClasses = 'container mx-auto ';
   }
 }
 
@@ -65,11 +65,11 @@ export class GridPropertiesModel extends PropertiesModel {
   constructor() {
     super();
     this.contents = mapWithResponsiveSizes(() => new ContentModel());
-    this.baseCssClasses = 'flex';
+    this.baseCssClasses = 'flex ';
   }
 
   getCss() {
-    return `${super.getCss()} ${getCss(this.contents)}`;
+    return `${super.getCss()}${getCss(this.contents)} `;
   }
 }
 
@@ -95,7 +95,7 @@ export class LabelPropertiesModel extends PropertiesModel {
     this.forId = '';
     this.text = '';
     this.typographies = mapWithResponsiveSizes(() => new TypographyModel());
-    this.baseCssClasses = 'block';
+    this.baseCssClasses = 'block ';
   }
 
   getAttributes() {
@@ -104,7 +104,7 @@ export class LabelPropertiesModel extends PropertiesModel {
   }
 
   getCss() {
-    return `${super.getCss()} ${getCss(this.typographies)}`;
+    return `${super.getCss()}${getCss(this.typographies)}`;
   }
 }
 
@@ -119,7 +119,7 @@ export class SpanPropertiesModel extends PropertiesModel {
   }
 
   getCss() {
-    return `${super.getCss()} ${getCss(this.typographies)}`;
+    return `${super.getCss()}${getCss(this.typographies)}`;
   }
 }
 
@@ -150,7 +150,7 @@ export class InputPropertiesModel extends PropertiesModel {
   }
 
   getCss() {
-    return `${super.getCss()} ${getCss(this.typographies)}`;
+    return `${super.getCss()}${getCss(this.typographies)}`;
   }
 }
 
@@ -194,7 +194,7 @@ export class ButtonPropertiesModel extends PropertiesModel {
   }
 
   getCss() {
-    return `${super.getCss()} ${getCss(this.typographies)}`;
+    return `${super.getCss()}${getCss(this.typographies)}`;
   }
 }
 
@@ -205,6 +205,7 @@ export class TextareaPropertiesModel extends PropertiesModel {
 
   constructor() {
     super();
+    this.baseCssClasses = 'block ';
     this.text = '';
     this.rows = '';
     this.typographies = mapWithResponsiveSizes(() => new TypographyModel());
@@ -224,6 +225,47 @@ export class TextareaPropertiesModel extends PropertiesModel {
   }
 
   getCss() {
-    return `${super.getCss()} ${getCss(this.typographies)}`;
+    return `${super.getCss()}${getCss(this.typographies)}`;
+  }
+}
+
+export class SelectPropertiesModel extends PropertiesModel {
+  options: SelectOption[];
+  typographies: Map<ResponsiveSizes, TypographyModel>;
+
+  constructor() {
+    super();
+    this.options = [];
+    this.typographies = mapWithResponsiveSizes(() => new TypographyModel());
+
+    this.layouts.get(ResponsiveSizes.All)!.paddingTop = '2';
+    this.layouts.get(ResponsiveSizes.All)!.paddingBottom = '2';
+    this.layouts.get(ResponsiveSizes.All)!.paddingLeft = '2';
+    this.layouts.get(ResponsiveSizes.All)!.paddingRight = '2';
+    this.layouts.get(ResponsiveSizes.All)!.width = 'full';
+
+    this.borders.get(ResponsiveSizes.All)!.width = '1';
+  }
+
+  getAttributes() {
+    return super.getAttributes();
+  }
+
+  getCss() {
+    return `${super.getCss()}${getCss(this.typographies)}`;
+  }
+}
+
+export class SelectOption {
+  key: string;
+  value: string;
+  text: string;
+  selected: boolean;
+
+  constructor() {
+    this.key = '';
+    this.value = '';
+    this.text = '';
+    this.selected = false;
   }
 }

@@ -23,6 +23,10 @@
           class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
         >Textarea</button>
         <button
+          @click="addSelect"
+          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+        >Select</button>
+        <button
           @click="addSpan"
           class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
         >Span</button>
@@ -91,6 +95,7 @@ import CheckComponent from '@/components/CheckComponent.vue';
 import SpanComponent from '@/components/SpanComponent.vue';
 import ButtonComponent from '@/components/ButtonComponent.vue';
 import TextareaComponent from '@/components/TextareaComponent.vue';
+import SelectComponent from '@/components/SelectComponent.vue';
 
 Vue.component('TreeView', TreeView);
 Vue.component('PropertiesView', PropertiesView);
@@ -103,6 +108,7 @@ Vue.component('CheckComponent', CheckComponent);
 Vue.component('SpanComponent', SpanComponent);
 Vue.component('ButtonComponent', ButtonComponent);
 Vue.component('TextareaComponent', TextareaComponent);
+Vue.component('SelectComponent', SelectComponent);
 
 @Component({
   computed: {
@@ -151,6 +157,10 @@ export default class App extends Vue {
     this.$store.commit('addTextarea');
   }
 
+  addSelect() {
+    this.$store.commit('addSelect');
+  }
+
   addInputWithLabel() {
     this.$store.commit('addInputWithLabel');
   }
@@ -186,8 +196,11 @@ export default class App extends Vue {
 
   adjustSizes() {
     const maxHeight = document.documentElement.clientHeight;
-    (this.$refs.propsContainer as HTMLElement).style.maxHeight = `${maxHeight - 256 - 140}px`;
-    (this.$refs.compsContainer as HTMLElement).style.maxHeight = `${maxHeight - 20}px`;
+    (this.$refs.propsContainer as HTMLElement).style.maxHeight = `${maxHeight -
+      256 -
+      140}px`;
+    (this.$refs.compsContainer as HTMLElement).style.maxHeight = `${maxHeight -
+      20}px`;
   }
 }
 </script>

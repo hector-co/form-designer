@@ -25,18 +25,6 @@
           </td>
         </tr>
       </template>
-      <template v-if="isTextarea">
-        <tr>
-          <td class="w-5/12 bg-gray-100 border px-4 py-2 text-xs">Rows</td>
-          <td class="w-7/12 border">
-            <input
-              v-model="model.properties.rows"
-              class="w-full py-2 px-3 text-gray-700 leading-tight text-xs"
-              type="text"
-            />
-          </td>
-        </tr>
-      </template>
       <template v-if="isInput">
         <tr>
           <td class="bg-gray-100 border px-4 text-xs">Type</td>
@@ -88,6 +76,26 @@
           </td>
         </tr>
       </template>
+      <template v-if="isTextarea">
+        <tr>
+          <td class="w-5/12 bg-gray-100 border px-4 py-2 text-xs">Rows</td>
+          <td class="w-7/12 border">
+            <input
+              v-model="model.properties.rows"
+              class="w-full py-2 px-3 text-gray-700 leading-tight text-xs"
+              type="text"
+            />
+          </td>
+        </tr>
+      </template>
+      <template v-if="isSelect">
+        <tr>
+          <td class="w-5/12 bg-gray-100 border px-4 py-2 text-xs">Options</td>
+          <td class="w-7/12 border">
+            <button @click="setSelectOptions" class="bg-blue-500 hover:bg-blue-700 text-white p-1 w-full">set...</button>
+          </td>
+        </tr>
+      </template>
     </BaseProperties>
 
     <table class="table-fixed w-full">
@@ -113,6 +121,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
+import SelectOptionsModal from './SelectOptionsModal.vue';
 import BaseProperties from './BaseProperties.vue';
 import LayoutProperties from './LayoutProperties.vue';
 import ContentProperties from './ContentProperties.vue';
@@ -126,7 +135,8 @@ import {
   CheckComponentModel,
   SpanComponentModel,
   ButtonComponentModel,
-  TextareaComponentModel
+  TextareaComponentModel,
+  SelectComponentModel
 } from '@/models';
 
 @Component({
@@ -176,6 +186,14 @@ export default class PropertiesView extends Vue {
 
   get isTextarea(): boolean {
     return this.model instanceof TextareaComponentModel;
+  }
+
+  get isSelect(): boolean {
+    return this.model instanceof SelectComponentModel;
+  }
+
+  setSelectOptions() {
+    this.$modal.show(SelectOptionsModal);
   }
 }
 </script>
