@@ -81,7 +81,7 @@ export default class SelectOptionsModal extends Vue {
   addOption() {
     const option = new SelectOption();
     let counter = 1;
-    while (this.options.find(o => o.key == `key-${counter}`)) counter++;
+    while (this.options.find(o => o.key === `key-${counter}`)) counter++;
     option.key = `key-${counter}`;
     this.options.push(option);
   }
