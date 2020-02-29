@@ -51,6 +51,22 @@
           class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
         >Button</button>
         <button
+          @click="addTable"
+          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+        >Table</button>
+        <button
+          @click="addTableRow"
+          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+        >Tr</button>
+        <button
+          @click="addHeaderCell"
+          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+        >Th</button>
+        <button
+          @click="addDataCell"
+          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+        >Td</button>
+        <button
           @click="moveUp"
           class="bg-green-500 hover:bg-green-700 text-white py-2 px-2 mx-1 my-1 text-xs"
         >Down</button>
@@ -87,7 +103,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState } from 'vuex';
-import { IComponentModel } from './models';
+import { ComponentModel } from './models';
 import BaseComponent from '@/components/BaseComponent.vue';
 import TreeView from '@/components/TreeView.vue';
 import PropertiesView from '@/components/properties/PropertiesView.vue';
@@ -110,7 +126,7 @@ Vue.component('BaseComponent', BaseComponent);
   }
 })
 export default class App extends Vue {
-  root!: IComponentModel;
+  root!: ComponentModel;
   htmlCode: string;
 
   constructor() {
@@ -175,6 +191,22 @@ export default class App extends Vue {
     this.$store.commit('addButton');
   }
 
+  addTable() {
+    this.$store.commit('addTable');
+  }
+
+  addTableRow() {
+    this.$store.commit('addTableRow');
+  }
+
+  addHeaderCell() {
+    this.$store.commit('addHeaderCell');
+  }
+
+  addDataCell() {
+    this.$store.commit('addDataCell');
+  }
+
   moveUp() {
     this.$store.commit('moveUp');
   }
@@ -196,7 +228,7 @@ export default class App extends Vue {
     const maxHeight = document.documentElement.clientHeight;
     (this.$refs.propsContainer as HTMLElement).style.maxHeight = `${maxHeight -
       256 -
-      140}px`;
+      190}px`;
     (this.$refs.compsContainer as HTMLElement).style.maxHeight = `${maxHeight -
       20}px`;
   }

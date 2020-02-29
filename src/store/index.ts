@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Vuex, { StoreOptions } from 'vuex';
 import {
-  IComponentModel,
   ResponsiveSizes,
   ContentModel,
   ComponentModel,
@@ -12,7 +11,7 @@ Vue.use(Vuex);
 
 interface IDesignerState {
   root: ComponentModel;
-  selected: IComponentModel | null;
+  selected: ComponentModel | null;
   counter: Map<string, number>;
 }
 
@@ -31,48 +30,48 @@ const store: StoreOptions<IDesignerState> = {
       state.selected = component;
     },
     addGrid(state) {
-      if (!state.selected || !(state.selected instanceof ComponentModel)) return;
+      if (!state.selected) return;
 
       const grid = addComponent(state.selected, 'Grid', state.counter, 'div');
       addComponent(grid, 'Column', state.counter, 'div');
     },
     addColumn(state) {
-      if (!state.selected || !(state.selected instanceof ComponentModel)) return;
+      if (!state.selected) return;
 
       addComponent(state.selected, 'Column', state.counter, 'div');
     },
     addLabel(state) {
-      if (!state.selected || !(state.selected instanceof ComponentModel)) return;
+      if (!state.selected) return;
 
       addComponent(state.selected, 'Label', state.counter);
     },
     addSpan(state) {
-      if (!state.selected || !(state.selected instanceof ComponentModel)) return;
+      if (!state.selected) return;
 
       addComponent(state.selected, 'Span', state.counter);
     },
     addInput(state) {
-      if (!state.selected || !(state.selected instanceof ComponentModel)) return;
+      if (!state.selected) return;
 
       addComponent(state.selected, 'Input', state.counter);
     },
     addTextarea(state) {
-      if (!state.selected || !(state.selected instanceof ComponentModel)) return;
+      if (!state.selected) return;
 
       addComponent(state.selected, 'Textarea', state.counter);
     },
     addSelect(state) {
-      if (!state.selected || !(state.selected instanceof ComponentModel)) return;
+      if (!state.selected) return;
 
       addComponent(state.selected, 'Select', state.counter);
     },
     addOption(state) {
-      if (!state.selected || !(state.selected instanceof ComponentModel)) return;
+      if (!state.selected) return;
 
       addComponent(state.selected, 'Option', state.counter);
     },
     addInputWithLabel(state) {
-      if (!state.selected || !(state.selected instanceof ComponentModel)) return;
+      if (!state.selected) return;
 
       const grid = addComponent(state.selected, 'Grid', state.counter, 'div');
       grid.properties.layouts.get(ResponsiveSizes.All)!.marginBottom = '2';
@@ -119,9 +118,33 @@ const store: StoreOptions<IDesignerState> = {
 
       addComponent(state.selected, 'Button', state.counter);
     },
+    addTable(state) {
+      if (!state.selected || !(state.selected instanceof ComponentModel)) return;
+
+      const table = addComponent(state.selected, 'Table', state.counter);
+
+      addComponent(table, 'TableHead', state.counter, 'thead');
+
+      addComponent(table, 'TableBody', state.counter, 'tbody');
+    },
+    addTableRow(state) {
+      if (!state.selected || !(state.selected instanceof ComponentModel)) return;
+
+      addComponent(state.selected, 'TableRow', state.counter, 'tr');
+    },
+    addHeaderCell(state) {
+      if (!state.selected || !(state.selected instanceof ComponentModel)) return;
+
+      addComponent(state.selected, 'HeaderCell', state.counter, 'th');
+    },
+    addDataCell(state) {
+      if (!state.selected || !(state.selected instanceof ComponentModel)) return;
+
+      addComponent(state.selected, 'DataCell', state.counter, 'td');
+    },
     delete(state) {
-      if (!state.selected || !state.selected.parent ||
-        !(state.selected.parent instanceof ComponentModel)) return;
+      if (!state.selected || !state.selected.parent || state.selected.typeName === 'TableHead' ||
+        state.selected.typeName === 'TableBody') return;
 
       const parent = state.selected.parent;
       const index = parent!.children.indexOf(state.selected);
@@ -130,8 +153,8 @@ const store: StoreOptions<IDesignerState> = {
       state.selected = parent;
     },
     moveDown(state) {
-      if (!state.selected || !state.selected.parent ||
-        !(state.selected.parent instanceof ComponentModel)) return;
+      if (!state.selected || !state.selected.parent || state.selected.typeName === 'TableHead' ||
+        state.selected.typeName === 'TableBody') return;
 
       const parent = state.selected.parent;
       const index = parent!.children.indexOf(state.selected);
@@ -140,8 +163,8 @@ const store: StoreOptions<IDesignerState> = {
       parent!.children.splice(index - 1, 0, state.selected);
     },
     moveUp(state) {
-      if (!state.selected || !state.selected.parent ||
-        !(state.selected.parent instanceof ComponentModel)) return;
+      if (!state.selected || !state.selected.parent || state.selected.typeName === 'TableHead' ||
+        state.selected.typeName === 'TableBody') return;
 
       const parent = state.selected.parent;
       const index = parent!.children.indexOf(state.selected);

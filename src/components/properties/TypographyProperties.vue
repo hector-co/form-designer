@@ -82,7 +82,7 @@
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import SelectColorComponent from './SelectColorComponent.vue';
-import { TypographyModel, ResponsiveSizes, IComponentModel } from '@/models';
+import { TypographyModel, ResponsiveSizes, ComponentModel } from '@/models';
 
 @Component({
   components: {
@@ -94,7 +94,7 @@ export default class TypographyProperties extends Vue {
   size!: ResponsiveSizes;
 
   @Prop()
-  model!: IComponentModel;
+  model!: ComponentModel;
 
   invalidTypes: string[];
 

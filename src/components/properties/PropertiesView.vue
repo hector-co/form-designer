@@ -70,7 +70,7 @@
           </td>
         </tr>
       </template>
-      <template v-if="isLabel || isSpan || isButton || isTextarea || isOption">
+      <template v-if="hasText">
         <tr>
           <td class="w-5/12 bg-gray-100 border px-4 py-2 text-xs">Text</td>
           <td class="w-7/12 border">
@@ -153,16 +153,31 @@ export default class PropertiesView extends Vue {
   @Prop()
   model!: ComponentModel;
 
+  typesWithText: string[];
+
   responsiveSize!: ResponsiveSizes;
 
   constructor() {
     super();
     this.responsiveSize = ResponsiveSizes.All;
+    this.typesWithText = [
+      'Label',
+      'Span',
+      'Textarea',
+      'Button',
+      'Option',
+      'DataCell',
+      'HeaderCell'
+    ];
   }
 
   @Watch('model')
   onModelChange() {
     this.responsiveSize = ResponsiveSizes.All;
+  }
+
+  get hasText(): boolean {
+    return this.typesWithText.indexOf(this.model.typeName) >= 0;
   }
 
   get isLabel(): boolean {

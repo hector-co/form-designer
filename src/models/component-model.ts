@@ -5,7 +5,7 @@ function getSpaces(count: number): string {
 }
 
 function getHtml(
-  level: number, tagName: string, autoclose: boolean, properties: PropertiesModel, children: IComponentModel[] = []) {
+  level: number, tagName: string, autoclose: boolean, properties: PropertiesModel, children: ComponentModel[] = []) {
   let html = `${getSpaces(level)}<${tagName} ${properties.getAttributes().trim()}`;
   if (autoclose) return `${html} />`;
   else html += '>\n';
@@ -22,21 +22,8 @@ function getHtml(
   return `${html}${getSpaces(level)}</${tagName}>`;
 }
 
-export interface IComponentModel {
-  parent?: IComponentModel | null;
-  component: string;
-  typeName: string;
-  id: string;
-  name: string;
-  tagName: string;
-  autoCloseTag: boolean;
-  children: IComponentModel[];
-
-  getHtml(level: number): string;
-}
-
-export class ComponentModel implements IComponentModel {
-  parent?: IComponentModel | null;
+export class ComponentModel implements ComponentModel {
+  parent?: ComponentModel | null;
   typeName: string;
   component: string;
   id: string;
@@ -44,9 +31,9 @@ export class ComponentModel implements IComponentModel {
   tagName: string;
   autoCloseTag: boolean;
   properties: PropertiesModel;
-  children: IComponentModel[];
+  children: ComponentModel[];
 
-  constructor(parent: IComponentModel | null, typeName: string, tagName: string = '', autoCloseTag: boolean = false) {
+  constructor(parent: ComponentModel | null, typeName: string, tagName: string = '', autoCloseTag: boolean = false) {
     this.parent = parent;
     this.typeName = typeName;
 
