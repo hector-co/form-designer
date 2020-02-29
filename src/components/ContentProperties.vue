@@ -52,12 +52,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import {
-  ResponsiveSizes,
-  IComponentModel,
-  GridComponentModel,
-  PropertiesModel
-} from '@/models';
+import { ResponsiveSizes, ComponentModel, PropertiesModel } from '@/models';
 
 @Component
 export default class ContentProperties extends Vue {
@@ -65,10 +60,10 @@ export default class ContentProperties extends Vue {
   size!: ResponsiveSizes;
 
   @Prop()
-  model!: IComponentModel;
+  model!: ComponentModel;
 
   get contentProperties() {
-    if (!this.model || !(this.model instanceof GridComponentModel)) return null;
+    if (!this.model || this.model.typeName !== 'Grid') return null;
     const properties: PropertiesModel = this.model.properties;
     return properties.customCss.get('contents')!.get(this.size);
   }

@@ -70,7 +70,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
 import {
   PropertiesModel,
   ResponsiveSizes,
-  IComponentModel,
+  ComponentModel,
   BorderModel,
   ColorModel
 } from '@/models';
@@ -86,7 +86,7 @@ export default class BorderBgProperties extends Vue {
   size!: ResponsiveSizes;
 
   @Prop()
-  model!: IComponentModel;
+  model!: ComponentModel;
 
   get borderProperties(): BorderModel | undefined {
     if (!this.model) return undefined;

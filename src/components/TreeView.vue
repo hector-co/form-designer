@@ -26,10 +26,10 @@
 <script lang="ts">
 import { Component } from 'vue-property-decorator';
 import { BaseComponent } from './base-component';
-import { IComponentModel, BaseContainerComponentModel } from '@/models';
+import { ComponentModel } from '@/models';
 
 @Component
-export default class TreeView extends BaseComponent<IComponentModel> {
+export default class TreeView extends BaseComponent {
   expanded: boolean = true;
 
   toggle() {
@@ -37,11 +37,7 @@ export default class TreeView extends BaseComponent<IComponentModel> {
   }
 
   get hasChildren() {
-    return (
-      this.model instanceof BaseContainerComponentModel &&
-      this.model.children &&
-      this.model.children.length
-    );
+    return this.model.children && this.model.children.length;
   }
 }
 </script>

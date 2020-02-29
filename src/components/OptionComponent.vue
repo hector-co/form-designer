@@ -9,10 +9,7 @@
 <script lang="ts">
 import { Component } from 'vue-property-decorator';
 import { BaseComponent } from './base-component';
-import { OptionComponentModel } from '@/models';
 
 @Component
-export default class OptionComponent extends BaseComponent<
-  OptionComponentModel
-> {}
+export default class OptionComponent extends BaseComponent {}
 </script>

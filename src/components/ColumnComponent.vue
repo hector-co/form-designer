@@ -6,10 +6,7 @@
 <script lang="ts">
 import { Component } from 'vue-property-decorator';
 import { BaseComponent } from './base-component';
-import { ColumnComponentModel } from '@/models';
 
 @Component
-export default class ColumnComponent extends BaseComponent<
-  ColumnComponentModel
-> {}
+export default class ColumnComponent extends BaseComponent {}
 </script>

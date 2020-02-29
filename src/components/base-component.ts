@@ -1,15 +1,15 @@
 import { Vue, Prop, Component } from 'vue-property-decorator';
 import { mapState } from 'vuex';
-import { IComponentModel } from '@/models';
+import { ComponentModel } from '@/models';
 
 @Component({
   computed: {
     ...mapState(['root'])
   }
 })
-export class BaseComponent<T extends IComponentModel> extends Vue {
+export class BaseComponent extends Vue {
   @Prop()
-  model!: T;
+  model!: ComponentModel;
 
   select() {
     this.$store.commit('select', this.model);

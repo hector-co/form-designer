@@ -12,10 +12,7 @@
 <script lang="ts">
 import { Component } from 'vue-property-decorator';
 import { BaseComponent } from './base-component';
-import { TextareaComponentModel } from '@/models';
 
 @Component
-export default class TextareaComponent extends BaseComponent<
-  TextareaComponentModel
-> {}
+export default class TextareaComponent extends BaseComponent {}
 </script>

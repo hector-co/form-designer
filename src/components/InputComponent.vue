@@ -11,10 +11,7 @@
 <script lang="ts">
 import { Component } from 'vue-property-decorator';
 import { BaseComponent } from './base-component';
-import { InputComponentModel } from '@/models';
 
 @Component
-export default class InputComponent extends BaseComponent<
-  InputComponentModel
-> {}
+export default class InputComponent extends BaseComponent {}
 </script>

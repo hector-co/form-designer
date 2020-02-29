@@ -24,7 +24,10 @@
       <tr>
         <td class="bg-gray-100 border px-4 text-xs">Max width</td>
         <td class="border">
-          <select v-model="layoutProperties.maxWidth" class="w-full text-gray-700 px-2 py-2 text-xs">
+          <select
+            v-model="layoutProperties.maxWidth"
+            class="w-full text-gray-700 px-2 py-2 text-xs"
+          >
             <option value>(none)</option>
             <option value="xs">xs</option>
             <option value="sm">sm</option>
@@ -38,7 +41,10 @@
       <tr>
         <td class="bg-gray-100 border px-4 text-xs">Max height</td>
         <td class="border">
-          <select v-model="layoutProperties.maxHeight" class="w-full text-gray-700 px-2 py-2 text-xs">
+          <select
+            v-model="layoutProperties.maxHeight"
+            class="w-full text-gray-700 px-2 py-2 text-xs"
+          >
             <option value>(none)</option>
             <option value="sm">sm</option>
             <option value="md">md</option>
@@ -134,7 +140,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import { ResponsiveSizes, IComponentModel, PropertiesModel } from '@/models';
+import { ResponsiveSizes, ComponentModel, PropertiesModel } from '@/models';
 
 @Component
 export default class LayoutProperties extends Vue {
@@ -142,12 +148,11 @@ export default class LayoutProperties extends Vue {
   size!: ResponsiveSizes;
 
   @Prop()
-  model!: IComponentModel;
+  model!: ComponentModel;
 
   get layoutProperties() {
     if (!this.model) return null;
-    const properties: PropertiesModel = (this.model as any).properties;
-    return properties.layouts.get(this.size);
+    return this.model.properties.layouts.get(this.size);
   }
 }
 </script>

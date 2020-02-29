@@ -17,7 +17,10 @@
         <tr>
           <td class="bg-gray-100 border px-4 text-xs">Type</td>
           <td class="border">
-            <select v-model="model.properties.customProps.get('type').value" class="w-full text-gray-700 px-2 py-2 text-xs">
+            <select
+              v-model="model.properties.customProps.get('type').value"
+              class="w-full text-gray-700 px-2 py-2 text-xs"
+            >
               <option value="text">Text</option>
               <option value="password">Password</option>
               <!-- <option value="file">File</option> -->
@@ -33,7 +36,10 @@
         <tr>
           <td class="bg-gray-100 border px-4 text-xs">Type</td>
           <td class="border">
-            <select v-model="model.properties.customProps.get('type').value" class="w-full text-gray-700 px-2 py-2 text-xs">
+            <select
+              v-model="model.properties.customProps.get('type').value"
+              class="w-full text-gray-700 px-2 py-2 text-xs"
+            >
               <option value="checkbox">Checkbox</option>
               <option value="radio">Radio</option>
             </select>
@@ -132,18 +138,7 @@ import LayoutProperties from './LayoutProperties.vue';
 import ContentProperties from './ContentProperties.vue';
 import TypographyProperties from './TypographyProperties.vue';
 import BorderBgProperties from './BorderBgProperties.vue';
-import {
-  ResponsiveSizes,
-  IComponentModel,
-  LabelComponentModel,
-  InputComponentModel,
-  CheckComponentModel,
-  SpanComponentModel,
-  ButtonComponentModel,
-  TextareaComponentModel,
-  SelectComponentModel,
-  OptionComponentModel
-} from '@/models';
+import { ResponsiveSizes, ComponentModel } from '@/models';
 
 @Component({
   components: {
@@ -156,7 +151,7 @@ import {
 })
 export default class PropertiesView extends Vue {
   @Prop()
-  model!: IComponentModel;
+  model!: ComponentModel;
 
   responsiveSize!: ResponsiveSizes;
 
@@ -171,35 +166,35 @@ export default class PropertiesView extends Vue {
   }
 
   get isLabel(): boolean {
-    return this.model instanceof LabelComponentModel;
+    return this.model.typeName === 'Label';
   }
 
   get isSpan(): boolean {
-    return this.model instanceof SpanComponentModel;
+    return this.model.typeName === 'Span';
   }
 
   get isInput(): boolean {
-    return this.model instanceof InputComponentModel;
+    return this.model.typeName === 'Input';
   }
 
   get isCheck(): boolean {
-    return this.model instanceof CheckComponentModel;
+    return this.model.typeName === 'Check';
   }
 
   get isButton(): boolean {
-    return this.model instanceof ButtonComponentModel;
+    return this.model.typeName === 'Button';
   }
 
   get isTextarea(): boolean {
-    return this.model instanceof TextareaComponentModel;
+    return this.model.typeName === 'Textarea';
   }
 
   get isSelect(): boolean {
-    return this.model instanceof SelectComponentModel;
+    return this.model.typeName === 'Select';
   }
 
   get isOption(): boolean {
-    return this.model instanceof OptionComponentModel;
+    return this.model.typeName === 'Option';
   }
 }
 </script>

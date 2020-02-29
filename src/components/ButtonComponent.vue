@@ -7,10 +7,7 @@
 <script lang="ts">
 import { Component } from 'vue-property-decorator';
 import { BaseComponent } from './base-component';
-import { ButtonComponentModel } from '@/models';
 
 @Component
-export default class ButtonComponent extends BaseComponent<
-  ButtonComponentModel
-> {}
+export default class ButtonComponent extends BaseComponent {}
 </script>

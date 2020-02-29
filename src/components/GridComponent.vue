@@ -6,8 +6,7 @@
 <script lang="ts">
 import { Component } from 'vue-property-decorator';
 import { BaseComponent } from './base-component';
-import { GridComponentModel } from '@/models';
 
 @Component
-export default class GridComponent extends BaseComponent<GridComponentModel> {}
+export default class GridComponent extends BaseComponent {}
 </script>

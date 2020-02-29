@@ -85,14 +85,7 @@ import SelectColorComponent from './SelectColorComponent.vue';
 import {
   TypographyModel,
   ResponsiveSizes,
-  IComponentModel,
-  LabelComponentModel,
-  SpanComponentModel,
-  InputComponentModel,
-  ButtonComponentModel,
-  TextareaComponentModel,
-  SelectComponentModel,
-  OptionComponentModel
+  IComponentModel
 } from '@/models';
 
 @Component({
@@ -107,6 +100,21 @@ export default class TypographyProperties extends Vue {
   @Prop()
   model!: IComponentModel;
 
+  validTypes: string[];
+
+  constructor() {
+    super();
+    this.validTypes = [
+      'Label',
+      'Span',
+      'Input',
+      'Button',
+      'Textarea',
+      'Select',
+      'Option'
+    ];
+  }
+
   get typographyProperties() {
     if (!this.model || !this.isValidModel) return null;
     const typographies: Map<ResponsiveSizes, TypographyModel> = (this
@@ -115,15 +123,7 @@ export default class TypographyProperties extends Vue {
   }
 
   get isValidModel(): boolean {
-    return (
-      this.model instanceof LabelComponentModel ||
-      this.model instanceof SpanComponentModel ||
-      this.model instanceof InputComponentModel ||
-      this.model instanceof ButtonComponentModel ||
-      this.model instanceof TextareaComponentModel ||
-      this.model instanceof SelectComponentModel ||
-      this.model instanceof OptionComponentModel
-    );
+    return this.validTypes.indexOf(this.model.typeName) >= 0;
   }
 
   setTextColor(color: string) {

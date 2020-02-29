@@ -4,10 +4,7 @@
 <script lang="ts">
 import { Component } from 'vue-property-decorator';
 import { BaseComponent } from './base-component';
-import { SelectComponentModel } from '@/models';
 
 @Component
-export default class SelectComponent extends BaseComponent<
-  SelectComponentModel
-> {}
+export default class SelectComponent extends BaseComponent {}
 </script>

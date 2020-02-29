@@ -8,8 +8,7 @@
 <script lang="ts">
 import { Component } from 'vue-property-decorator';
 import { BaseComponent } from './base-component';
-import { SpanComponentModel } from '@/models';
 
 @Component
-export default class SpanComponent extends BaseComponent<SpanComponentModel> {}
+export default class SpanComponent extends BaseComponent {}
 </script>

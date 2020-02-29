@@ -54,11 +54,11 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import { IComponentModel } from '@/models';
+import { ComponentModel } from '@/models';
 
 @Component
 export default class BaseProperties extends Vue {
   @Prop()
-  model!: IComponentModel;
+  model!: ComponentModel;
 }
 </script>

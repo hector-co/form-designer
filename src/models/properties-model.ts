@@ -39,7 +39,7 @@ export class PropertiesModel {
     this.id = '';
     this.name = '';
     this.text = '';
-    this.baseCssClasses = baseCssClass ? `${baseCssClass} ` : '';
+    this.baseCssClasses = baseCssClass;
 
     this.layouts = mapWithResponsiveSizes(() => new LayoutModel());
     this.typographies = mapWithResponsiveSizes(() => new TypographyModel());
@@ -68,7 +68,7 @@ export class PropertiesModel {
     this.customCss.forEach(c => {
       customCss += getCss(c);
     });
-    return `${this.baseCssClasses}${getCss(this.layouts)}${getCss(this.typographies)}${getCss(this.backgroundColors)}${getCss(this.borders)}${customCss} `;
+    return (this.baseCssClasses ? `${this.baseCssClasses} ` : '') + `${getCss(this.layouts)}${getCss(this.typographies)}${getCss(this.backgroundColors)}${getCss(this.borders)}${customCss} `;
   }
 
   addCustomProperty<TValue>(
