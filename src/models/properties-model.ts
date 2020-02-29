@@ -8,12 +8,7 @@ function getCss(cssMap: Map<ResponsiveSizes, ICssModel>): string {
     cssMap.get(ResponsiveSizes.Large)!.getCss('xl:'));
 }
 
-function getAttribute(name: string, value: string) {
-  if (!value || !value.trim()) return '';
-  return `${name}="${value.trim()}" `;
-}
-
-function mapWithResponsiveSizes<T>(factory: () => T): Map<ResponsiveSizes, T> {
+export function mapWithResponsiveSizes<T>(factory: () => T): Map<ResponsiveSizes, T> {
   const dict = new Map<ResponsiveSizes, T>();
   dict.set(ResponsiveSizes.All, factory());
   dict.set(ResponsiveSizes.Small, factory());
@@ -23,254 +18,70 @@ function mapWithResponsiveSizes<T>(factory: () => T): Map<ResponsiveSizes, T> {
   return dict;
 }
 
-export abstract class PropertiesModel {
+export function getAttribute(name: string, value: string) {
+  if (!value || !value.trim()) return '';
+  return `${name}="${value.trim()}" `;
+}
+
+export class PropertiesModel {
   id: string;
   name: string;
+  text: string;
   baseCssClasses: string;
   layouts: Map<ResponsiveSizes, LayoutModel>;
+  typographies: Map<ResponsiveSizes, TypographyModel>;
   backgroundColors: Map<ResponsiveSizes, ColorModel>;
   borders: Map<ResponsiveSizes, BorderModel>;
+  customProps: Map<string, { attributeName: string, value: any, attributeMap: (value: any) => string }>;
+  customCss: Map<string, Map<ResponsiveSizes, ICssModel>>;
 
-  constructor() {
+  constructor(baseCssClass: string = '') {
     this.id = '';
     this.name = '';
-    this.baseCssClasses = '';
+    this.text = '';
+    this.baseCssClasses = baseCssClass ? `${baseCssClass} ` : '';
 
     this.layouts = mapWithResponsiveSizes(() => new LayoutModel());
+    this.typographies = mapWithResponsiveSizes(() => new TypographyModel());
     this.backgroundColors = mapWithResponsiveSizes(() => new ColorModel('bg'));
     this.borders = mapWithResponsiveSizes(() => new BorderModel());
+
+    this.customProps = new Map<string, { attributeName: string, value: any, attributeMap: (value: any) => string }>();
+    this.customCss = new Map<string, Map<ResponsiveSizes, ICssModel>>();
   }
 
   getAttributes() {
+    let customAttrValues = '';
+    this.customProps.forEach(p => {
+      const mapped = p.attributeMap(p.value);
+      customAttrValues += mapped ? mapped : getAttribute(p.attributeName, p.value);
+    });
+
     return getAttribute('id', this.id) +
       getAttribute('name', this.name) +
-      getAttribute('class', this.getCss());
+      getAttribute('class', this.getCss()) +
+      customAttrValues;
   }
 
   getCss() {
-    return `${this.baseCssClasses}${getCss(this.layouts)}${getCss(this.backgroundColors)}${getCss(this.borders)} `;
-  }
-}
-
-export class ContainerPropertiesModel extends PropertiesModel {
-  constructor() {
-    super();
-    this.baseCssClasses = 'container mx-auto ';
-  }
-}
-
-export class GridPropertiesModel extends PropertiesModel {
-  contents: Map<ResponsiveSizes, ContentModel>;
-
-  constructor() {
-    super();
-    this.contents = mapWithResponsiveSizes(() => new ContentModel());
-    this.baseCssClasses = 'flex ';
+    let customCss = '';
+    this.customCss.forEach(c => {
+      customCss += getCss(c);
+    });
+    return `${this.baseCssClasses}${getCss(this.layouts)}${getCss(this.typographies)}${getCss(this.backgroundColors)}${getCss(this.borders)}${customCss} `;
   }
 
-  getCss() {
-    return `${super.getCss()}${getCss(this.contents)} `;
-  }
-}
-
-export class ColumnPropertiesModel extends PropertiesModel {
-  constructor() {
-    super();
-
-    this.layouts.get(ResponsiveSizes.All)!.paddingTop = '1';
-    this.layouts.get(ResponsiveSizes.All)!.paddingRight = '1';
-    this.layouts.get(ResponsiveSizes.All)!.paddingBottom = '1';
-    this.layouts.get(ResponsiveSizes.All)!.paddingLeft = '1';
-    this.layouts.get(ResponsiveSizes.All)!.width = 'full';
-  }
-}
-
-export class LabelPropertiesModel extends PropertiesModel {
-  forId: string;
-  text: string;
-  typographies: Map<ResponsiveSizes, TypographyModel>;
-
-  constructor() {
-    super();
-    this.forId = '';
-    this.text = '';
-    this.typographies = mapWithResponsiveSizes(() => new TypographyModel());
-    this.baseCssClasses = 'block ';
+  addCustomProperty<TValue>(
+    name: string, value: TValue, attributeName: string = '', attributeMap: (value: TValue) => string = () => '') {
+    const customValue = {
+      attributeName: attributeName ? attributeName : name,
+      value,
+      attributeMap
+    };
+    this.customProps.set(name, customValue);
   }
 
-  getAttributes() {
-    return super.getAttributes() +
-      getAttribute('for', this.forId);
-  }
-
-  getCss() {
-    return `${super.getCss()}${getCss(this.typographies)}`;
-  }
-}
-
-export class SpanPropertiesModel extends PropertiesModel {
-  text: string;
-  typographies: Map<ResponsiveSizes, TypographyModel>;
-
-  constructor() {
-    super();
-    this.text = '';
-    this.typographies = mapWithResponsiveSizes(() => new TypographyModel());
-  }
-
-  getCss() {
-    return `${super.getCss()}${getCss(this.typographies)}`;
-  }
-}
-
-export class InputPropertiesModel extends PropertiesModel {
-  type: string;
-  value: string;
-  typographies: Map<ResponsiveSizes, TypographyModel>;
-
-  constructor() {
-    super();
-    this.type = 'text';
-    this.value = '';
-    this.typographies = mapWithResponsiveSizes(() => new TypographyModel());
-
-    this.layouts.get(ResponsiveSizes.All)!.paddingTop = '2';
-    this.layouts.get(ResponsiveSizes.All)!.paddingBottom = '2';
-    this.layouts.get(ResponsiveSizes.All)!.paddingLeft = '2';
-    this.layouts.get(ResponsiveSizes.All)!.paddingRight = '2';
-    this.layouts.get(ResponsiveSizes.All)!.width = 'full';
-
-    this.borders.get(ResponsiveSizes.All)!.width = '1';
-  }
-
-  getAttributes() {
-    return super.getAttributes() +
-      getAttribute('type', this.type) +
-      getAttribute('value', this.value);
-  }
-
-  getCss() {
-    return `${super.getCss()}${getCss(this.typographies)}`;
-  }
-}
-
-export class CheckPropertiesModel extends PropertiesModel {
-  type: string;
-  value: string;
-  checked: boolean;
-
-  constructor() {
-    super();
-    this.type = 'checkbox';
-    this.value = '';
-    this.checked = false;
-  }
-
-  getAttributes() {
-    return super.getAttributes() +
-      getAttribute('type', this.type) +
-      getAttribute('value', this.value) +
-      (this.checked ? getAttribute('checked', 'checked') : '');
-  }
-}
-
-export class ButtonPropertiesModel extends PropertiesModel {
-  text: string;
-  typographies: Map<ResponsiveSizes, TypographyModel>;
-
-  constructor() {
-    super();
-    this.text = '';
-    this.typographies = mapWithResponsiveSizes(() => new TypographyModel());
-
-    this.typographies.get(ResponsiveSizes.All)!.textColor.color = 'white';
-    this.backgroundColors.get(ResponsiveSizes.All)!.color = 'blue-500';
-    this.backgroundColors.get(ResponsiveSizes.All)!.hover = 'blue-700';
-
-    this.layouts.get(ResponsiveSizes.All)!.paddingTop = '2';
-    this.layouts.get(ResponsiveSizes.All)!.paddingBottom = '2';
-    this.layouts.get(ResponsiveSizes.All)!.paddingLeft = '4';
-    this.layouts.get(ResponsiveSizes.All)!.paddingRight = '4';
-  }
-
-  getCss() {
-    return `${super.getCss()}${getCss(this.typographies)}`;
-  }
-}
-
-export class TextareaPropertiesModel extends PropertiesModel {
-  text: string;
-  rows: string;
-  typographies: Map<ResponsiveSizes, TypographyModel>;
-
-  constructor() {
-    super();
-    this.baseCssClasses = 'block ';
-    this.text = '';
-    this.rows = '';
-    this.typographies = mapWithResponsiveSizes(() => new TypographyModel());
-
-    this.layouts.get(ResponsiveSizes.All)!.paddingTop = '2';
-    this.layouts.get(ResponsiveSizes.All)!.paddingBottom = '2';
-    this.layouts.get(ResponsiveSizes.All)!.paddingLeft = '2';
-    this.layouts.get(ResponsiveSizes.All)!.paddingRight = '2';
-    this.layouts.get(ResponsiveSizes.All)!.width = 'full';
-
-    this.borders.get(ResponsiveSizes.All)!.width = '1';
-  }
-
-  getAttributes() {
-    return super.getAttributes() +
-      getAttribute('rows', this.rows);
-  }
-
-  getCss() {
-    return `${super.getCss()}${getCss(this.typographies)}`;
-  }
-}
-
-export class SelectPropertiesModel extends PropertiesModel {
-  typographies: Map<ResponsiveSizes, TypographyModel>;
-
-  constructor() {
-    super();
-    this.typographies = mapWithResponsiveSizes(() => new TypographyModel());
-
-    this.layouts.get(ResponsiveSizes.All)!.paddingTop = '2';
-    this.layouts.get(ResponsiveSizes.All)!.paddingBottom = '2';
-    this.layouts.get(ResponsiveSizes.All)!.paddingLeft = '2';
-    this.layouts.get(ResponsiveSizes.All)!.paddingRight = '2';
-    this.layouts.get(ResponsiveSizes.All)!.width = 'full';
-
-    this.borders.get(ResponsiveSizes.All)!.width = '1';
-  }
-
-  getAttributes() {
-    return super.getAttributes();
-  }
-
-  getCss() {
-    return `${super.getCss()}${getCss(this.typographies)}`;
-  }
-}
-
-export class OptionPropertiesModel extends PropertiesModel {
-  value: string;
-  text: string;
-  selected: boolean;
-  typographies: Map<ResponsiveSizes, TypographyModel>;
-
-  constructor() {
-    super();
-    this.value = '';
-    this.text = '';
-    this.selected = false;
-    this.typographies = mapWithResponsiveSizes(() => new TypographyModel());
-  }
-
-  getAttributes() {
-    return super.getAttributes() +
-      getAttribute('value', this.value) +
-      (this.selected ? getAttribute('selected', 'selected') : '');
+  addCustomCss(name: string, value: Map<ResponsiveSizes, ICssModel>) {
+    this.customCss.set(name, value);
   }
 }

@@ -1,16 +1,8 @@
 import {
   PropertiesModel,
-  ContainerPropertiesModel,
-  GridPropertiesModel,
-  ColumnPropertiesModel,
-  LabelPropertiesModel,
-  InputPropertiesModel,
-  CheckPropertiesModel,
-  SpanPropertiesModel,
-  ButtonPropertiesModel,
-  TextareaPropertiesModel,
-  SelectPropertiesModel,
-  OptionPropertiesModel
+  getAttribute,
+  mapWithResponsiveSizes,
+  ContentModel
 } from '.';
 
 function getSpaces(count: number): string {
@@ -18,19 +10,19 @@ function getSpaces(count: number): string {
 }
 
 function getHtml(
-  level: number, tagName: string, autoclose: boolean, properties: PropertiesModel, children: IComponentModel[] = [],
-  content: string = '') {
+  level: number, tagName: string, autoclose: boolean, properties: PropertiesModel, children: IComponentModel[] = []) {
   let html = `${getSpaces(level)}<${tagName} ${properties.getAttributes().trim()}`;
   if (autoclose) return `${html} />`;
   else html += '>\n';
-  if ((!children || !children.length) && !content)
+
+  if ((!children || !children.length) && !properties.text)
     return `${html}\n${getSpaces(level)}</${tagName}>`;
 
   if (children && children.length)
     html += children.map(c => c.getHtml(level + 1)).join('\n') + '\n';
 
-  if (content)
-    html += `${getSpaces(level + 1)}${content}\n`;
+  if (properties.text)
+    html += `${getSpaces(level + 1)}${properties.text}\n`;
 
   return `${html}${getSpaces(level)}</${tagName}>`;
 }
@@ -49,8 +41,8 @@ export interface IComponentModel {
 
 export abstract class BaseComponentModel<T extends PropertiesModel> implements IComponentModel {
   parent: IComponentModel | null;
-  component: string;
   typeName: string;
+  component: string;
   id: string;
   name: string;
   tagName: string;
@@ -59,8 +51,8 @@ export abstract class BaseComponentModel<T extends PropertiesModel> implements I
 
   constructor() {
     this.parent = null;
-    this.component = '';
     this.typeName = '';
+    this.component = '';
     this.id = '';
     this.name = '';
     this.tagName = 'div';
@@ -87,47 +79,48 @@ export abstract class BaseContainerComponentModel
 }
 
 export class ContainerComponentModel
-  extends BaseContainerComponentModel<ContainerPropertiesModel, IComponentModel> {
-  properties: ContainerPropertiesModel;
+  extends BaseContainerComponentModel<PropertiesModel, IComponentModel> {
+  properties: PropertiesModel;
 
   constructor() {
     super();
     this.component = 'ContainerComponent';
     this.typeName = 'Container';
     this.name = 'Container';
-    this.properties = new ContainerPropertiesModel();
+    this.properties = new PropertiesModel('container mx-auto');
   }
 }
 
 export class GridComponentModel
-  extends BaseContainerComponentModel<GridPropertiesModel, IComponentModel> {
-  properties: GridPropertiesModel;
+  extends BaseContainerComponentModel<PropertiesModel, IComponentModel> {
+  properties: PropertiesModel;
 
   constructor() {
     super();
     this.component = 'GridComponent';
     this.typeName = 'Grid';
     this.name = 'Grid';
-    this.properties = new GridPropertiesModel();
+    this.properties = new PropertiesModel('flex');
+    this.properties.addCustomCss('contents', mapWithResponsiveSizes(() => new ContentModel()));
   }
 }
 
 export class ColumnComponentModel
-  extends BaseContainerComponentModel<ColumnPropertiesModel, IComponentModel> {
-  properties: ColumnPropertiesModel;
+  extends BaseContainerComponentModel<PropertiesModel, IComponentModel> {
+  properties: PropertiesModel;
 
   constructor() {
     super();
     this.component = 'ColumnComponent';
     this.typeName = 'Column';
     this.name = 'Column';
-    this.properties = new ColumnPropertiesModel();
+    this.properties = new PropertiesModel();
   }
 }
 
 export class LabelComponentModel
-  extends BaseContainerComponentModel<LabelPropertiesModel, IComponentModel> {
-  properties: LabelPropertiesModel;
+  extends BaseContainerComponentModel<PropertiesModel, IComponentModel> {
+  properties: PropertiesModel;
 
   constructor() {
     super();
@@ -135,16 +128,13 @@ export class LabelComponentModel
     this.typeName = 'Label';
     this.name = 'Label';
     this.tagName = 'label';
-    this.properties = new LabelPropertiesModel();
-  }
-
-  getHtml(level: number = 0) {
-    return getHtml(level, this.tagName, this.autoCloseTag, this.properties, this.children, this.properties.text);
+    this.properties = new PropertiesModel('block');
+    this.properties.addCustomProperty('forId', '', 'for');
   }
 }
 
-export class SpanComponentModel extends BaseComponentModel<SpanPropertiesModel> {
-  properties: SpanPropertiesModel;
+export class SpanComponentModel extends BaseComponentModel<PropertiesModel> {
+  properties: PropertiesModel;
 
   constructor() {
     super();
@@ -152,16 +142,12 @@ export class SpanComponentModel extends BaseComponentModel<SpanPropertiesModel> 
     this.typeName = 'Span';
     this.name = 'Span';
     this.tagName = 'span';
-    this.properties = new SpanPropertiesModel();
-  }
-
-  getHtml(level: number = 0) {
-    return getHtml(level, this.tagName, this.autoCloseTag, this.properties, [], this.properties.text);
+    this.properties = new PropertiesModel();
   }
 }
 
-export class InputComponentModel extends BaseComponentModel<InputPropertiesModel> {
-  properties: InputPropertiesModel;
+export class InputComponentModel extends BaseComponentModel<PropertiesModel> {
+  properties: PropertiesModel;
 
   constructor() {
     super();
@@ -170,12 +156,14 @@ export class InputComponentModel extends BaseComponentModel<InputPropertiesModel
     this.name = 'Input';
     this.tagName = 'input';
     this.autoCloseTag = true;
-    this.properties = new InputPropertiesModel();
+    this.properties = new PropertiesModel();
+    this.properties.addCustomProperty('type', 'text');
+    this.properties.addCustomProperty('value', '');
   }
 }
 
-export class CheckComponentModel extends BaseComponentModel<CheckPropertiesModel> {
-  properties: CheckPropertiesModel;
+export class CheckComponentModel extends BaseComponentModel<PropertiesModel> {
+  properties: PropertiesModel;
 
   constructor() {
     super();
@@ -184,13 +172,17 @@ export class CheckComponentModel extends BaseComponentModel<CheckPropertiesModel
     this.name = 'Check';
     this.tagName = 'input';
     this.autoCloseTag = true;
-    this.properties = new CheckPropertiesModel();
+    this.properties = new PropertiesModel();
+    this.properties.addCustomProperty('type', 'checkbox');
+    this.properties.addCustomProperty('value', '');
+    this.properties.addCustomProperty('checked', false, 'checked',
+      (value) => value ? getAttribute('checked', 'checked') : '');
   }
 }
 
 export class ButtonComponentModel
-  extends BaseContainerComponentModel<ButtonPropertiesModel, IComponentModel> {
-  properties: ButtonPropertiesModel;
+  extends BaseContainerComponentModel<PropertiesModel, IComponentModel> {
+  properties: PropertiesModel;
 
   constructor() {
     super();
@@ -198,16 +190,12 @@ export class ButtonComponentModel
     this.typeName = 'Button';
     this.name = 'Button';
     this.tagName = 'button';
-    this.properties = new ButtonPropertiesModel();
-  }
-
-  getHtml(level: number = 0) {
-    return getHtml(level, this.tagName, this.autoCloseTag, this.properties, [], this.properties.text);
+    this.properties = new PropertiesModel('container mx-auto');
   }
 }
 
-export class TextareaComponentModel extends BaseComponentModel<TextareaPropertiesModel> {
-  properties: TextareaPropertiesModel;
+export class TextareaComponentModel extends BaseComponentModel<PropertiesModel> {
+  properties: PropertiesModel;
 
   constructor() {
     super();
@@ -215,17 +203,14 @@ export class TextareaComponentModel extends BaseComponentModel<TextareaPropertie
     this.typeName = 'Textarea';
     this.name = 'Textarea';
     this.tagName = 'textarea';
-    this.properties = new TextareaPropertiesModel();
-  }
-
-  getHtml(level: number = 0) {
-    return getHtml(level, this.tagName, this.autoCloseTag, this.properties, [], this.properties.text);
+    this.properties = new PropertiesModel('block');
+    this.properties.addCustomProperty('rows', '');
   }
 }
 
 export class SelectComponentModel
-  extends BaseContainerComponentModel<SelectPropertiesModel, OptionComponentModel> {
-  properties: SelectPropertiesModel;
+  extends BaseContainerComponentModel<PropertiesModel, OptionComponentModel> {
+  properties: PropertiesModel;
 
   constructor() {
     super();
@@ -233,12 +218,12 @@ export class SelectComponentModel
     this.typeName = 'Select';
     this.name = 'Select';
     this.tagName = 'select';
-    this.properties = new SelectPropertiesModel();
+    this.properties = new PropertiesModel();
   }
 }
 
-export class OptionComponentModel extends BaseComponentModel<OptionPropertiesModel> {
-  properties: OptionPropertiesModel;
+export class OptionComponentModel extends BaseComponentModel<PropertiesModel> {
+  properties: PropertiesModel;
 
   constructor() {
     super();
@@ -246,10 +231,9 @@ export class OptionComponentModel extends BaseComponentModel<OptionPropertiesMod
     this.typeName = 'Option';
     this.name = 'Option';
     this.tagName = 'option';
-    this.properties = new OptionPropertiesModel();
-  }
-
-  getHtml(level: number = 0) {
-    return getHtml(level, this.tagName, this.autoCloseTag, this.properties, [], this.properties.text);
+    this.properties = new PropertiesModel();
+    this.properties.addCustomProperty('value', '');
+    this.properties.addCustomProperty('selected', false, 'selected',
+      (value) => value ? getAttribute('selected', 'selected') : '');
   }
 }

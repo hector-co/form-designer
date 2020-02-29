@@ -1,10 +1,10 @@
 <template>
   <input
     @click.self="select"
-    :type="model.properties.type"
+    :type="model.properties.customProps.get('type').value"
     :class="layoutCss"
     class="input-component design-component"
-    :value="model.properties.value"
+    :value="model.properties.customProps.get('value').value"
     readonly
   />
 </template>

@@ -55,8 +55,8 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
 import {
   ResponsiveSizes,
   IComponentModel,
-  GridPropertiesModel,
-  GridComponentModel
+  GridComponentModel,
+  PropertiesModel
 } from '@/models';
 
 @Component
@@ -69,8 +69,8 @@ export default class ContentProperties extends Vue {
 
   get contentProperties() {
     if (!this.model || !(this.model instanceof GridComponentModel)) return null;
-    const properties: GridPropertiesModel = this.model.properties;
-    return properties.contents.get(this.size);
+    const properties: PropertiesModel = this.model.properties;
+    return properties.customCss.get('contents')!.get(this.size);
   }
 }
 </script>

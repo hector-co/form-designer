@@ -11,7 +11,8 @@ import {
   ButtonComponentModel,
   TextareaComponentModel,
   SelectComponentModel,
-  OptionComponentModel
+  OptionComponentModel,
+  ContentModel
 } from '@/models';
 
 Vue.use(Vuex);
@@ -41,11 +42,23 @@ const store: StoreOptions<IDesignerState> = {
     addGrid(state) {
       if (!state.selected || !(state.selected instanceof BaseContainerComponentModel)) return;
       const grid = addComponent(new GridComponentModel(), state.selected, state.counter);
-      addComponent(new ColumnComponentModel(), grid, state.counter);
+
+      const column = addComponent(new ColumnComponentModel(), grid, state.counter) as ColumnComponentModel;
+      column.properties.layouts.get(ResponsiveSizes.All)!.paddingTop = '1';
+      column.properties.layouts.get(ResponsiveSizes.All)!.paddingRight = '1';
+      column.properties.layouts.get(ResponsiveSizes.All)!.paddingBottom = '1';
+      column.properties.layouts.get(ResponsiveSizes.All)!.paddingLeft = '1';
+      column.properties.layouts.get(ResponsiveSizes.All)!.width = 'full';
     },
     addColumn(state) {
       if (!state.selected || !(state.selected instanceof BaseContainerComponentModel)) return;
-      addComponent(new ColumnComponentModel(), state.selected, state.counter);
+
+      const column = addComponent(new ColumnComponentModel(), state.selected, state.counter) as ColumnComponentModel;
+      column.properties.layouts.get(ResponsiveSizes.All)!.paddingTop = '1';
+      column.properties.layouts.get(ResponsiveSizes.All)!.paddingRight = '1';
+      column.properties.layouts.get(ResponsiveSizes.All)!.paddingBottom = '1';
+      column.properties.layouts.get(ResponsiveSizes.All)!.paddingLeft = '1';
+      column.properties.layouts.get(ResponsiveSizes.All)!.width = 'full';
     },
     addLabel(state) {
       if (!state.selected || !(state.selected instanceof BaseContainerComponentModel)) return;
@@ -59,31 +72,50 @@ const store: StoreOptions<IDesignerState> = {
     },
     addInput(state) {
       if (!state.selected || !(state.selected instanceof BaseContainerComponentModel)) return;
-      addComponent(new InputComponentModel(), state.selected, state.counter);
+
+      const input = addComponent(new InputComponentModel(), state.selected, state.counter) as InputComponentModel;
+      input.properties.layouts.get(ResponsiveSizes.All)!.paddingTop = '2';
+      input.properties.layouts.get(ResponsiveSizes.All)!.paddingBottom = '2';
+      input.properties.layouts.get(ResponsiveSizes.All)!.paddingLeft = '2';
+      input.properties.layouts.get(ResponsiveSizes.All)!.paddingRight = '2';
+      input.properties.layouts.get(ResponsiveSizes.All)!.width = 'full';
+      input.properties.borders.get(ResponsiveSizes.All)!.width = '1';
     },
     addTextarea(state) {
       if (!state.selected || !(state.selected instanceof BaseContainerComponentModel)) return;
-      addComponent(new TextareaComponentModel(), state.selected, state.counter);
+
+      const textarea =
+        addComponent(new TextareaComponentModel(), state.selected, state.counter) as TextareaComponentModel;
+      textarea.properties.layouts.get(ResponsiveSizes.All)!.paddingTop = '2';
+      textarea.properties.layouts.get(ResponsiveSizes.All)!.paddingBottom = '2';
+      textarea.properties.layouts.get(ResponsiveSizes.All)!.paddingLeft = '2';
+      textarea.properties.layouts.get(ResponsiveSizes.All)!.paddingRight = '2';
+      textarea.properties.layouts.get(ResponsiveSizes.All)!.width = 'full';
+      textarea.properties.borders.get(ResponsiveSizes.All)!.width = '1';
     },
     addSelect(state) {
       if (!state.selected || !(state.selected instanceof BaseContainerComponentModel)) return;
-      addComponent(new SelectComponentModel(), state.selected, state.counter);
+
+      const select = addComponent(new SelectComponentModel(), state.selected, state.counter) as SelectComponentModel;
+      select.properties.layouts.get(ResponsiveSizes.All)!.paddingTop = '2';
+      select.properties.layouts.get(ResponsiveSizes.All)!.paddingBottom = '2';
+      select.properties.layouts.get(ResponsiveSizes.All)!.paddingLeft = '2';
+      select.properties.layouts.get(ResponsiveSizes.All)!.paddingRight = '2';
+      select.properties.layouts.get(ResponsiveSizes.All)!.width = 'full';
+      select.properties.borders.get(ResponsiveSizes.All)!.width = '1';
     },
     addOption(state) {
       if (!state.selected || !(state.selected instanceof SelectComponentModel)) return;
       addComponent(new OptionComponentModel(), state.selected, state.counter);
     },
-    // setSelectOptions(state, options) {
-    //   if (!state.selected || !(state.selected instanceof SelectComponentModel)) return;
-    //   state.selected.properties.options = options;
-    // },
     addInputWithLabel(state) {
       if (!state.selected || !(state.selected instanceof BaseContainerComponentModel)) return;
 
       const grid = addComponent(new GridComponentModel(), state.selected, state.counter) as GridComponentModel;
       grid.properties.layouts.get(ResponsiveSizes.All)!.marginBottom = '2';
-      grid.properties.contents.get(ResponsiveSizes.All)!.flexWrap = '';
-      grid.properties.contents.get(ResponsiveSizes.All)!.alignItems = 'center';
+      const contentCss = grid.properties.customCss.get('contents')!.get(ResponsiveSizes.All) as ContentModel;
+      contentCss.flexWrap = '';
+      contentCss.alignItems = 'center';
 
       const column1 = addComponent(new ColumnComponentModel(), grid, state.counter) as ColumnComponentModel;
       column1.properties.layouts.get(ResponsiveSizes.Medium)!.width = '1/3';
@@ -98,7 +130,7 @@ const store: StoreOptions<IDesignerState> = {
 
       const input = addComponent(new InputComponentModel(), column2, state.counter) as InputComponentModel;
       input.properties.id = input.id;
-      label.properties.forId = input.properties.id;
+      label.properties.customProps.get('forId')!.value = input.properties.id;
     },
     addCheck(state) {
       if (!state.selected || !(state.selected instanceof BaseContainerComponentModel)) return;
@@ -118,8 +150,16 @@ const store: StoreOptions<IDesignerState> = {
     },
     addButton(state) {
       if (!state.selected || !(state.selected instanceof BaseContainerComponentModel)) return;
+
       const button = addComponent(new ButtonComponentModel(), state.selected, state.counter) as ButtonComponentModel;
       button.properties.text = button.name;
+      button.properties.typographies.get(ResponsiveSizes.All)!.textColor.color = 'white';
+      button.properties.backgroundColors.get(ResponsiveSizes.All)!.color = 'blue-500';
+      button.properties.backgroundColors.get(ResponsiveSizes.All)!.hover = 'blue-700';
+      button.properties.layouts.get(ResponsiveSizes.All)!.paddingTop = '2';
+      button.properties.layouts.get(ResponsiveSizes.All)!.paddingBottom = '2';
+      button.properties.layouts.get(ResponsiveSizes.All)!.paddingLeft = '4';
+      button.properties.layouts.get(ResponsiveSizes.All)!.paddingRight = '4';
     },
     delete(state) {
       if (!state.selected || !state.selected.parent ||

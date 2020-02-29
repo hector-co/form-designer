@@ -6,7 +6,7 @@
           <td class="w-5/12 bg-gray-100 border px-4 py-2 text-xs">For</td>
           <td class="w-7/12 border">
             <input
-              v-model="model.properties.forId"
+              v-model="model.properties.customProps.get('forId').value"
               class="w-full py-2 px-3 text-gray-700 leading-tight text-xs"
               type="text"
             />
@@ -17,7 +17,7 @@
         <tr>
           <td class="bg-gray-100 border px-4 text-xs">Type</td>
           <td class="border">
-            <select v-model="model.properties.type" class="w-full text-gray-700 px-2 py-2 text-xs">
+            <select v-model="model.properties.customProps.get('type').value" class="w-full text-gray-700 px-2 py-2 text-xs">
               <option value="text">Text</option>
               <option value="password">Password</option>
               <!-- <option value="file">File</option> -->
@@ -33,7 +33,7 @@
         <tr>
           <td class="bg-gray-100 border px-4 text-xs">Type</td>
           <td class="border">
-            <select v-model="model.properties.type" class="w-full text-gray-700 px-2 py-2 text-xs">
+            <select v-model="model.properties.customProps.get('type').value" class="w-full text-gray-700 px-2 py-2 text-xs">
               <option value="checkbox">Checkbox</option>
               <option value="radio">Radio</option>
             </select>
@@ -57,7 +57,7 @@
           <td class="w-5/12 bg-gray-100 border px-4 py-2 text-xs">Value</td>
           <td class="w-7/12 border">
             <input
-              v-model="model.properties.value"
+              v-model="model.properties.customProps.get('value').value"
               class="w-full py-2 px-3 text-gray-700 leading-tight text-xs"
               type="text"
             />
@@ -81,18 +81,10 @@
           <td class="w-5/12 bg-gray-100 border px-4 py-2 text-xs">Rows</td>
           <td class="w-7/12 border">
             <input
-              v-model="model.properties.rows"
+              v-model="model.properties.customProps.get('rows').value"
               class="w-full py-2 px-3 text-gray-700 leading-tight text-xs"
               type="text"
             />
-          </td>
-        </tr>
-      </template>
-      <template v-if="isSelect">
-        <tr>
-          <td class="w-5/12 bg-gray-100 border px-4 py-2 text-xs">Options</td>
-          <td class="w-7/12 border">
-            <!-- <button @click="setSelectOptions" class="bg-blue-500 hover:bg-blue-700 text-white p-1 w-full">set...</button> -->
           </td>
         </tr>
       </template>
@@ -100,7 +92,10 @@
         <tr>
           <td class="w-5/12 bg-gray-100 border px-4 py-2 text-xs">Selected</td>
           <td class="w-7/12 border">
-            <select v-model="model.properties.selected" class="w-full text-gray-700 px-2 py-2 text-xs">
+            <select
+              v-model="model.properties.customProps.get('selected').value"
+              class="w-full text-gray-700 px-2 py-2 text-xs"
+            >
               <option :value="true">True</option>
               <option :value="false">False</option>
             </select>

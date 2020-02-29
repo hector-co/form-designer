@@ -2,7 +2,7 @@
   <textarea
     @click.self="select"
     v-model="model.properties.text"
-    :rows="model.properties.rows"
+    :rows="model.properties.customProps.get('rows').value"
     :class="layoutCss"
     class="textarea-component design-component"
     readonly

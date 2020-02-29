@@ -3,7 +3,7 @@
     @click.self="select"
     :class="layoutCss"
     class="option-component design-component"
-    :value="model.properties.value"
+    :value="model.properties.customProps.get('value').value"
   >{{model.properties.text}}</option>
 </template>
 <script lang="ts">
