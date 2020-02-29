@@ -27,8 +27,8 @@ export class ComponentModel implements ComponentModel {
   typeName: string;
   component: string;
   id: string;
-  name: string;
   tagName: string;
+  role: string;
   autoCloseTag: boolean;
   properties: PropertiesModel;
   children: ComponentModel[];
@@ -37,12 +37,12 @@ export class ComponentModel implements ComponentModel {
     this.parent = parent;
     this.typeName = typeName;
 
-    this.name = typeName;
     this.tagName = tagName ? tagName : typeName.toLowerCase();
     this.component = this.tagName;
     this.autoCloseTag = autoCloseTag;
 
     this.id = '';
+    this.role = '';
     this.properties = new PropertiesModel();
     this.children = [];
   }

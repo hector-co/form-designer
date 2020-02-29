@@ -12,12 +12,12 @@
           @click="select"
           class="tree-view-item hover:bg-gray-100 cursor-pointer text-sm"
           :class="{'bg-gray-300': isSelected}"
-        >{{model.name}}</div>
+        ><b>{{model.tagName}}</b> {{model.properties.name}} {{model.role}}</div>
       </div>
     </div>
     <div v-show="expanded" class="flex">
       <div class="w-4"></div>
-      <div class="w-auto">
+      <div class="w-full">
         <TreeView v-for="child in model.children" :key="child.id" :model="child"></TreeView>
       </div>
     </div>

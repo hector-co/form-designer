@@ -36,8 +36,11 @@ export default class SelectColorComponent extends Vue {
 
     colors.forEach(c => {
       this.options.push({ value: `${c}-100`, text: `${c}-100` });
+      this.options.push({ value: `${c}-200`, text: `${c}-200` });
       this.options.push({ value: `${c}-300`, text: `${c}-300` });
+      this.options.push({ value: `${c}-400`, text: `${c}-400` });
       this.options.push({ value: `${c}-500`, text: `${c}-500` });
+      this.options.push({ value: `${c}-600`, text: `${c}-600` });
       this.options.push({ value: `${c}-700`, text: `${c}-700` });
     });
 

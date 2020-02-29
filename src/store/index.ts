@@ -16,6 +16,7 @@ interface IDesignerState {
 }
 
 const container = new ComponentModel(null, 'Container', 'div');
+container.role = 'Container';
 container.properties.baseCssClasses = 'container mx-auto';
 
 const store: StoreOptions<IDesignerState> = {
@@ -88,7 +89,6 @@ const store: StoreOptions<IDesignerState> = {
       const label = addComponent(column1, 'Label', state.counter);
       label.properties.layouts.get(ResponsiveSizes.Medium)!.marginRight = '2';
       label.properties.typographies.get(ResponsiveSizes.Medium)!.textAlign = 'right';
-      label.properties.text = label.name;
 
       const input = addComponent(column2, 'Input', state.counter);
       input.properties.id = input.id;
@@ -111,7 +111,6 @@ const store: StoreOptions<IDesignerState> = {
       check.properties.layouts.get(ResponsiveSizes.All)!.marginBottom = '3';
 
       const span = addComponent(label, 'Span', state.counter);
-      span.properties.text = span.name;
     },
     addButton(state) {
       if (!state.selected || !(state.selected instanceof ComponentModel)) return;
@@ -183,7 +182,6 @@ function addComponent(
 
   const component = new ComponentModel(parent, typeName, tagName, autoCloseTag);
   component.id = `${typeName}_${counterValue}`;
-  component.name = `${typeName}_${counterValue}`;
   component.parent = parent;
   parent.children.push(component);
 
@@ -192,6 +190,7 @@ function addComponent(
       component.tagName = 'div';
       component.properties.baseCssClasses = 'flex';
       component.properties.addCustomCss('contents', mapWithResponsiveSizes(() => new ContentModel()));
+      component.role = 'Grid';
       break;
     case 'column':
       if (!tagName) component.tagName = 'div';
@@ -200,14 +199,15 @@ function addComponent(
       component.properties.layouts.get(ResponsiveSizes.All)!.paddingBottom = '1';
       component.properties.layouts.get(ResponsiveSizes.All)!.paddingLeft = '1';
       component.properties.layouts.get(ResponsiveSizes.All)!.width = 'full';
+      component.role = 'Column';
       break;
     case 'label':
       component.properties.baseCssClasses = 'block';
-      component.properties.text = component.name;
+      component.properties.text = `${typeName}_${counterValue}`;
       component.properties.addCustomProperty('forId', '', 'for');
       break;
     case 'span':
-      component.properties.text = component.name;
+      component.properties.text = `${typeName}_${counterValue}`;
       break;
     case 'input':
       component.autoCloseTag = true;
@@ -255,7 +255,7 @@ function addComponent(
         (value) => value ? 'checked' : undefined);
       break;
     case 'button':
-      component.properties.text = component.name;
+      component.properties.text = `${typeName}_${counterValue}`;
       component.properties.typographies.get(ResponsiveSizes.All)!.textColor.color = 'white';
       component.properties.backgroundColors.get(ResponsiveSizes.All)!.color = 'blue-500';
       component.properties.backgroundColors.get(ResponsiveSizes.All)!.hover = 'blue-700';
