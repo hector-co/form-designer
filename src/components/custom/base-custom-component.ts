@@ -7,7 +7,7 @@ import { ComponentModel } from '@/models';
     ...mapState(['root'])
   }
 })
-export class BaseComponent extends Vue {
+export class BaseCustomComponent extends Vue {
   @Prop()
   model!: ComponentModel;
 

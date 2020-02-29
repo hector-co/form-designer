@@ -11,8 +11,8 @@
 </template>
 <script lang="ts">
 import { Component } from 'vue-property-decorator';
-import { BaseComponent } from './base-component';
+import { BaseCustomComponent } from './base-custom-component';
 
 @Component
-export default class TextareaComponent extends BaseComponent {}
+export default class TextareaComponent extends BaseCustomComponent {}
 </script>

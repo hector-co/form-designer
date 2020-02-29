@@ -82,11 +82,7 @@
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import SelectColorComponent from './SelectColorComponent.vue';
-import {
-  TypographyModel,
-  ResponsiveSizes,
-  IComponentModel
-} from '@/models';
+import { TypographyModel, ResponsiveSizes, IComponentModel } from '@/models';
 
 @Component({
   components: {
@@ -100,19 +96,11 @@ export default class TypographyProperties extends Vue {
   @Prop()
   model!: IComponentModel;
 
-  validTypes: string[];
+  invalidTypes: string[];
 
   constructor() {
     super();
-    this.validTypes = [
-      'Label',
-      'Span',
-      'Input',
-      'Button',
-      'Textarea',
-      'Select',
-      'Option'
-    ];
+    this.invalidTypes = ['Check', 'Column', 'Container', 'Grid'];
   }
 
   get typographyProperties() {
@@ -123,7 +111,7 @@ export default class TypographyProperties extends Vue {
   }
 
   get isValidModel(): boolean {
-    return this.validTypes.indexOf(this.model.typeName) >= 0;
+    return this.invalidTypes.indexOf(this.model.typeName) < 0;
   }
 
   setTextColor(color: string) {

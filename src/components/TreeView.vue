@@ -25,11 +25,11 @@
 </template>
 <script lang="ts">
 import { Component } from 'vue-property-decorator';
-import { BaseComponent } from './base-component';
+import { BaseCustomComponent } from './custom/base-custom-component';
 import { ComponentModel } from '@/models';
 
 @Component
-export default class TreeView extends BaseComponent {
+export default class TreeView extends BaseCustomComponent {
   expanded: boolean = true;
 
   toggle() {

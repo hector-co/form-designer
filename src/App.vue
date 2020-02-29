@@ -77,7 +77,7 @@
       </div>
       <div class="w-full">
         <div ref="compsContainer" class="mx-1 my-1 px-1 py-1 border overflow-y-auto">
-          <component :model="root" :is="root.component"></component>
+          <BaseComponent :model="root"></BaseComponent>
         </div>
       </div>
     </div>
@@ -88,33 +88,21 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState } from 'vuex';
 import { IComponentModel } from './models';
+import BaseComponent from '@/components/BaseComponent.vue';
 import TreeView from '@/components/TreeView.vue';
 import PropertiesView from '@/components/properties/PropertiesView.vue';
-import ContainerComponent from '@/components/ContainerComponent.vue';
-import GridComponent from '@/components/GridComponent.vue';
-import ColumnComponent from '@/components/ColumnComponent.vue';
-import LabelComponent from '@/components/LabelComponent.vue';
-import InputComponent from '@/components/InputComponent.vue';
-import CheckComponent from '@/components/CheckComponent.vue';
-import SpanComponent from '@/components/SpanComponent.vue';
-import ButtonComponent from '@/components/ButtonComponent.vue';
-import TextareaComponent from '@/components/TextareaComponent.vue';
-import SelectComponent from '@/components/SelectComponent.vue';
-import OptionComponent from '@/components/OptionComponent.vue';
+import CheckComponent from '@/components/custom/CheckComponent.vue';
+import InputComponent from '@/components/custom/InputComponent.vue';
+import SelectComponent from '@/components/custom/SelectComponent.vue';
+import TextareaComponent from '@/components/custom/TextareaComponent.vue';
 
 Vue.component('TreeView', TreeView);
 Vue.component('PropertiesView', PropertiesView);
-Vue.component('ContainerComponent', ContainerComponent);
-Vue.component('GridComponent', GridComponent);
-Vue.component('ColumnComponent', ColumnComponent);
-Vue.component('LabelComponent', LabelComponent);
-Vue.component('InputComponent', InputComponent);
 Vue.component('CheckComponent', CheckComponent);
-Vue.component('SpanComponent', SpanComponent);
-Vue.component('ButtonComponent', ButtonComponent);
-Vue.component('TextareaComponent', TextareaComponent);
+Vue.component('InputComponent', InputComponent);
 Vue.component('SelectComponent', SelectComponent);
-Vue.component('OptionComponent', OptionComponent);
+Vue.component('TextareaComponent', TextareaComponent);
+Vue.component('BaseComponent', BaseComponent);
 
 @Component({
   computed: {

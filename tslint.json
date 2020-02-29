@@ -28,6 +28,7 @@
     "arrow-parens": false,
     "max-classes-per-file": false,
     "array-type": false,
-    "member-ordering": false
+    "member-ordering": false,
+    "no-string-literal": false
   }
 }

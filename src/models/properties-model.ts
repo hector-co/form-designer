@@ -1,4 +1,4 @@
-import { ResponsiveSizes, LayoutModel, ContentModel, TypographyModel, ICssModel, ColorModel, BorderModel } from '.';
+import { ResponsiveSizes, LayoutModel, TypographyModel, ICssModel, ColorModel, BorderModel } from '.';
 
 function getCss(cssMap: Map<ResponsiveSizes, ICssModel>): string {
   return (cssMap.get(ResponsiveSizes.All)!.getCss('') +
@@ -32,7 +32,7 @@ export class PropertiesModel {
   typographies: Map<ResponsiveSizes, TypographyModel>;
   backgroundColors: Map<ResponsiveSizes, ColorModel>;
   borders: Map<ResponsiveSizes, BorderModel>;
-  customProps: Map<string, { attributeName: string, value: any, attributeMap: (value: any) => string }>;
+  customProps: Map<string, { attributeName: string, value: any, attributeMap: (value: any) => string | undefined }>;
   customCss: Map<string, Map<ResponsiveSizes, ICssModel>>;
 
   constructor(baseCssClass: string = '') {
@@ -46,7 +46,8 @@ export class PropertiesModel {
     this.backgroundColors = mapWithResponsiveSizes(() => new ColorModel('bg'));
     this.borders = mapWithResponsiveSizes(() => new BorderModel());
 
-    this.customProps = new Map<string, { attributeName: string, value: any, attributeMap: (value: any) => string }>();
+    this.customProps = new Map<string,
+      { attributeName: string, value: any, attributeMap: (value: any) => | undefined }>();
     this.customCss = new Map<string, Map<ResponsiveSizes, ICssModel>>();
   }
 
@@ -54,13 +55,35 @@ export class PropertiesModel {
     let customAttrValues = '';
     this.customProps.forEach(p => {
       const mapped = p.attributeMap(p.value);
-      customAttrValues += mapped ? mapped : getAttribute(p.attributeName, p.value);
+      if (mapped !== undefined)
+        customAttrValues += getAttribute(p.attributeName, mapped);
+      else if (p.value)
+        customAttrValues += getAttribute(p.attributeName, p.value);
     });
 
     return getAttribute('id', this.id) +
       getAttribute('name', this.name) +
       getAttribute('class', this.getCss()) +
       customAttrValues;
+  }
+
+  getObjectAttributes() {
+    const attrs: any = {};
+
+    if (this.id)
+      attrs['id'] = this.id;
+    if (this.id)
+      attrs['name'] = this.name;
+
+    this.customProps.forEach(p => {
+      const mapped = p.attributeMap(p.value);
+      if (mapped !== undefined)
+        attrs[p.attributeName] = mapped;
+      else if (p.value)
+        attrs[p.attributeName] = p.value;
+    });
+
+    return attrs;
   }
 
   getCss() {
@@ -72,7 +95,8 @@ export class PropertiesModel {
   }
 
   addCustomProperty<TValue>(
-    name: string, value: TValue, attributeName: string = '', attributeMap: (value: TValue) => string = () => '') {
+    name: string, value: TValue, attributeName: string = '',
+    attributeMap: (value: TValue) => string | undefined = () => undefined) {
     const customValue = {
       attributeName: attributeName ? attributeName : name,
       value,

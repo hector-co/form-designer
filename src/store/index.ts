@@ -5,8 +5,7 @@ import {
   ResponsiveSizes,
   ContentModel,
   ComponentModel,
-  mapWithResponsiveSizes,
-  getAttribute
+  mapWithResponsiveSizes
 } from '@/models';
 
 Vue.use(Vuex);
@@ -75,7 +74,7 @@ const store: StoreOptions<IDesignerState> = {
     addInputWithLabel(state) {
       if (!state.selected || !(state.selected instanceof ComponentModel)) return;
 
-      const grid = addComponent(state.selected, 'Grid', state.counter);
+      const grid = addComponent(state.selected, 'Grid', state.counter, 'div');
       grid.properties.layouts.get(ResponsiveSizes.All)!.marginBottom = '2';
       const contentCss = grid.properties.customCss.get('contents')!.get(ResponsiveSizes.All) as ContentModel;
       contentCss.flexWrap = '';
@@ -154,11 +153,12 @@ const store: StoreOptions<IDesignerState> = {
 };
 
 function addComponent(
-  parent: ComponentModel, typeName: string, counter: Map<string, number>, tagName: string = ''): ComponentModel {
+  parent: ComponentModel, typeName: string, counter: Map<string, number>,
+  tagName: string = '', autoCloseTag: boolean = false): ComponentModel {
   if (!counter.has(typeName)) counter.set(typeName, 0);
   const counterValue = counter.get(typeName)! + 1;
 
-  const component = new ComponentModel(parent, typeName, tagName);
+  const component = new ComponentModel(parent, typeName, tagName, autoCloseTag);
   component.id = `${typeName}_${counterValue}`;
   component.name = `${typeName}_${counterValue}`;
   component.parent = parent;
@@ -166,10 +166,12 @@ function addComponent(
 
   switch (typeName.toLowerCase()) {
     case 'grid':
+      component.tagName = 'div';
       component.properties.baseCssClasses = 'flex';
       component.properties.addCustomCss('contents', mapWithResponsiveSizes(() => new ContentModel()));
       break;
     case 'column':
+      if (!tagName) component.tagName = 'div';
       component.properties.layouts.get(ResponsiveSizes.All)!.paddingTop = '1';
       component.properties.layouts.get(ResponsiveSizes.All)!.paddingRight = '1';
       component.properties.layouts.get(ResponsiveSizes.All)!.paddingBottom = '1';
@@ -185,6 +187,8 @@ function addComponent(
       component.properties.text = component.name;
       break;
     case 'input':
+      component.autoCloseTag = true;
+      component.component = 'InputComponent';
       component.properties.layouts.get(ResponsiveSizes.All)!.paddingTop = '2';
       component.properties.layouts.get(ResponsiveSizes.All)!.paddingBottom = '2';
       component.properties.layouts.get(ResponsiveSizes.All)!.paddingLeft = '2';
@@ -205,6 +209,7 @@ function addComponent(
       component.properties.addCustomProperty('rows', '');
       break;
     case 'select':
+      component.component = 'SelectComponent';
       component.properties.layouts.get(ResponsiveSizes.All)!.paddingTop = '2';
       component.properties.layouts.get(ResponsiveSizes.All)!.paddingBottom = '2';
       component.properties.layouts.get(ResponsiveSizes.All)!.paddingLeft = '2';
@@ -215,13 +220,16 @@ function addComponent(
     case 'option':
       component.properties.addCustomProperty('value', '');
       component.properties.addCustomProperty('selected', false, 'selected',
-        (value) => value ? getAttribute('selected', 'selected') : '');
+        (value) => value ? 'selected' : undefined);
       break;
     case 'check':
+      component.tagName = 'input';
+      component.component = 'CheckComponent';
+      component.autoCloseTag = true;
       component.properties.addCustomProperty('type', 'checkbox');
       component.properties.addCustomProperty('value', '');
       component.properties.addCustomProperty('checked', false, 'checked',
-        (value) => value ? getAttribute('checked', 'checked') : '');
+        (value) => value ? 'checked' : undefined);
       break;
     case 'button':
       component.properties.text = component.name;

@@ -50,9 +50,9 @@ export class ComponentModel implements IComponentModel {
     this.parent = parent;
     this.typeName = typeName;
 
-    this.component = `${typeName}Component`;
     this.name = typeName;
     this.tagName = tagName ? tagName : typeName.toLowerCase();
+    this.component = this.tagName;
     this.autoCloseTag = autoCloseTag;
 
     this.id = '';

@@ -3,8 +3,8 @@
 </template>
 <script lang="ts">
 import { Component } from 'vue-property-decorator';
-import { BaseComponent } from './base-component';
+import { BaseCustomComponent } from './base-custom-component';
 
 @Component
-export default class SelectComponent extends BaseComponent {}
+export default class SelectComponent extends BaseCustomComponent {}
 </script>

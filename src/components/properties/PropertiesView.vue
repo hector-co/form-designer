@@ -49,7 +49,7 @@
           <td class="bg-gray-100 border px-4 text-xs">Checked</td>
           <td class="border">
             <select
-              v-model="model.properties.checked"
+              v-model="model.properties.customProps.get('checked').value"
               class="w-full text-gray-700 px-2 py-2 text-xs"
             >
               <option :value="true">True</option>
