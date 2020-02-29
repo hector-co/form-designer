@@ -2,7 +2,7 @@
   <component
     v-if="model"
     :model="model"
-    v-bind="model.properties.getObjectAttributes()"
+    v-bind="model.properties.getAttributes()"
     @click.self="select"
     :is="model.component"
     class="design-component"

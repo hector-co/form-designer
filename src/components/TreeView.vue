@@ -12,7 +12,7 @@
           @click="select"
           class="tree-view-item hover:bg-gray-100 cursor-pointer text-sm"
           :class="{'bg-gray-300': isSelected}"
-        ><b>{{model.tagName}}</b> {{model.properties.name}} {{model.role}}</div>
+        ><b>{{model.tagName}}</b> {{model.properties.id}} {{model.role}}</div>
       </div>
     </div>
     <div v-show="expanded" class="flex">

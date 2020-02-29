@@ -18,11 +18,6 @@ export function mapWithResponsiveSizes<T>(factory: () => T): Map<ResponsiveSizes
   return dict;
 }
 
-export function getAttribute(name: string, value: string) {
-  if (!value || !value.trim()) return '';
-  return `${name}="${value.trim()}" `;
-}
-
 export class PropertiesModel {
   id: string;
   name: string;
@@ -52,22 +47,6 @@ export class PropertiesModel {
   }
 
   getAttributes() {
-    let customAttrValues = '';
-    this.customProps.forEach(p => {
-      const mapped = p.attributeMap(p.value);
-      if (mapped !== undefined)
-        customAttrValues += getAttribute(p.attributeName, mapped);
-      else if (p.value)
-        customAttrValues += getAttribute(p.attributeName, p.value);
-    });
-
-    return getAttribute('id', this.id) +
-      getAttribute('name', this.name) +
-      getAttribute('class', this.getCss()) +
-      customAttrValues;
-  }
-
-  getObjectAttributes() {
     const attrs: any = {};
 
     if (this.id)

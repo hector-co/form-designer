@@ -103,7 +103,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState } from 'vuex';
-import { ComponentModel } from './models';
+import { ComponentModel, toHtml } from './models';
 import BaseComponent from '@/components/BaseComponent.vue';
 import TreeView from '@/components/TreeView.vue';
 import PropertiesView from '@/components/properties/PropertiesView.vue';
@@ -136,7 +136,7 @@ export default class App extends Vue {
 
   copyHtmlCode() {
     const el = document.createElement('textarea');
-    el.value = this.root.getHtml(0);
+    el.value = toHtml(this.root);
     document.body.appendChild(el);
     el.select();
     document.execCommand('copy');
