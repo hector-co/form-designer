@@ -9,7 +9,8 @@ import {
   SpanPropertiesModel,
   ButtonPropertiesModel,
   TextareaPropertiesModel,
-  SelectPropertiesModel
+  SelectPropertiesModel,
+  OptionPropertiesModel
 } from '.';
 
 function getSpaces(count: number): string {
@@ -71,8 +72,9 @@ export abstract class BaseComponentModel<T extends PropertiesModel> implements I
   }
 }
 
-export abstract class BaseContainerComponentModel<T extends PropertiesModel> extends BaseComponentModel<T> {
-  children: IComponentModel[];
+export abstract class BaseContainerComponentModel
+  <T extends PropertiesModel, C extends IComponentModel> extends BaseComponentModel<T> {
+  children: C[];
 
   constructor() {
     super();
@@ -84,7 +86,8 @@ export abstract class BaseContainerComponentModel<T extends PropertiesModel> ext
   }
 }
 
-export class ContainerComponentModel extends BaseContainerComponentModel<ContainerPropertiesModel> {
+export class ContainerComponentModel
+  extends BaseContainerComponentModel<ContainerPropertiesModel, IComponentModel> {
   properties: ContainerPropertiesModel;
 
   constructor() {
@@ -96,7 +99,8 @@ export class ContainerComponentModel extends BaseContainerComponentModel<Contain
   }
 }
 
-export class GridComponentModel extends BaseContainerComponentModel<GridPropertiesModel> {
+export class GridComponentModel
+  extends BaseContainerComponentModel<GridPropertiesModel, IComponentModel> {
   properties: GridPropertiesModel;
 
   constructor() {
@@ -108,7 +112,8 @@ export class GridComponentModel extends BaseContainerComponentModel<GridProperti
   }
 }
 
-export class ColumnComponentModel extends BaseContainerComponentModel<ColumnPropertiesModel> {
+export class ColumnComponentModel
+  extends BaseContainerComponentModel<ColumnPropertiesModel, IComponentModel> {
   properties: ColumnPropertiesModel;
 
   constructor() {
@@ -120,7 +125,8 @@ export class ColumnComponentModel extends BaseContainerComponentModel<ColumnProp
   }
 }
 
-export class LabelComponentModel extends BaseContainerComponentModel<LabelPropertiesModel> {
+export class LabelComponentModel
+  extends BaseContainerComponentModel<LabelPropertiesModel, IComponentModel> {
   properties: LabelPropertiesModel;
 
   constructor() {
@@ -182,7 +188,8 @@ export class CheckComponentModel extends BaseComponentModel<CheckPropertiesModel
   }
 }
 
-export class ButtonComponentModel extends BaseContainerComponentModel<ButtonPropertiesModel> {
+export class ButtonComponentModel
+  extends BaseContainerComponentModel<ButtonPropertiesModel, IComponentModel> {
   properties: ButtonPropertiesModel;
 
   constructor() {
@@ -216,7 +223,8 @@ export class TextareaComponentModel extends BaseComponentModel<TextareaPropertie
   }
 }
 
-export class SelectComponentModel extends BaseComponentModel<SelectPropertiesModel> {
+export class SelectComponentModel
+  extends BaseContainerComponentModel<SelectPropertiesModel, OptionComponentModel> {
   properties: SelectPropertiesModel;
 
   constructor() {
@@ -226,5 +234,22 @@ export class SelectComponentModel extends BaseComponentModel<SelectPropertiesMod
     this.name = 'Select';
     this.tagName = 'select';
     this.properties = new SelectPropertiesModel();
+  }
+}
+
+export class OptionComponentModel extends BaseComponentModel<OptionPropertiesModel> {
+  properties: OptionPropertiesModel;
+
+  constructor() {
+    super();
+    this.component = 'OptionComponent';
+    this.typeName = 'Option';
+    this.name = 'Option';
+    this.tagName = 'option';
+    this.properties = new OptionPropertiesModel();
+  }
+
+  getHtml(level: number = 0) {
+    return getHtml(level, this.tagName, this.autoCloseTag, this.properties, [], this.properties.text);
   }
 }

@@ -230,12 +230,10 @@ export class TextareaPropertiesModel extends PropertiesModel {
 }
 
 export class SelectPropertiesModel extends PropertiesModel {
-  options: SelectOption[];
   typographies: Map<ResponsiveSizes, TypographyModel>;
 
   constructor() {
     super();
-    this.options = [];
     this.typographies = mapWithResponsiveSizes(() => new TypographyModel());
 
     this.layouts.get(ResponsiveSizes.All)!.paddingTop = '2';
@@ -256,16 +254,23 @@ export class SelectPropertiesModel extends PropertiesModel {
   }
 }
 
-export class SelectOption {
-  key: string;
+export class OptionPropertiesModel extends PropertiesModel {
   value: string;
   text: string;
   selected: boolean;
+  typographies: Map<ResponsiveSizes, TypographyModel>;
 
   constructor() {
-    this.key = '';
+    super();
     this.value = '';
     this.text = '';
     this.selected = false;
+    this.typographies = mapWithResponsiveSizes(() => new TypographyModel());
+  }
+
+  getAttributes() {
+    return super.getAttributes() +
+      getAttribute('value', this.value) +
+      (this.selected ? getAttribute('selected', 'selected') : '');
   }
 }

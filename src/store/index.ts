@@ -10,7 +10,8 @@ import {
   SpanComponentModel,
   ButtonComponentModel,
   TextareaComponentModel,
-  SelectComponentModel
+  SelectComponentModel,
+  OptionComponentModel
 } from '@/models';
 
 Vue.use(Vuex);
@@ -68,10 +69,14 @@ const store: StoreOptions<IDesignerState> = {
       if (!state.selected || !(state.selected instanceof BaseContainerComponentModel)) return;
       addComponent(new SelectComponentModel(), state.selected, state.counter);
     },
-    setSelectOptions(state, options) {
+    addOption(state) {
       if (!state.selected || !(state.selected instanceof SelectComponentModel)) return;
-      state.selected.properties.options = options;
+      addComponent(new OptionComponentModel(), state.selected, state.counter);
     },
+    // setSelectOptions(state, options) {
+    //   if (!state.selected || !(state.selected instanceof SelectComponentModel)) return;
+    //   state.selected.properties.options = options;
+    // },
     addInputWithLabel(state) {
       if (!state.selected || !(state.selected instanceof BaseContainerComponentModel)) return;
 

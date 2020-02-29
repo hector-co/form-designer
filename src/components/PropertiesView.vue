@@ -13,18 +13,6 @@
           </td>
         </tr>
       </template>
-      <template v-if="isLabel || isSpan || isButton || isTextarea">
-        <tr>
-          <td class="w-5/12 bg-gray-100 border px-4 py-2 text-xs">Text</td>
-          <td class="w-7/12 border">
-            <input
-              v-model="model.properties.text"
-              class="w-full py-2 px-3 text-gray-700 leading-tight text-xs"
-              type="text"
-            />
-          </td>
-        </tr>
-      </template>
       <template v-if="isInput">
         <tr>
           <td class="bg-gray-100 border px-4 text-xs">Type</td>
@@ -64,12 +52,24 @@
           </td>
         </tr>
       </template>
-      <template v-if="isInput || isCheck">
+      <template v-if="isInput || isCheck || isOption">
         <tr>
           <td class="w-5/12 bg-gray-100 border px-4 py-2 text-xs">Value</td>
           <td class="w-7/12 border">
             <input
               v-model="model.properties.value"
+              class="w-full py-2 px-3 text-gray-700 leading-tight text-xs"
+              type="text"
+            />
+          </td>
+        </tr>
+      </template>
+      <template v-if="isLabel || isSpan || isButton || isTextarea || isOption">
+        <tr>
+          <td class="w-5/12 bg-gray-100 border px-4 py-2 text-xs">Text</td>
+          <td class="w-7/12 border">
+            <input
+              v-model="model.properties.text"
               class="w-full py-2 px-3 text-gray-700 leading-tight text-xs"
               type="text"
             />
@@ -92,7 +92,18 @@
         <tr>
           <td class="w-5/12 bg-gray-100 border px-4 py-2 text-xs">Options</td>
           <td class="w-7/12 border">
-            <button @click="setSelectOptions" class="bg-blue-500 hover:bg-blue-700 text-white p-1 w-full">set...</button>
+            <!-- <button @click="setSelectOptions" class="bg-blue-500 hover:bg-blue-700 text-white p-1 w-full">set...</button> -->
+          </td>
+        </tr>
+      </template>
+      <template v-if="isOption">
+        <tr>
+          <td class="w-5/12 bg-gray-100 border px-4 py-2 text-xs">Selected</td>
+          <td class="w-7/12 border">
+            <select v-model="model.properties.selected" class="w-full text-gray-700 px-2 py-2 text-xs">
+              <option :value="true">True</option>
+              <option :value="false">False</option>
+            </select>
           </td>
         </tr>
       </template>
@@ -121,7 +132,6 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
-import SelectOptionsModal from './SelectOptionsModal.vue';
 import BaseProperties from './BaseProperties.vue';
 import LayoutProperties from './LayoutProperties.vue';
 import ContentProperties from './ContentProperties.vue';
@@ -136,7 +146,8 @@ import {
   SpanComponentModel,
   ButtonComponentModel,
   TextareaComponentModel,
-  SelectComponentModel
+  SelectComponentModel,
+  OptionComponentModel
 } from '@/models';
 
 @Component({
@@ -192,8 +203,8 @@ export default class PropertiesView extends Vue {
     return this.model instanceof SelectComponentModel;
   }
 
-  setSelectOptions() {
-    this.$modal.show(SelectOptionsModal);
+  get isOption(): boolean {
+    return this.model instanceof OptionComponentModel;
   }
 }
 </script>

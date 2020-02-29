@@ -91,7 +91,8 @@ import {
   InputComponentModel,
   ButtonComponentModel,
   TextareaComponentModel,
-  SelectComponentModel
+  SelectComponentModel,
+  OptionComponentModel
 } from '@/models';
 
 @Component({
@@ -120,7 +121,8 @@ export default class TypographyProperties extends Vue {
       this.model instanceof InputComponentModel ||
       this.model instanceof ButtonComponentModel ||
       this.model instanceof TextareaComponentModel ||
-      this.model instanceof SelectComponentModel
+      this.model instanceof SelectComponentModel ||
+      this.model instanceof OptionComponentModel
     );
   }
 

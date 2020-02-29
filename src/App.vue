@@ -27,6 +27,10 @@
           class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
         >Select</button>
         <button
+          @click="addOption"
+          class="bg-orange-500 hover:bg-orange-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+        >Option</button>
+        <button
           @click="addSpan"
           class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
         >Span</button>
@@ -96,6 +100,7 @@ import SpanComponent from '@/components/SpanComponent.vue';
 import ButtonComponent from '@/components/ButtonComponent.vue';
 import TextareaComponent from '@/components/TextareaComponent.vue';
 import SelectComponent from '@/components/SelectComponent.vue';
+import OptionComponent from '@/components/OptionComponent.vue';
 
 Vue.component('TreeView', TreeView);
 Vue.component('PropertiesView', PropertiesView);
@@ -109,6 +114,7 @@ Vue.component('SpanComponent', SpanComponent);
 Vue.component('ButtonComponent', ButtonComponent);
 Vue.component('TextareaComponent', TextareaComponent);
 Vue.component('SelectComponent', SelectComponent);
+Vue.component('OptionComponent', OptionComponent);
 
 @Component({
   computed: {
@@ -159,6 +165,10 @@ export default class App extends Vue {
 
   addSelect() {
     this.$store.commit('addSelect');
+  }
+
+  addOption() {
+    this.$store.commit('addOption');
   }
 
   addInputWithLabel() {
