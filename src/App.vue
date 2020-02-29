@@ -89,7 +89,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import { mapState } from 'vuex';
 import { IComponentModel } from './models';
 import TreeView from '@/components/TreeView.vue';
-import PropertiesView from '@/components/PropertiesView.vue';
+import PropertiesView from '@/components/properties/PropertiesView.vue';
 import ContainerComponent from '@/components/ContainerComponent.vue';
 import GridComponent from '@/components/GridComponent.vue';
 import ColumnComponent from '@/components/ColumnComponent.vue';
