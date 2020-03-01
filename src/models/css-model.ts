@@ -1,3 +1,10 @@
+// export enum ResponsiveSizes {
+//   All = '',
+//   Small = 'sm',
+//   Medium = 'md',
+//   Large = 'lg'
+// }
+
 export enum ResponsiveSizes {
   All,
   Small,
@@ -6,10 +13,12 @@ export enum ResponsiveSizes {
 }
 
 export interface ICssModel {
-  getCss(prefix: string): string;
+  prefix: string;
+  readonly cssArray: string[];
 }
 
 export class LayoutModel implements ICssModel {
+  prefix: string;
   width: string;
   height: string;
   maxWidth: string;
@@ -23,7 +32,8 @@ export class LayoutModel implements ICssModel {
   marginBottom: string;
   marginLeft: string;
 
-  constructor() {
+  constructor(prefix: string) {
+    this.prefix = prefix;
     this.width = '';
     this.height = '';
     this.maxWidth = '';
@@ -40,15 +50,27 @@ export class LayoutModel implements ICssModel {
     this.marginLeft = '';
   }
 
-  getCss(prefix: string) {
-    return (this.width ? `${prefix}w-${this.width} ` : '') +
-      (this.height ? `${prefix}h-${this.height} ` : '') +
-      (this.maxWidth ? `${prefix}max-w-${this.maxWidth} ` : '') +
-      (this.maxHeight ? `${prefix}max-h-${this.maxHeight} ` : '') +
-      LayoutModel.getCssWithPosition(
-        `${prefix}p`, this.paddingTop, this.paddingRight, this.paddingBottom, this.paddingLeft) +
-      LayoutModel.getCssWithPosition(
-        `${prefix}m`, this.marginTop, this.marginRight, this.marginBottom, this.marginLeft);
+  get cssArray(): string[] {
+    const result: string[] = [];
+
+    if (this.width)
+      result.push(`${this.prefix}w-${this.width}`);
+    if (this.height)
+      result.push(`${this.prefix}h-${this.height}`);
+    if (this.maxWidth)
+      result.push(`${this.prefix}max-w-${this.maxWidth}`);
+    if (this.maxHeight)
+      result.push(`${this.prefix}max-h-${this.maxHeight}`);
+    const padding = LayoutModel
+      .getCssWithPosition(`${this.prefix}p`, this.paddingTop, this.paddingRight, this.paddingBottom, this.paddingLeft);
+    if (padding)
+      result.push(padding);
+    const margin = LayoutModel
+      .getCssWithPosition(`${this.prefix}m`, this.marginTop, this.marginRight, this.marginBottom, this.marginLeft);
+    if (margin)
+      result.push(margin);
+
+    return result;
   }
 
   static getCssWithPosition(
@@ -72,24 +94,33 @@ export class LayoutModel implements ICssModel {
 }
 
 export class ContentModel implements ICssModel {
+  prefix: string;
   flexWrap: string;
   justify: string;
   alignItems: string;
 
-  constructor() {
+  constructor(prefix: string) {
+    this.prefix = prefix;
     this.flexWrap = '';
     this.justify = '';
     this.alignItems = '';
   }
 
-  getCss(prefix: string) {
-    return (this.flexWrap ? `${prefix}flex-${this.flexWrap} ` : '') +
-      (this.justify ? `${prefix}justify-${this.justify} ` : '') +
-      (this.alignItems ? `${prefix}items-${this.alignItems} ` : '');
+  get cssArray(): string[] {
+    const result: string[] = [];
+    if (this.flexWrap)
+      result.push(`${this.prefix}flex-${this.flexWrap}`);
+    if (this.justify)
+      result.push(`${this.prefix}justify-${this.justify}`);
+    if (this.alignItems)
+      result.push(`${this.prefix}items-${this.alignItems}`);
+
+    return result;
   }
 }
 
 export class TypographyModel implements ICssModel {
+  prefix: string;
   textAlign: string;
   verticalAlign: string;
   textSize: string;
@@ -97,56 +128,82 @@ export class TypographyModel implements ICssModel {
   textColor: ColorModel;
   fontStyle: string;
 
-  constructor() {
+  constructor(prefix: string) {
+    this.prefix = prefix;
     this.textAlign = '';
     this.verticalAlign = '';
     this.textSize = '';
     this.fontWeight = '';
-    this.textColor = new ColorModel('text');
+    this.textColor = new ColorModel(prefix, 'text');
     this.fontStyle = '';
   }
 
-  getCss(prefix: string) {
-    return (this.textAlign ? `${prefix}text-${this.textAlign} ` : '') +
-      (this.verticalAlign ? `${prefix}align-${this.verticalAlign} ` : '') +
-      (this.textSize ? `${prefix}text-${this.textSize} ` : '') +
-      (this.fontStyle ? `${prefix}${this.fontStyle} ` : '') +
-      this.textColor.getCss(prefix) +
-      (this.fontWeight ? `${prefix}font-${this.fontWeight} ` : '');
+  get cssArray(): string[] {
+    const result: string[] = [];
+
+    if (this.textAlign)
+      result.push(`${this.prefix}text-${this.textAlign}`);
+    if (this.verticalAlign)
+      result.push(`${this.prefix}align-${this.verticalAlign}`);
+    if (this.textSize)
+      result.push(`${this.prefix}text-${this.textSize}`);
+    if (this.fontStyle)
+      result.push(`${this.prefix}${this.fontStyle}`);
+    if (this.fontWeight)
+      result.push(`${this.prefix}font-${this.fontWeight}`);
+    result.push(...this.textColor.cssArray);
+
+    return result;
   }
 }
 
 export class ColorModel implements ICssModel {
+  prefix: string;
   type: string;
   color: string;
   hover: string;
 
-  constructor(type: string) {
+  constructor(prefix: string, type: string) {
+    this.prefix = prefix;
     this.type = type;
     this.color = '';
     this.hover = '';
   }
 
-  getCss(prefix: string) {
-    return (this.color ? `${prefix}${this.type}-${this.color} ` : '') +
-      (this.hover ? `${prefix}hover:${this.type}-${this.hover} ` : '');
+  get cssArray(): string[] {
+    const result: string[] = [];
+
+    if (this.color)
+      result.push(`${this.prefix}${this.type}-${this.color}`);
+    if (this.hover)
+      result.push(`${this.prefix}hover:${this.type}-${this.hover}`);
+
+    return result;
   }
 }
 
 export class BorderModel implements ICssModel {
+  prefix: string;
   style: string;
   width: string;
   color: ColorModel;
 
-  constructor() {
+  constructor(prefix: string) {
+    this.prefix = prefix;
     this.style = '';
     this.width = '';
-    this.color = new ColorModel('border');
+    this.color = new ColorModel(prefix, 'border');
   }
 
-  getCss(prefix: string) {
-    return (this.style ? `${prefix}border-${this.style} ` : '') +
-      (this.width ? this.width === '1' ? `${prefix}border ` : `${prefix}border-${this.width} ` : '') +
-      this.color.getCss(prefix);
+  get cssArray(): string[] {
+    const result: string[] = [];
+
+    if (this.style)
+      result.push(`${this.prefix}border-${this.style}`);
+    if (this.width)
+      result.push(this.width === '1' ? `${this.prefix}border` : `${this.prefix}border-${this.width}`);
+    result.push(...this.color.cssArray);
+
+    return result;
   }
 }

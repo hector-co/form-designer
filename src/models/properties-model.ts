@@ -1,19 +1,19 @@
-import { ResponsiveSizes, LayoutModel, TypographyModel, ICssModel, ColorModel, BorderModel } from '.';
+import { ResponsiveSizes, LayoutModel, TypographyModel, ICssModel, ColorModel, BorderModel, Dictionary } from '.';
 
-function getCss(cssMap: Map<ResponsiveSizes, ICssModel>): string {
-  return (cssMap.get(ResponsiveSizes.All)!.getCss('') +
-    cssMap.get(ResponsiveSizes.Small)!.getCss('sm:') +
-    cssMap.get(ResponsiveSizes.Medium)!.getCss('md:') +
-    cssMap.get(ResponsiveSizes.Large)!.getCss('lg:') +
-    cssMap.get(ResponsiveSizes.Large)!.getCss('xl:'));
+function getCss(cssMap: Dictionary<ResponsiveSizes, ICssModel>): string[] {
+  return [
+    ...cssMap.get(ResponsiveSizes.All)!.cssArray,
+    ...cssMap.get(ResponsiveSizes.Small)!.cssArray,
+    ...cssMap.get(ResponsiveSizes.Medium)!.cssArray,
+    ...cssMap.get(ResponsiveSizes.Large)!.cssArray];
 }
 
-export function mapWithResponsiveSizes<T>(factory: () => T): Map<ResponsiveSizes, T> {
-  const dict = new Map<ResponsiveSizes, T>();
-  dict.set(ResponsiveSizes.All, factory());
-  dict.set(ResponsiveSizes.Small, factory());
-  dict.set(ResponsiveSizes.Medium, factory());
-  dict.set(ResponsiveSizes.Large, factory());
+export function mapWithResponsiveSizes<T>(factory: (prefix: string) => T): Dictionary<ResponsiveSizes, T> {
+  const dict = new Dictionary<ResponsiveSizes, T>();
+  dict.add(ResponsiveSizes.All, factory(''));
+  dict.add(ResponsiveSizes.Small, factory('sm'));
+  dict.add(ResponsiveSizes.Medium, factory('md'));
+  dict.add(ResponsiveSizes.Large, factory('lg'));
 
   return dict;
 }
@@ -23,12 +23,13 @@ export class PropertiesModel {
   name: string;
   text: string;
   baseCssClasses: string;
-  layouts: Map<ResponsiveSizes, LayoutModel>;
-  typographies: Map<ResponsiveSizes, TypographyModel>;
-  backgroundColors: Map<ResponsiveSizes, ColorModel>;
-  borders: Map<ResponsiveSizes, BorderModel>;
-  customProps: Map<string, { attributeName: string, value: any, attributeMap: (value: any) => string | undefined }>;
-  customCss: Map<string, Map<ResponsiveSizes, ICssModel>>;
+  layouts: Dictionary<ResponsiveSizes, LayoutModel>;
+  typographies: Dictionary<ResponsiveSizes, TypographyModel>;
+  backgroundColors: Dictionary<ResponsiveSizes, ColorModel>;
+  borders: Dictionary<ResponsiveSizes, BorderModel>;
+  customProps: Dictionary<string,
+    { attributeName: string, value: any, attributeMap: (value: any) => string | undefined }>;
+  customCss: Dictionary<string, Dictionary<ResponsiveSizes, ICssModel>>;
 
   constructor(baseCssClass: string = '') {
     this.id = '';
@@ -36,14 +37,14 @@ export class PropertiesModel {
     this.text = '';
     this.baseCssClasses = baseCssClass;
 
-    this.layouts = mapWithResponsiveSizes(() => new LayoutModel());
-    this.typographies = mapWithResponsiveSizes(() => new TypographyModel());
-    this.backgroundColors = mapWithResponsiveSizes(() => new ColorModel('bg'));
-    this.borders = mapWithResponsiveSizes(() => new BorderModel());
+    this.layouts = mapWithResponsiveSizes((prefix) => new LayoutModel(prefix));
+    this.typographies = mapWithResponsiveSizes((prefix) => new TypographyModel(prefix));
+    this.backgroundColors = mapWithResponsiveSizes((prefix) => new ColorModel(prefix, 'bg'));
+    this.borders = mapWithResponsiveSizes((prefix) => new BorderModel(prefix));
 
-    this.customProps = new Map<string,
+    this.customProps = new Dictionary<string,
       { attributeName: string, value: any, attributeMap: (value: any) => | undefined }>();
-    this.customCss = new Map<string, Map<ResponsiveSizes, ICssModel>>();
+    this.customCss = new Dictionary<string, Dictionary<ResponsiveSizes, ICssModel>>();
   }
 
   getAttributes() {
@@ -54,23 +55,32 @@ export class PropertiesModel {
     if (this.id)
       attrs['name'] = this.name;
 
-    this.customProps.forEach(p => {
-      const mapped = p.attributeMap(p.value);
+    this.customProps.tuples.forEach(p => {
+      const mapped = p.value.attributeMap(p.value.value);
       if (mapped !== undefined)
-        attrs[p.attributeName] = mapped;
-      else if (p.value)
-        attrs[p.attributeName] = p.value;
+        attrs[p.value.attributeName] = mapped;
+      else if (p.value.value)
+        attrs[p.value.attributeName] = p.value.value;
     });
 
     return attrs;
   }
 
-  getCss() {
-    let customCss = '';
-    this.customCss.forEach(c => {
-      customCss += getCss(c);
+  get cssArray() {
+    const result: string[] = [];
+
+    if (this.baseCssClasses)
+      result.push(this.baseCssClasses);
+    result.push(...getCss(this.layouts));
+    result.push(...getCss(this.typographies));
+    result.push(...getCss(this.backgroundColors));
+    result.push(...getCss(this.borders));
+
+    this.customCss.tuples.forEach(c => {
+      result.push(...getCss(c.value));
     });
-    return (this.baseCssClasses ? `${this.baseCssClasses} ` : '') + `${getCss(this.layouts)}${getCss(this.typographies)}${getCss(this.backgroundColors)}${getCss(this.borders)}${customCss} `;
+
+    return result;
   }
 
   addCustomProperty<TValue>(
@@ -81,10 +91,10 @@ export class PropertiesModel {
       value,
       attributeMap
     };
-    this.customProps.set(name, customValue);
+    this.customProps.add(name, customValue);
   }
 
-  addCustomCss(name: string, value: Map<ResponsiveSizes, ICssModel>) {
-    this.customCss.set(name, value);
+  addCustomCss(name: string, value: Dictionary<ResponsiveSizes, ICssModel>) {
+    this.customCss.add(name, value);
   }
 }

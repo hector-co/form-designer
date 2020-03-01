@@ -34,16 +34,48 @@ function propToHtmlString(name: string, value: string) {
 
 function toHtmlAttributes(properties: PropertiesModel) {
   let customAttrValues = '';
-  properties.customProps.forEach(p => {
-    const mapped = p.attributeMap(p.value);
+  properties.customProps.tuples.forEach(p => {
+    const mapped = p.value.attributeMap(p.value);
     if (mapped !== undefined)
-      customAttrValues += propToHtmlString(p.attributeName, mapped);
+      customAttrValues += propToHtmlString(p.value.attributeName, mapped);
     else if (p.value)
-      customAttrValues += propToHtmlString(p.attributeName, p.value);
+      customAttrValues += propToHtmlString(p.value.attributeName, p.value.value);
   });
 
   return propToHtmlString('id', properties.id) +
     propToHtmlString('name', properties.name) +
-    propToHtmlString('class', properties.getCss()) +
+    propToHtmlString('class', properties.cssArray.join(' ')) +
     customAttrValues;
+}
+
+export class Dictionary<TKey, TValue> {
+  tuples: { key: TKey, value: TValue }[];
+
+  constructor() {
+    this.tuples = [];
+  }
+
+  add(key: TKey, value: TValue) {
+    if (this.has(key))
+      throw new Error(`Duplicated key '${key}'`);
+    this.tuples.push({ key, value });
+  }
+
+  set(key: TKey, value: TValue) {
+    const tuple = this.tuples.find(m => m.key === key);
+    if (!tuple)
+      throw new Error(`Key not found '${key}'`);
+    tuple.value = value;
+  }
+
+  has(key: TKey): boolean {
+    return !!this.tuples.find(m => m.key === key);
+  }
+
+  get(key: TKey): TValue {
+    const tuple = this.tuples.find(m => m.key === key);
+    if (!tuple)
+      throw new Error(`Key not found '${key}'`);
+    return tuple.value;
+  }
 }

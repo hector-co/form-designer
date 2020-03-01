@@ -4,7 +4,8 @@ import {
   ResponsiveSizes,
   ContentModel,
   ComponentModel,
-  mapWithResponsiveSizes
+  mapWithResponsiveSizes,
+  Dictionary
 } from '@/models';
 
 Vue.use(Vuex);
@@ -12,7 +13,7 @@ Vue.use(Vuex);
 interface IDesignerState {
   root: ComponentModel;
   selected: ComponentModel | null;
-  counter: Map<string, number>;
+  counter: Dictionary<string, number>;
 }
 
 const container = new ComponentModel(null, 'Container', 'div');
@@ -24,7 +25,7 @@ const store: StoreOptions<IDesignerState> = {
   state: {
     root: container,
     selected: null,
-    counter: new Map<string, number>()
+    counter: new Dictionary<string, number>()
   },
   mutations: {
     select(state, component) {
@@ -110,7 +111,7 @@ const store: StoreOptions<IDesignerState> = {
       check.properties.layouts.get(ResponsiveSizes.All)!.marginTop = '4';
       check.properties.layouts.get(ResponsiveSizes.All)!.marginBottom = '3';
 
-      const span = addComponent(label, 'Span', state.counter);
+      addComponent(label, 'Span', state.counter);
     },
     addButton(state) {
       if (!state.selected || !(state.selected instanceof ComponentModel)) return;
@@ -175,9 +176,9 @@ const store: StoreOptions<IDesignerState> = {
 };
 
 function addComponent(
-  parent: ComponentModel, typeName: string, counter: Map<string, number>,
+  parent: ComponentModel, typeName: string, counter: Dictionary<string, number>,
   tagName: string = '', autoCloseTag: boolean = false): ComponentModel {
-  if (!counter.has(typeName)) counter.set(typeName, 0);
+  if (!counter.has(typeName)) counter.add(typeName, 0);
   const counterValue = counter.get(typeName)! + 1;
 
   const component = new ComponentModel(parent, typeName, tagName, autoCloseTag);
@@ -189,7 +190,7 @@ function addComponent(
     case 'grid':
       component.tagName = 'div';
       component.properties.baseCssClasses = 'flex';
-      component.properties.addCustomCss('contents', mapWithResponsiveSizes(() => new ContentModel()));
+      component.properties.addCustomCss('contents', mapWithResponsiveSizes((prefix) => new ContentModel(prefix)));
       component.role = 'Grid';
       break;
     case 'column':
