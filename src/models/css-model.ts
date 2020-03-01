@@ -1,10 +1,3 @@
-// export enum ResponsiveSizes {
-//   All = '',
-//   Small = 'sm',
-//   Medium = 'md',
-//   Large = 'lg'
-// }
-
 export enum ResponsiveSizes {
   All,
   Small,

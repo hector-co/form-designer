@@ -11,9 +11,9 @@ function getCss(cssMap: Dictionary<ResponsiveSizes, ICssModel>): string[] {
 export function mapWithResponsiveSizes<T>(factory: (prefix: string) => T): Dictionary<ResponsiveSizes, T> {
   const dict = new Dictionary<ResponsiveSizes, T>();
   dict.add(ResponsiveSizes.All, factory(''));
-  dict.add(ResponsiveSizes.Small, factory('sm'));
-  dict.add(ResponsiveSizes.Medium, factory('md'));
-  dict.add(ResponsiveSizes.Large, factory('lg'));
+  dict.add(ResponsiveSizes.Small, factory('sm:'));
+  dict.add(ResponsiveSizes.Medium, factory('md:'));
+  dict.add(ResponsiveSizes.Large, factory('lg:'));
 
   return dict;
 }
