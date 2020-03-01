@@ -1,98 +1,100 @@
 <template>
   <div id="app">
-    <div class="flex">
-      <div class="left-panel">
-        <button
-          @click="addGrid"
-          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >Grid</button>
-        <button
-          @click="addColumn"
-          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >Column</button>
-        <button
-          @click="addLabel"
-          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >Label</button>
-        <button
-          @click="addInput"
-          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >Input</button>
-        <button
-          @click="addTextarea"
-          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >Textarea</button>
-        <button
-          @click="addSelect"
-          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >Select</button>
-        <button
-          @click="addOption"
-          class="bg-orange-500 hover:bg-orange-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >Option</button>
-        <button
-          @click="addSpan"
-          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >Span</button>
-        <button
+    <div class="flex flex-wrap lg:flex-no-wrap">
+      <div class="left-panel flex flex-wrap">
+        <div class="w-full">
+          <button
+            @click="addGrid"
+            class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+          >grid</button>
+          <button
+            @click="addColumn"
+            class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+          >column</button>
+          <button
+            @click="addLabel"
+            class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+          >label</button>
+          <button
+            @click="addInput"
+            class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+          >input</button>
+          <button
+            @click="addTextarea"
+            class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+          >textarea</button>
+          <button
+            @click="addSelect"
+            class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+          >select</button>
+          <button
+            @click="addOption"
+            class="bg-orange-500 hover:bg-orange-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+          >option</button>
+          <button
+            @click="addSpan"
+            class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+          >span</button>
+          <!-- <button
           @click="addInputWithLabel"
           class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >Input+Label</button>
-        <button
-          @click="addCheck"
-          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >Check</button>
-        <button
+          >input+label</button>-->
+          <button
+            @click="addCheck"
+            class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+          >check</button>
+          <!-- <button
           @click="addCheckWithLabel"
           class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >Check+Label</button>
-        <button
-          @click="addButton"
-          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >Button</button>
-        <button
-          @click="addTable"
-          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >Table</button>
-        <button
-          @click="addTableRow"
-          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >Tr</button>
-        <button
-          @click="addHeaderCell"
-          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >Th</button>
-        <button
-          @click="addDataCell"
-          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >Td</button>
-        <button
-          @click="moveUp"
-          class="bg-green-500 hover:bg-green-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >Down</button>
-        <button
-          @click="moveDown"
-          class="bg-green-500 hover:bg-green-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >Up</button>
-        <button
-          @click="deleteComponent"
-          class="bg-red-500 hover:bg-red-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >Del</button>
-        <button
-          @click="copyHtmlCode"
-          class="bg-green-500 hover:bg-green-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >CopyHtml</button>
-
-        <div class="tree-container mb-2 border overflow-y-auto">
+          >Check+Label</button>-->
+          <button
+            @click="addButton"
+            class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+          >button</button>
+          <button
+            @click="addTable"
+            class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+          >table</button>
+          <button
+            @click="addTableRow"
+            class="bg-orange-500 hover:bg-orange-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+          >tr</button>
+          <button
+            @click="addHeaderCell"
+            class="bg-orange-500 hover:bg-orange-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+          >th</button>
+          <button
+            @click="addDataCell"
+            class="bg-orange-500 hover:bg-orange-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+          >td</button>
+          <button
+            @click="moveUp"
+            class="bg-orange-500 hover:bg-orange-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+          >down</button>
+          <button
+            @click="moveDown"
+            class="bg-green-500 hover:bg-green-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+          >up</button>
+          <button
+            @click="deleteComponent"
+            class="bg-red-500 hover:bg-red-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+          >del</button>
+          <button
+            @click="copyHtmlCode"
+            class="bg-green-500 hover:bg-green-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+          >copyHtml</button>
+        </div>
+        
+        <div class="tree-container mb-2 border w-full md:w-1/2 lg:w-full overflow-y-auto">
           <TreeView :model="root"></TreeView>
         </div>
 
-        <div ref="propsContainer" class="properties-container overflow-y-auto">
+        <div ref="propsContainer" class="properties-container w-full md:w-1/2 lg:w-full overflow-y-auto">
           <PropertiesView :model="selected"></PropertiesView>
         </div>
       </div>
       <div class="w-full">
-        <div ref="compsContainer" class="mx-1 my-1 px-1 py-1 border overflow-y-auto">
+        <div ref="compsContainer" class="mx-1 my-1 px-1 py-1 md:mt-2 border overflow-y-auto">
           <DefaultComponent :model="root"></DefaultComponent>
         </div>
       </div>
@@ -228,7 +230,7 @@ export default class App extends Vue {
     const maxHeight = document.documentElement.clientHeight;
     (this.$refs.propsContainer as HTMLElement).style.maxHeight = `${maxHeight -
       256 -
-      190}px`;
+      140}px`;
     (this.$refs.compsContainer as HTMLElement).style.maxHeight = `${maxHeight -
       20}px`;
   }
@@ -249,7 +251,9 @@ export default class App extends Vue {
 }
 
 .left-panel {
-  width: 24rem;
-  min-width: 24rem;
+  @media (min-width: 1024px) {
+    width: 24rem;
+    min-width: 24rem;
+  }
 }
 </style>

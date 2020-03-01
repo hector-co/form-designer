@@ -15,6 +15,6 @@ export class BaseCustomComponent extends Vue {
   }
 
   get layoutCss(): string[] {
-    return this.model.properties.cssArray;
+    return [this.isSelected ? 'selected' : '', ...this.model.properties.cssArray];
   }
 }
