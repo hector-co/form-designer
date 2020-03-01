@@ -1,12 +1,7 @@
 import { Vue, Prop, Component } from 'vue-property-decorator';
-import { mapState } from 'vuex';
 import { ComponentModel } from '@/models';
 
-@Component({
-  computed: {
-    ...mapState(['root'])
-  }
-})
+@Component
 export class BaseCustomComponent extends Vue {
   @Prop()
   model!: ComponentModel;
@@ -20,6 +15,6 @@ export class BaseCustomComponent extends Vue {
   }
 
   get layoutCss(): string {
-    return `${this.isSelected ? 'selected' : ''} ` + (this.model as any).properties.getCss();
+    return `${this.isSelected ? 'selected' : ''} ` + this.model.properties.getCss();
   }
 }

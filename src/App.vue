@@ -93,7 +93,7 @@
       </div>
       <div class="w-full">
         <div ref="compsContainer" class="mx-1 my-1 px-1 py-1 border overflow-y-auto">
-          <BaseComponent :model="root"></BaseComponent>
+          <DefaultComponent :model="root"></DefaultComponent>
         </div>
       </div>
     </div>
@@ -104,9 +104,9 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState } from 'vuex';
 import { ComponentModel, toHtml } from './models';
-import BaseComponent from '@/components/BaseComponent.vue';
 import TreeView from '@/components/TreeView.vue';
 import PropertiesView from '@/components/properties/PropertiesView.vue';
+import DefaultComponent from '@/components/custom/DefaultComponent.vue';
 import CheckComponent from '@/components/custom/CheckComponent.vue';
 import InputComponent from '@/components/custom/InputComponent.vue';
 import SelectComponent from '@/components/custom/SelectComponent.vue';
@@ -114,11 +114,11 @@ import TextareaComponent from '@/components/custom/TextareaComponent.vue';
 
 Vue.component('TreeView', TreeView);
 Vue.component('PropertiesView', PropertiesView);
+Vue.component('DefaultComponent', DefaultComponent);
 Vue.component('CheckComponent', CheckComponent);
 Vue.component('InputComponent', InputComponent);
 Vue.component('SelectComponent', SelectComponent);
 Vue.component('TextareaComponent', TextareaComponent);
-Vue.component('BaseComponent', BaseComponent);
 
 @Component({
   computed: {
