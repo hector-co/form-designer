@@ -68,13 +68,13 @@
             class="bg-orange-500 hover:bg-orange-700 text-white py-2 px-2 mx-1 my-1 text-xs"
           >td</button>
           <button
-            @click="moveUp"
-            class="bg-orange-500 hover:bg-orange-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-          >down</button>
-          <button
             @click="moveDown"
             class="bg-green-500 hover:bg-green-700 text-white py-2 px-2 mx-1 my-1 text-xs"
           >up</button>
+          <button
+            @click="moveUp"
+            class="bg-green-500 hover:bg-green-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+          >down</button>
           <button
             @click="deleteComponent"
             class="bg-red-500 hover:bg-red-700 text-white py-2 px-2 mx-1 my-1 text-xs"
@@ -84,12 +84,15 @@
             class="bg-green-500 hover:bg-green-700 text-white py-2 px-2 mx-1 my-1 text-xs"
           >copyHtml</button>
         </div>
-        
+
         <div class="tree-container mb-2 border w-full md:w-1/2 lg:w-full overflow-y-auto">
           <TreeView :model="root"></TreeView>
         </div>
 
-        <div ref="propsContainer" class="properties-container w-full md:w-1/2 lg:w-full overflow-y-auto">
+        <div
+          ref="propsContainer"
+          class="properties-container w-full md:w-1/2 lg:w-full overflow-y-auto"
+        >
           <PropertiesView :model="selected"></PropertiesView>
         </div>
       </div>
