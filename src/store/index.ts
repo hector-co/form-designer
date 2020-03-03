@@ -224,6 +224,7 @@ function addComponent(
       break;
     case 'textarea':
       component.properties.baseCssClasses = 'block';
+      component.component = 'TextareaComponent';
       component.properties.layouts.get(ResponsiveSizes.All)!.paddingTop = '2';
       component.properties.layouts.get(ResponsiveSizes.All)!.paddingBottom = '2';
       component.properties.layouts.get(ResponsiveSizes.All)!.paddingLeft = '2';
