@@ -122,7 +122,11 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState } from 'vuex';
-import { ComponentModel, toHtml } from '@/models';
+import {
+  ComponentModel,
+  toHtml,
+  toJson
+} from '@/models';
 import TreeView from '@/components/TreeView.vue';
 import PropertiesView from '@/components/properties/PropertiesView.vue';
 import DefaultComponent from '@/components/custom/DefaultComponent.vue';
@@ -146,6 +150,7 @@ Vue.component('TextareaComponent', TextareaComponent);
 })
 export default class Designer extends Vue {
   root!: ComponentModel;
+  selected!: ComponentModel;
   htmlCode: string;
 
   constructor() {
@@ -240,6 +245,7 @@ export default class Designer extends Vue {
 
   preview() {
     window.localStorage.setItem('form-preview', toHtml(this.root));
+    window.localStorage.setItem('design-state', toJson(this.root));
     const routeData = this.$router.resolve({ name: 'preview' });
     window.open(routeData.href, '_blank');
   }
@@ -252,10 +258,8 @@ export default class Designer extends Vue {
   adjustSizes() {
     const screenwidth = document.documentElement.clientWidth;
     if (screenwidth < 1024) {
-      (this.$refs
-        .propsContainer as HTMLElement).style.maxHeight = '16rem';
-      (this.$refs
-        .compsContainer as HTMLElement).style.maxHeight = 'auto';
+      (this.$refs.propsContainer as HTMLElement).style.maxHeight = '16rem';
+      (this.$refs.compsContainer as HTMLElement).style.maxHeight = 'auto';
     } else {
       const maxHeight = document.documentElement.clientHeight;
       (this.$refs

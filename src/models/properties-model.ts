@@ -47,13 +47,15 @@ export class PropertiesModel {
     this.customCss = new Dictionary<string, Dictionary<ResponsiveSizes, CssModel>>();
   }
 
-  getAttributes() {
+  getAttributes(includeText: boolean = false) {
     const attrs: any = {};
 
     if (this.id)
       attrs['id'] = this.id;
     if (this.id)
       attrs['name'] = this.name;
+    if (this.text && includeText)
+      attrs['text'] = this.text;
 
     this.customProps.tuples.forEach(p => {
       const mapped = p.value.attributeMap(p.value.value);
@@ -64,6 +66,29 @@ export class PropertiesModel {
     });
 
     return attrs;
+  }
+
+  getCss() {
+    const css: any = {};
+    PropertiesModel.addCssToObject(css, 'layouts', this.layouts);
+    PropertiesModel.addCssToObject(css, 'typographies', this.typographies);
+    PropertiesModel.addCssToObject(css, 'backgroundColors', this.backgroundColors);
+    PropertiesModel.addCssToObject(css, 'borders', this.borders);
+
+    this.customCss.tuples.forEach(c => {
+      PropertiesModel.addCssToObject(css, c.key, c.value);
+    });
+
+    return css;
+  }
+
+  private static addCssToObject(css: any, key: string, cssDictionary: Dictionary<ResponsiveSizes, CssModel>) {
+    css[key] = {
+      all: cssDictionary.get(ResponsiveSizes.All),
+      small: cssDictionary.get(ResponsiveSizes.Small),
+      medium: cssDictionary.get(ResponsiveSizes.Medium),
+      large: cssDictionary.get(ResponsiveSizes.Large)
+    };
   }
 
   get cssArray() {

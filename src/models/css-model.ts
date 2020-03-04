@@ -5,13 +5,26 @@ export enum ResponsiveSizes {
   Large
 }
 
-export interface ICssModel {
-  prefix: string;
-  readonly cssArray: string[];
+export abstract class CssModel {
+  abstract responsiveSize: ResponsiveSizes;
+  abstract get cssArray(): string[];
+
+  get prefix(): string {
+    switch (this.responsiveSize) {
+      case ResponsiveSizes.All:
+        return '';
+      case ResponsiveSizes.Small:
+        return 'sm:';
+      case ResponsiveSizes.Medium:
+        return 'md:';
+      case ResponsiveSizes.Large:
+        return 'lg:';
+    }
+  }
 }
 
-export class LayoutModel implements ICssModel {
-  prefix: string;
+export class LayoutModel extends CssModel {
+  responsiveSize: ResponsiveSizes;
   width: string;
   height: string;
   maxWidth: string;
@@ -25,8 +38,9 @@ export class LayoutModel implements ICssModel {
   marginBottom: string;
   marginLeft: string;
 
-  constructor(prefix: string) {
-    this.prefix = prefix;
+  constructor(responsiveSize: ResponsiveSizes) {
+    super();
+    this.responsiveSize = responsiveSize;
     this.width = '';
     this.height = '';
     this.maxWidth = '';
@@ -56,44 +70,51 @@ export class LayoutModel implements ICssModel {
       result.push(`${this.prefix}max-h-${this.maxHeight}`);
     const padding = LayoutModel
       .getCssWithPosition(`${this.prefix}p`, this.paddingTop, this.paddingRight, this.paddingBottom, this.paddingLeft);
-    if (padding)
-      result.push(padding);
+    result.push(...padding);
     const margin = LayoutModel
       .getCssWithPosition(`${this.prefix}m`, this.marginTop, this.marginRight, this.marginBottom, this.marginLeft);
-    if (margin)
-      result.push(margin);
+    result.push(...margin);
 
     return result;
   }
 
   static getCssWithPosition(
-    prefix: string, top: string = '', right: string = '', bottom: string = '', left: string = '') {
+    prefix: string, top: string = '', right: string = '', bottom: string = '', left: string = ''): string[] {
     if (top && top === right && top === bottom && top === left)
-      return `${prefix}-${top} `;
+      return [`${prefix}-${top}`];
 
-    let result = '';
+    const result: string[] = [];
     if (top && top === bottom)
-      result += `${prefix}y-${top} `;
-    else
-      result += (top ? `${prefix}t-${top} ` : '') + (bottom ? `${prefix}b-${bottom} ` : '');
+      result.push(`${prefix}y-${top}`);
+    else {
+      if (top)
+        result.push(`${prefix}t-${top}`);
+      if (bottom)
+        result.push(`${prefix}b-${bottom}`);
+    }
 
     if (right && right === left)
-      result += `${prefix}x-${right} `;
-    else
-      result += (right ? `${prefix}r-${right} ` : '') + (left ? `${prefix}l-${left} ` : '');
+      result.push(`${prefix}x-${right}`);
+    else {
+      if (right)
+        result.push(`${prefix}r-${right}`);
+      if (left)
+        result.push(`${prefix}l-${left}`);
+    }
 
     return result;
   }
 }
 
-export class ContentModel implements ICssModel {
-  prefix: string;
+export class ContentModel extends CssModel {
+  responsiveSize: ResponsiveSizes;
   flexWrap: string;
   justify: string;
   alignItems: string;
 
-  constructor(prefix: string) {
-    this.prefix = prefix;
+  constructor(responsiveSize: ResponsiveSizes) {
+    super();
+    this.responsiveSize = responsiveSize;
     this.flexWrap = '';
     this.justify = '';
     this.alignItems = '';
@@ -112,8 +133,8 @@ export class ContentModel implements ICssModel {
   }
 }
 
-export class TypographyModel implements ICssModel {
-  prefix: string;
+export class TypographyModel extends CssModel {
+  responsiveSize: ResponsiveSizes;
   textAlign: string;
   verticalAlign: string;
   textSize: string;
@@ -121,13 +142,14 @@ export class TypographyModel implements ICssModel {
   textColor: ColorModel;
   fontStyle: string;
 
-  constructor(prefix: string) {
-    this.prefix = prefix;
+  constructor(responsiveSize: ResponsiveSizes) {
+    super();
+    this.responsiveSize = responsiveSize;
     this.textAlign = '';
     this.verticalAlign = '';
     this.textSize = '';
     this.fontWeight = '';
-    this.textColor = new ColorModel(prefix, 'text');
+    this.textColor = new ColorModel(responsiveSize, 'text');
     this.fontStyle = '';
   }
 
@@ -150,14 +172,15 @@ export class TypographyModel implements ICssModel {
   }
 }
 
-export class ColorModel implements ICssModel {
-  prefix: string;
+export class ColorModel extends CssModel {
+  responsiveSize: ResponsiveSizes;
   type: string;
   color: string;
   hover: string;
 
-  constructor(prefix: string, type: string) {
-    this.prefix = prefix;
+  constructor(responsiveSize: ResponsiveSizes, type: string) {
+    super();
+    this.responsiveSize = responsiveSize;
     this.type = type;
     this.color = '';
     this.hover = '';
@@ -175,17 +198,18 @@ export class ColorModel implements ICssModel {
   }
 }
 
-export class BorderModel implements ICssModel {
-  prefix: string;
+export class BorderModel extends CssModel {
+  responsiveSize: ResponsiveSizes;
   style: string;
   width: string;
   color: ColorModel;
 
-  constructor(prefix: string) {
-    this.prefix = prefix;
+  constructor(responsiveSize: ResponsiveSizes) {
+    super();
+    this.responsiveSize = responsiveSize;
     this.style = '';
     this.width = '';
-    this.color = new ColorModel(prefix, 'border');
+    this.color = new ColorModel(responsiveSize, 'border');
   }
 
   get cssArray(): string[] {

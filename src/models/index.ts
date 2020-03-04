@@ -4,6 +4,7 @@ import { ComponentModel } from './component-model';
 export * from './component-model';
 export * from './properties-model';
 export * from './css-model';
+export * from './dictionary';
 
 function getSpaces(count: number): string {
   return ' '.repeat(count * 2);
@@ -11,7 +12,7 @@ function getSpaces(count: number): string {
 
 export function toHtml(
   component: ComponentModel, level: number = 0) {
-  let html = `${getSpaces(level)}<${component.tagName} ${toHtmlAttributes(component.properties).trim()}`;
+  let html = `${getSpaces(level)}<${component.tagName} ${propsToHtmlAttributes(component.properties).trim()}`;
   if (component.autoCloseTag) return `${html} />`;
   else html += '>\n';
 
@@ -32,7 +33,7 @@ function propToHtmlString(name: string, value: string) {
   return `${name}="${value.trim()}" `;
 }
 
-function toHtmlAttributes(properties: PropertiesModel) {
+function propsToHtmlAttributes(properties: PropertiesModel) {
   let customAttrValues = '';
   properties.customProps.tuples.forEach(p => {
     const mapped = p.value.attributeMap(p.value.value);
@@ -48,34 +49,48 @@ function toHtmlAttributes(properties: PropertiesModel) {
     customAttrValues;
 }
 
-export class Dictionary<TKey, TValue> {
-  tuples: { key: TKey, value: TValue }[];
+export function toJson(component: ComponentModel): string {
+  const newComp = jsonPrepare(component);
+  return JSON.stringify(newComp);
+}
 
-  constructor() {
-    this.tuples = [];
-  }
+function removeEmptyValues(obj: any, fieldsToIncludeAlways: string[] = [], fieldsToRemoveAlways: string[] = []): any {
+  const newObj: any = {};
+  Object.keys(obj).forEach(k => {
+    if (fieldsToIncludeAlways.indexOf(k) >= 0) {
+      newObj[k] = obj[k];
+      return;
+    }
 
-  add(key: TKey, value: TValue) {
-    if (this.has(key))
-      throw new Error(`Duplicated key '${key}'`);
-    this.tuples.push({ key, value });
-  }
+    if (fieldsToRemoveAlways.indexOf(k) >= 0)
+      return;
 
-  set(key: TKey, value: TValue) {
-    const tuple = this.tuples.find(m => m.key === key);
-    if (!tuple)
-      throw new Error(`Key not found '${key}'`);
-    tuple.value = value;
-  }
+    if (obj[k] === null || obj[k] === undefined || obj[k] === '' || obj[k] === false)
+      return;
 
-  has(key: TKey): boolean {
-    return !!this.tuples.find(m => m.key === key);
-  }
+    if (obj[k] instanceof Array && !obj[k].length)
+      return;
 
-  get(key: TKey): TValue {
-    const tuple = this.tuples.find(m => m.key === key);
-    if (!tuple)
-      throw new Error(`Key not found '${key}'`);
-    return tuple.value;
-  }
+    if (obj[k] instanceof Object) {
+      const child = removeEmptyValues(obj[k], fieldsToIncludeAlways, fieldsToRemoveAlways);
+      if (Object.keys(child).length > 0)
+        newObj[k] = child;
+      return;
+    }
+
+    newObj[k] = obj[k];
+  });
+  return newObj;
+}
+
+function jsonPrepare(component: ComponentModel): string {
+  const newComp = removeEmptyValues(component, [], ['parent', 'children', 'properties']);
+  newComp.children = [];
+  component.children.forEach(c => {
+    newComp.children.push(jsonPrepare(c));
+  });
+  newComp.props = removeEmptyValues(component.properties.getAttributes());
+  newComp.css = removeEmptyValues(component.properties.getCss(), [], ['responsiveSize', 'type', 'cssArray']);
+
+  return newComp;
 }
