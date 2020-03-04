@@ -96,6 +96,10 @@
           @click="preview"
           class="bg-green-500 hover:bg-green-700 text-white py-2 px-2 mx-1 my-1 text-xs"
         >preview</button>
+        <button
+          @click="loadState"
+          class="bg-green-500 hover:bg-green-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+        >loadState</button>
       </div>
     </div>
     <div class="flex flex-wrap lg:flex-no-wrap">
@@ -122,11 +126,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState } from 'vuex';
-import {
-  ComponentModel,
-  toHtml,
-  toJson
-} from '@/models';
+import { ComponentModel } from '@/models';
 import TreeView from '@/components/TreeView.vue';
 import PropertiesView from '@/components/properties/PropertiesView.vue';
 import DefaultComponent from '@/components/custom/DefaultComponent.vue';
@@ -235,8 +235,9 @@ export default class Designer extends Vue {
   }
 
   copyHtmlCode() {
+    this.$store.commit('saveState');
     const el = document.createElement('textarea');
-    el.value = toHtml(this.root);
+    el.value = window.localStorage.getItem('form-preview')!;
     document.body.appendChild(el);
     el.select();
     document.execCommand('copy');
@@ -244,10 +245,13 @@ export default class Designer extends Vue {
   }
 
   preview() {
-    window.localStorage.setItem('form-preview', toHtml(this.root));
-    window.localStorage.setItem('design-state', toJson(this.root));
+    this.$store.commit('saveState');
     const routeData = this.$router.resolve({ name: 'preview' });
     window.open(routeData.href, '_blank');
+  }
+
+  loadState() {
+    this.$store.commit('loadState');
   }
 
   mounted() {
