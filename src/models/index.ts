@@ -35,7 +35,7 @@ function propToHtmlString(name: string, value: string) {
 function toHtmlAttributes(properties: PropertiesModel) {
   let customAttrValues = '';
   properties.customProps.tuples.forEach(p => {
-    const mapped = p.value.attributeMap(p.value);
+    const mapped = p.value.attributeMap(p.value.value);
     if (mapped !== undefined)
       customAttrValues += propToHtmlString(p.value.attributeName, mapped);
     else if (p.value)

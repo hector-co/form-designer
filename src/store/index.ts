@@ -18,7 +18,7 @@ interface IDesignerState {
 
 const container = new ComponentModel(null, 'Container', 'div');
 container.role = 'Container';
-container.properties.baseCssClasses = 'container mx-auto';
+container.properties.baseCssClasses = 'mx-auto';
 
 const store: StoreOptions<IDesignerState> = {
   // strict: true,
@@ -191,10 +191,14 @@ function addComponent(
       component.tagName = 'div';
       component.properties.baseCssClasses = 'flex';
       component.properties.addCustomCss('contents', mapWithResponsiveSizes((prefix) => new ContentModel(prefix)));
+      component.properties.layouts.get(ResponsiveSizes.All)!.width = 'full';
       component.role = 'Grid';
       break;
     case 'column':
       if (!tagName) component.tagName = 'div';
+      component.properties.baseCssClasses = 'flex';
+      component.properties.addCustomCss('contents', mapWithResponsiveSizes((prefix) => new ContentModel(prefix)));
+      (component.properties.customCss.get('contents').get(ResponsiveSizes.All) as ContentModel).flexWrap = 'wrap';
       component.properties.layouts.get(ResponsiveSizes.All)!.paddingTop = '1';
       component.properties.layouts.get(ResponsiveSizes.All)!.paddingRight = '1';
       component.properties.layouts.get(ResponsiveSizes.All)!.paddingBottom = '1';

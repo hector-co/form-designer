@@ -63,7 +63,7 @@ export default class ContentProperties extends Vue {
   model!: ComponentModel;
 
   get contentProperties() {
-    if (!this.model || this.model.typeName !== 'Grid') return null;
+    if (!this.model || (this.model.typeName !== 'Grid' && this.model.typeName !== 'Column')) return null;
     const properties: PropertiesModel = this.model.properties;
     return properties.customCss.get('contents')!.get(this.size);
   }

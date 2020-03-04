@@ -1,6 +1,6 @@
-import { ResponsiveSizes, LayoutModel, TypographyModel, ICssModel, ColorModel, BorderModel, Dictionary } from '.';
+import { ResponsiveSizes, LayoutModel, TypographyModel, CssModel, ColorModel, BorderModel, Dictionary } from '.';
 
-function getCss(cssMap: Dictionary<ResponsiveSizes, ICssModel>): string[] {
+function getCss(cssMap: Dictionary<ResponsiveSizes, CssModel>): string[] {
   return [
     ...cssMap.get(ResponsiveSizes.All)!.cssArray,
     ...cssMap.get(ResponsiveSizes.Small)!.cssArray,
@@ -8,12 +8,12 @@ function getCss(cssMap: Dictionary<ResponsiveSizes, ICssModel>): string[] {
     ...cssMap.get(ResponsiveSizes.Large)!.cssArray];
 }
 
-export function mapWithResponsiveSizes<T>(factory: (prefix: string) => T): Dictionary<ResponsiveSizes, T> {
+export function mapWithResponsiveSizes<T>(factory: (prefix: ResponsiveSizes) => T): Dictionary<ResponsiveSizes, T> {
   const dict = new Dictionary<ResponsiveSizes, T>();
-  dict.add(ResponsiveSizes.All, factory(''));
-  dict.add(ResponsiveSizes.Small, factory('sm:'));
-  dict.add(ResponsiveSizes.Medium, factory('md:'));
-  dict.add(ResponsiveSizes.Large, factory('lg:'));
+  dict.add(ResponsiveSizes.All, factory(ResponsiveSizes.All));
+  dict.add(ResponsiveSizes.Small, factory(ResponsiveSizes.Small));
+  dict.add(ResponsiveSizes.Medium, factory(ResponsiveSizes.Medium));
+  dict.add(ResponsiveSizes.Large, factory(ResponsiveSizes.Large));
 
   return dict;
 }
@@ -29,7 +29,7 @@ export class PropertiesModel {
   borders: Dictionary<ResponsiveSizes, BorderModel>;
   customProps: Dictionary<string,
     { attributeName: string, value: any, attributeMap: (value: any) => string | undefined }>;
-  customCss: Dictionary<string, Dictionary<ResponsiveSizes, ICssModel>>;
+  customCss: Dictionary<string, Dictionary<ResponsiveSizes, CssModel>>;
 
   constructor(baseCssClass: string = '') {
     this.id = '';
@@ -44,7 +44,7 @@ export class PropertiesModel {
 
     this.customProps = new Dictionary<string,
       { attributeName: string, value: any, attributeMap: (value: any) => | undefined }>();
-    this.customCss = new Dictionary<string, Dictionary<ResponsiveSizes, ICssModel>>();
+    this.customCss = new Dictionary<string, Dictionary<ResponsiveSizes, CssModel>>();
   }
 
   getAttributes() {
@@ -94,7 +94,7 @@ export class PropertiesModel {
     this.customProps.add(name, customValue);
   }
 
-  addCustomCss(name: string, value: Dictionary<ResponsiveSizes, ICssModel>) {
+  addCustomCss(name: string, value: Dictionary<ResponsiveSizes, CssModel>) {
     this.customCss.add(name, value);
   }
 }
