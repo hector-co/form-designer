@@ -28,7 +28,7 @@ export class PropertiesModel {
   backgroundColors: Dictionary<ResponsiveSizes, ColorModel>;
   borders: Dictionary<ResponsiveSizes, BorderModel>;
   customProps: Dictionary<string,
-    { attributeName: string, value: any, attributeMap: (value: any) => string | undefined }>;
+    { attributeName: string, value: any, attributeMap: (value: any) => string | undefined, bindInDesigner: boolean }>;
   customCss: Dictionary<string, Dictionary<ResponsiveSizes, CssModel>>;
 
   constructor(baseCssClass: string = '') {
@@ -43,11 +43,11 @@ export class PropertiesModel {
     this.borders = mapWithResponsiveSizes((prefix) => new BorderModel(prefix));
 
     this.customProps = new Dictionary<string,
-      { attributeName: string, value: any, attributeMap: (value: any) => | undefined }>();
+      { attributeName: string, value: any, attributeMap: (value: any) => | undefined, bindInDesigner: boolean }>();
     this.customCss = new Dictionary<string, Dictionary<ResponsiveSizes, CssModel>>();
   }
 
-  getAttributes(includeText: boolean = false) {
+  getAttributes(includeText: boolean = false, includeNonBindedInDesigner: boolean = false) {
     const attrs: any = {};
 
     if (this.id)
@@ -57,7 +57,11 @@ export class PropertiesModel {
     if (this.text && includeText)
       attrs['text'] = this.text;
 
-    this.customProps.tuples.forEach(p => {
+    const tuples = includeNonBindedInDesigner
+      ? this.customProps.tuples
+      : this.customProps.tuples.filter(p => p.value.bindInDesigner);
+
+    tuples.forEach(p => {
       const mapped = p.value.attributeMap(p.value.value);
       if (mapped !== undefined)
         attrs[p.value.attributeName] = mapped;
@@ -110,11 +114,12 @@ export class PropertiesModel {
 
   addCustomProperty<TValue>(
     name: string, value: TValue, attributeName: string = '',
-    attributeMap: (value: TValue) => string | undefined = () => undefined) {
+    attributeMap: (value: TValue) => string | undefined = () => undefined, bindInDesigner: boolean = true) {
     const customValue = {
       attributeName: attributeName ? attributeName : name,
       value,
-      attributeMap
+      attributeMap,
+      bindInDesigner
     };
     this.customProps.add(name, customValue);
   }

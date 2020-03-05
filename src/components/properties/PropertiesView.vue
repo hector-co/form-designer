@@ -26,6 +26,7 @@
               <!-- <option value="file">File</option> -->
               <option value="email">Email</option>
               <option value="tel">Telephone</option>
+              <option value="number">Number</option>
               <option value="date">Date</option>
               <option value="time">Time</option>
             </select>

@@ -89,17 +89,25 @@
           class="bg-red-500 hover:bg-red-700 text-white py-2 px-2 mx-1 my-1 text-xs"
         >del</button>
         <button
-          @click="copyHtmlCode"
-          class="bg-green-500 hover:bg-green-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >copyHtml</button>
-        <button
-          @click="preview"
-          class="bg-green-500 hover:bg-green-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >preview</button>
+          @click="clearState"
+          class="bg-red-500 hover:bg-red-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+        >clear</button>
         <button
           @click="loadState"
-          class="bg-green-500 hover:bg-green-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+          class="bg-teal-500 hover:bg-teal-700 text-white py-2 px-2 mx-1 my-1 text-xs"
         >loadState</button>
+        <button
+          @click="saveState"
+          class="bg-teal-500 hover:bg-teal-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+        >saveState</button>
+        <button
+          @click="preview"
+          class="bg-teal-500 hover:bg-teal-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+        >preview</button>
+        <button
+          @click="copyHtmlCode"
+          class="bg-teal-500 hover:bg-teal-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+        >copyHtml</button>
       </div>
     </div>
     <div class="flex flex-wrap lg:flex-no-wrap">
@@ -234,8 +242,27 @@ export default class Designer extends Vue {
     this.$store.commit('delete');
   }
 
-  copyHtmlCode() {
+  clearState() {
+    this.$store.commit('clearState');
+  }
+
+  loadState() {
+    this.$store.commit('loadState');
+  }
+
+  saveState() {
     this.$store.commit('saveState');
+    this.$store.commit('savePreview');
+  }
+
+  preview() {
+    this.$store.commit('savePreview');
+    const routeData = this.$router.resolve({ name: 'preview' });
+    window.open(routeData.href, '_blank');
+  }
+
+  copyHtmlCode() {
+    this.$store.commit('savePreview');
     const el = document.createElement('textarea');
     el.value = window.localStorage.getItem('form-preview')!;
     document.body.appendChild(el);
@@ -244,17 +271,13 @@ export default class Designer extends Vue {
     document.body.removeChild(el);
   }
 
-  preview() {
-    this.$store.commit('saveState');
-    const routeData = this.$router.resolve({ name: 'preview' });
-    window.open(routeData.href, '_blank');
-  }
-
-  loadState() {
-    this.$store.commit('loadState');
-  }
-
   mounted() {
+    if (this.$route.query['s']) {
+      if (this.$route.query['s'] === 'example1')
+        this.$store.commit('loadExample1');
+      this.$router.replace('/');
+    } else this.$store.commit('loadState');
+
     window.onresize = this.adjustSizes;
     this.adjustSizes();
   }

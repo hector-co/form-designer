@@ -175,12 +175,21 @@ const store: StoreOptions<IDesignerState> = {
       parent!.children.splice(index + 1, 0, state.selected);
     },
     saveState(state) {
+      window.localStorage.setItem('designer-state', toJson(state.root));
+    },
+    savePreview(state) {
       window.localStorage.setItem('form-preview', toHtml(state.root));
-      window.localStorage.setItem('design-state', toJson(state.root));
     },
     loadState(state) {
-      const currentState = window.localStorage.getItem('design-state')!;
+      const currentState = window.localStorage.getItem('designer-state')!;
       loadState(state, JSON.parse(currentState));
+    },
+    clearState(state) {
+      clearState(state);
+    },
+    loadExample1(state) {
+      const example = require('@/examples/example1.json');
+      loadState(state, example);
     }
   }
 };
@@ -214,16 +223,16 @@ function addComponents(
 
       if (!addDefaultValues) break;
       (component.properties.customCss.get('contents').get(ResponsiveSizes.All) as ContentModel).flexWrap = 'wrap';
-      if (parent.parent && parent.parent.typeName === 'Column') break;
-      component.properties.layouts.get(ResponsiveSizes.All)!.paddingTop = '1';
-      component.properties.layouts.get(ResponsiveSizes.All)!.paddingRight = '1';
-      component.properties.layouts.get(ResponsiveSizes.All)!.paddingBottom = '1';
-      component.properties.layouts.get(ResponsiveSizes.All)!.paddingLeft = '1';
       component.properties.layouts.get(ResponsiveSizes.All)!.width = 'full';
+      component.properties.layouts.get(ResponsiveSizes.All)!.paddingTop = '1';
+      component.properties.layouts.get(ResponsiveSizes.All)!.paddingBottom = '1';
+      if (parent.parent && parent.parent.typeName === 'Column') break;
+      component.properties.layouts.get(ResponsiveSizes.All)!.paddingRight = '1';
+      component.properties.layouts.get(ResponsiveSizes.All)!.paddingLeft = '1';
       break;
     case 'label':
       component.properties.baseCssClasses = 'block';
-      component.properties.addCustomProperty('forId', '', 'for');
+      component.properties.addCustomProperty('forId', '', 'for', undefined, false);
 
       if (!addDefaultValues) break;
       component.properties.text = `${typeName}_${counterValue}`;
@@ -311,18 +320,18 @@ function toHtml(
   component: ComponentModel, level: number = 0) {
   let html = `${getSpaces(level)}<${component.tagName} ${propsToHtmlAttributes(component.properties).trim()}`;
   if (component.autoCloseTag) return `${html} />`;
-  else html += '>\n';
+  else html += '>';
 
   if ((!component.children || !component.children.length) && !component.properties.text)
-    return `${html}\n${getSpaces(level)}</${component.tagName}>`;
+    return `${html}</${component.tagName}>`;
 
   if (component.children && component.children.length)
-    html += component.children.map(c => toHtml(c, level + 1)).join('\n') + '\n';
+    html += '\n' + component.children.map(c => toHtml(c, level + 1)).join('\n');
 
   if (component.properties.text)
-    html += `${getSpaces(level + 1)}${component.properties.text}\n`;
+    html += '\n' + `${getSpaces(level + 1)}${component.properties.text}`;
 
-  return `${html}${getSpaces(level)}</${component.tagName}>`;
+  return `${html}\n${getSpaces(level)}</${component.tagName}>`;
 }
 
 function propToHtmlString(name: string, value: string) {
@@ -381,30 +390,31 @@ function removeEmptyValues(obj: any, fieldsToIncludeAlways: string[] = [], field
 }
 
 function jsonPrepare(component: ComponentModel): string {
-  const newComp = removeEmptyValues(component, [], ['parent', 'children', 'properties']);
+  const newComp = removeEmptyValues(component, [], ['id', 'parent', 'children', 'properties']);
   newComp.children = [];
   component.children.forEach(c => {
     newComp.children.push(jsonPrepare(c));
   });
-  newComp.props = removeEmptyValues(component.properties.getAttributes(true));
+  newComp.props = removeEmptyValues(component.properties.getAttributes(true, true));
   newComp.css = removeEmptyValues(component.properties.getCss(), [], ['responsiveSize', 'type', 'cssArray']);
 
   return newComp;
 }
 
-function loadState(state: IDesignerState, currentState: any) {
-  if (currentState == null) return;
-  state.selected = null;
-  state.counter = new Dictionary<string, number>();
-
+function clearState(state: IDesignerState) {
   const stateContainer = new ComponentModel(null, 'Container', 'div');
   stateContainer.role = 'Container';
   stateContainer.properties.baseCssClasses = 'mx-auto';
-  applyProperties(stateContainer, currentState.props);
-  applyCss(stateContainer, currentState.css);
 
   state.root = stateContainer;
+  state.selected = null;
+  state.counter = new Dictionary<string, number>();
+}
 
+function loadState(state: IDesignerState, currentState: any) {
+  clearState(state);
+  applyProperties(state.root, currentState.props);
+  applyCss(state.root, currentState.css);
   loadComponents(state.root, currentState.children, state.counter);
 }
 
@@ -477,6 +487,15 @@ function setCssValues(cssDictionary: Dictionary<ResponsiveSizes, CssModel>, valu
   if (!values) return;
   Object.keys(values).forEach(key => {
     const size = stringToResponsiveSize(key);
-    Object.assign(cssDictionary.get(size), values[key]);
+    copyValues(cssDictionary.get(size), values[key]);
+  });
+}
+
+function copyValues(target: any, source: any) {
+  Object.keys(source).forEach(key => {
+    if (target[key] instanceof Object)
+      copyValues(target[key], source[key]);
+    else
+      target[key] = source[key];
   });
 }

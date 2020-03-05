@@ -1,0 +1,948 @@
+{
+  "typeName": "Container",
+  "tagName": "div",
+  "component": "div",
+  "role": "Container",
+  "children": [
+    {
+      "typeName": "Grid",
+      "tagName": "div",
+      "component": "div",
+      "role": "Grid",
+      "children": [
+        {
+          "typeName": "Column",
+          "tagName": "div",
+          "component": "div",
+          "role": "Column",
+          "children": [
+            {
+              "typeName": "Label",
+              "tagName": "label",
+              "component": "label",
+              "children": [],
+              "props": {
+                "text": "Add card"
+              },
+              "css": {
+                "typographies": {
+                  "all": {
+                    "textSize": "lg",
+                    "fontWeight": "medium"
+                  }
+                }
+              }
+            }
+          ],
+          "props": {},
+          "css": {
+            "layouts": {
+              "all": {
+                "width": "full",
+                "paddingTop": "3",
+                "paddingRight": "3",
+                "paddingBottom": "3",
+                "paddingLeft": "3"
+              }
+            },
+            "backgroundColors": {
+              "all": {
+                "color": "gray-200"
+              }
+            },
+            "contents": {
+              "all": {
+                "flexWrap": "wrap"
+              }
+            }
+          }
+        },
+        {
+          "typeName": "Column",
+          "tagName": "div",
+          "component": "div",
+          "role": "Column",
+          "children": [
+            {
+              "typeName": "Grid",
+              "tagName": "div",
+              "component": "div",
+              "role": "Grid",
+              "children": [
+                {
+                  "typeName": "Column",
+                  "tagName": "div",
+                  "component": "div",
+                  "role": "Column",
+                  "children": [
+                    {
+                      "typeName": "Label",
+                      "tagName": "label",
+                      "component": "label",
+                      "children": [],
+                      "props": {
+                        "text": "Code",
+                        "for": "tx-code"
+                      },
+                      "css": {}
+                    },
+                    {
+                      "typeName": "Input",
+                      "tagName": "input",
+                      "component": "InputComponent",
+                      "autoCloseTag": true,
+                      "children": [],
+                      "props": {
+                        "id": "tx-code",
+                        "type": "text"
+                      },
+                      "css": {
+                        "layouts": {
+                          "all": {
+                            "width": "full",
+                            "paddingTop": "2",
+                            "paddingRight": "2",
+                            "paddingBottom": "2",
+                            "paddingLeft": "2"
+                          }
+                        },
+                        "borders": {
+                          "all": {
+                            "width": "1"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "props": {},
+                  "css": {
+                    "layouts": {
+                      "all": {
+                        "width": "full",
+                        "paddingTop": "1",
+                        "paddingBottom": "1"
+                      }
+                    },
+                    "contents": {
+                      "all": {
+                        "flexWrap": "wrap"
+                      }
+                    }
+                  }
+                },
+                {
+                  "typeName": "Column",
+                  "tagName": "div",
+                  "component": "div",
+                  "role": "Column",
+                  "children": [
+                    {
+                      "typeName": "Label",
+                      "tagName": "label",
+                      "component": "label",
+                      "children": [],
+                      "props": {
+                        "text": "Name",
+                        "for": "tx-name"
+                      },
+                      "css": {}
+                    },
+                    {
+                      "typeName": "Input",
+                      "tagName": "input",
+                      "component": "InputComponent",
+                      "autoCloseTag": true,
+                      "children": [],
+                      "props": {
+                        "id": "tx-name",
+                        "type": "text"
+                      },
+                      "css": {
+                        "layouts": {
+                          "all": {
+                            "width": "full",
+                            "paddingTop": "2",
+                            "paddingRight": "2",
+                            "paddingBottom": "2",
+                            "paddingLeft": "2"
+                          }
+                        },
+                        "borders": {
+                          "all": {
+                            "width": "1"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "props": {},
+                  "css": {
+                    "layouts": {
+                      "all": {
+                        "width": "full",
+                        "paddingTop": "1",
+                        "paddingBottom": "1"
+                      }
+                    },
+                    "contents": {
+                      "all": {
+                        "flexWrap": "wrap"
+                      }
+                    }
+                  }
+                },
+                {
+                  "typeName": "Column",
+                  "tagName": "div",
+                  "component": "div",
+                  "role": "Column",
+                  "children": [
+                    {
+                      "typeName": "Label",
+                      "tagName": "label",
+                      "component": "label",
+                      "children": [],
+                      "props": {
+                        "text": "Description",
+                        "for": "tx-description"
+                      },
+                      "css": {}
+                    },
+                    {
+                      "typeName": "Textarea",
+                      "tagName": "textarea",
+                      "component": "TextareaComponent",
+                      "children": [],
+                      "props": {
+                        "id": "tx-description"
+                      },
+                      "css": {
+                        "layouts": {
+                          "all": {
+                            "width": "full",
+                            "paddingTop": "2",
+                            "paddingRight": "2",
+                            "paddingBottom": "2",
+                            "paddingLeft": "2"
+                          }
+                        },
+                        "borders": {
+                          "all": {
+                            "width": "1"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "props": {},
+                  "css": {
+                    "layouts": {
+                      "all": {
+                        "width": "full",
+                        "paddingTop": "1",
+                        "paddingBottom": "1"
+                      }
+                    },
+                    "contents": {
+                      "all": {
+                        "flexWrap": "wrap"
+                      }
+                    }
+                  }
+                },
+                {
+                  "typeName": "Column",
+                  "tagName": "div",
+                  "component": "div",
+                  "role": "Column",
+                  "children": [
+                    {
+                      "typeName": "Grid",
+                      "tagName": "div",
+                      "component": "div",
+                      "role": "Grid",
+                      "children": [
+                        {
+                          "typeName": "Column",
+                          "tagName": "div",
+                          "component": "div",
+                          "role": "Column",
+                          "children": [
+                            {
+                              "typeName": "Label",
+                              "tagName": "label",
+                              "component": "label",
+                              "children": [],
+                              "props": {
+                                "text": "Color"
+                              },
+                              "css": {}
+                            }
+                          ],
+                          "props": {},
+                          "css": {
+                            "layouts": {
+                              "all": {
+                                "width": "full"
+                              }
+                            },
+                            "contents": {
+                              "all": {
+                                "flexWrap": "wrap"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "typeName": "Column",
+                          "tagName": "div",
+                          "component": "div",
+                          "role": "Column",
+                          "children": [
+                            {
+                              "typeName": "Button",
+                              "tagName": "button",
+                              "component": "button",
+                              "children": [],
+                              "props": {
+                                "text": "x"
+                              },
+                              "css": {
+                                "layouts": {
+                                  "all": {
+                                    "width": "16",
+                                    "height": "8"
+                                  }
+                                },
+                                "typographies": {
+                                  "all": {
+                                    "textColor": {
+                                      "color": "white"
+                                    }
+                                  }
+                                },
+                                "backgroundColors": {
+                                  "all": {
+                                    "color": "green-500",
+                                    "hover": "green-700"
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "typeName": "Button",
+                              "tagName": "button",
+                              "component": "button",
+                              "children": [],
+                              "props": {},
+                              "css": {
+                                "layouts": {
+                                  "all": {
+                                    "width": "16",
+                                    "height": "8",
+                                    "paddingTop": "2",
+                                    "paddingRight": "4",
+                                    "paddingBottom": "2",
+                                    "paddingLeft": "4"
+                                  }
+                                },
+                                "typographies": {
+                                  "all": {
+                                    "textColor": {
+                                      "color": "white"
+                                    }
+                                  }
+                                },
+                                "backgroundColors": {
+                                  "all": {
+                                    "color": "blue-500",
+                                    "hover": "blue-700"
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "typeName": "Button",
+                              "tagName": "button",
+                              "component": "button",
+                              "children": [],
+                              "props": {},
+                              "css": {
+                                "layouts": {
+                                  "all": {
+                                    "width": "16",
+                                    "height": "8",
+                                    "paddingTop": "2",
+                                    "paddingRight": "4",
+                                    "paddingBottom": "2",
+                                    "paddingLeft": "4"
+                                  }
+                                },
+                                "typographies": {
+                                  "all": {
+                                    "textColor": {
+                                      "color": "white"
+                                    }
+                                  }
+                                },
+                                "backgroundColors": {
+                                  "all": {
+                                    "color": "yellow-500",
+                                    "hover": "yellow-700"
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "typeName": "Button",
+                              "tagName": "button",
+                              "component": "button",
+                              "children": [],
+                              "props": {},
+                              "css": {
+                                "layouts": {
+                                  "all": {
+                                    "width": "16",
+                                    "height": "8",
+                                    "paddingTop": "2",
+                                    "paddingRight": "4",
+                                    "paddingBottom": "2",
+                                    "paddingLeft": "4"
+                                  }
+                                },
+                                "typographies": {
+                                  "all": {
+                                    "textColor": {
+                                      "color": "white"
+                                    }
+                                  }
+                                },
+                                "backgroundColors": {
+                                  "all": {
+                                    "color": "red-500",
+                                    "hover": "red-700"
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "typeName": "Button",
+                              "tagName": "button",
+                              "component": "button",
+                              "children": [],
+                              "props": {},
+                              "css": {
+                                "layouts": {
+                                  "all": {
+                                    "width": "16",
+                                    "height": "8",
+                                    "paddingTop": "2",
+                                    "paddingRight": "4",
+                                    "paddingBottom": "2",
+                                    "paddingLeft": "4"
+                                  }
+                                },
+                                "typographies": {
+                                  "all": {
+                                    "textColor": {
+                                      "color": "white"
+                                    }
+                                  }
+                                },
+                                "backgroundColors": {
+                                  "all": {
+                                    "color": "teal-500",
+                                    "hover": "teal-700"
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "typeName": "Button",
+                              "tagName": "button",
+                              "component": "button",
+                              "children": [],
+                              "props": {},
+                              "css": {
+                                "layouts": {
+                                  "all": {
+                                    "width": "16",
+                                    "height": "8",
+                                    "paddingTop": "2",
+                                    "paddingRight": "4",
+                                    "paddingBottom": "2",
+                                    "paddingLeft": "4"
+                                  }
+                                },
+                                "typographies": {
+                                  "all": {
+                                    "textColor": {
+                                      "color": "white"
+                                    }
+                                  }
+                                },
+                                "backgroundColors": {
+                                  "all": {
+                                    "color": "gray-500",
+                                    "hover": "gray-700"
+                                  }
+                                }
+                              }
+                            }
+                          ],
+                          "props": {},
+                          "css": {
+                            "layouts": {
+                              "all": {
+                                "width": "full"
+                              },
+                              "medium": {
+                                "paddingRight": "8",
+                                "paddingLeft": "8"
+                              }
+                            },
+                            "contents": {
+                              "all": {
+                                "flexWrap": "wrap",
+                                "justify": "between"
+                              }
+                            }
+                          }
+                        }
+                      ],
+                      "props": {},
+                      "css": {
+                        "layouts": {
+                          "all": {
+                            "width": "full"
+                          }
+                        },
+                        "contents": {
+                          "all": {
+                            "flexWrap": "wrap"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "props": {},
+                  "css": {
+                    "layouts": {
+                      "all": {
+                        "width": "full",
+                        "paddingTop": "1",
+                        "paddingBottom": "1"
+                      }
+                    },
+                    "contents": {
+                      "all": {
+                        "flexWrap": "wrap"
+                      }
+                    }
+                  }
+                },
+                {
+                  "typeName": "Column",
+                  "tagName": "div",
+                  "component": "div",
+                  "role": "Column",
+                  "children": [
+                    {
+                      "typeName": "Label",
+                      "tagName": "label",
+                      "component": "label",
+                      "children": [],
+                      "props": {
+                        "text": "Priority",
+                        "for": "dd-priority"
+                      },
+                      "css": {}
+                    },
+                    {
+                      "typeName": "Select",
+                      "tagName": "select",
+                      "component": "SelectComponent",
+                      "children": [
+                        {
+                          "typeName": "Option",
+                          "tagName": "option",
+                          "component": "option",
+                          "children": [],
+                          "props": {
+                            "text": "Low",
+                            "value": "0"
+                          },
+                          "css": {}
+                        },
+                        {
+                          "typeName": "Option",
+                          "tagName": "option",
+                          "component": "option",
+                          "children": [],
+                          "props": {
+                            "text": "Medium",
+                            "value": "1",
+                            "selected": "selected"
+                          },
+                          "css": {}
+                        },
+                        {
+                          "typeName": "Option",
+                          "tagName": "option",
+                          "component": "option",
+                          "children": [],
+                          "props": {
+                            "text": "High",
+                            "value": "2"
+                          },
+                          "css": {}
+                        }
+                      ],
+                      "props": {
+                        "id": "dd-priority"
+                      },
+                      "css": {
+                        "layouts": {
+                          "all": {
+                            "width": "full",
+                            "paddingTop": "2",
+                            "paddingRight": "2",
+                            "paddingBottom": "2",
+                            "paddingLeft": "2"
+                          }
+                        },
+                        "borders": {
+                          "all": {
+                            "width": "1"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "props": {},
+                  "css": {
+                    "layouts": {
+                      "all": {
+                        "width": "full",
+                        "paddingTop": "1",
+                        "paddingBottom": "1"
+                      }
+                    },
+                    "contents": {
+                      "all": {
+                        "flexWrap": "wrap"
+                      }
+                    }
+                  }
+                },
+                {
+                  "typeName": "Column",
+                  "tagName": "div",
+                  "component": "div",
+                  "role": "Column",
+                  "children": [
+                    {
+                      "typeName": "Label",
+                      "tagName": "label",
+                      "component": "label",
+                      "children": [],
+                      "props": {
+                        "text": "Estimated points",
+                        "for": "tx-estimated-points"
+                      },
+                      "css": {}
+                    },
+                    {
+                      "typeName": "Input",
+                      "tagName": "input",
+                      "component": "InputComponent",
+                      "autoCloseTag": true,
+                      "children": [],
+                      "props": {
+                        "id": "tx-estimated-points",
+                        "type": "number"
+                      },
+                      "css": {
+                        "layouts": {
+                          "all": {
+                            "width": "full",
+                            "paddingTop": "2",
+                            "paddingRight": "2",
+                            "paddingBottom": "2",
+                            "paddingLeft": "2"
+                          }
+                        },
+                        "borders": {
+                          "all": {
+                            "width": "1"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "props": {},
+                  "css": {
+                    "layouts": {
+                      "all": {
+                        "width": "full",
+                        "paddingTop": "1",
+                        "paddingBottom": "1"
+                      }
+                    },
+                    "contents": {
+                      "all": {
+                        "flexWrap": "wrap"
+                      }
+                    }
+                  }
+                }
+              ],
+              "props": {},
+              "css": {
+                "layouts": {
+                  "all": {
+                    "width": "full"
+                  }
+                },
+                "contents": {
+                  "all": {
+                    "flexWrap": "wrap"
+                  }
+                }
+              }
+            }
+          ],
+          "props": {},
+          "css": {
+            "layouts": {
+              "all": {
+                "width": "full",
+                "paddingTop": "1",
+                "paddingRight": "3",
+                "paddingBottom": "1",
+                "paddingLeft": "3"
+              }
+            },
+            "borders": {
+              "all": {
+                "width": "1",
+                "color": {
+                  "color": "gray-200"
+                }
+              }
+            },
+            "contents": {
+              "all": {
+                "flexWrap": "wrap"
+              }
+            }
+          }
+        },
+        {
+          "typeName": "Column",
+          "tagName": "div",
+          "component": "div",
+          "role": "Column",
+          "children": [
+            {
+              "typeName": "Grid",
+              "tagName": "div",
+              "component": "div",
+              "role": "Grid",
+              "children": [
+                {
+                  "typeName": "Column",
+                  "tagName": "div",
+                  "component": "div",
+                  "role": "Column",
+                  "children": [
+                    {
+                      "typeName": "Button",
+                      "tagName": "button",
+                      "component": "button",
+                      "children": [],
+                      "props": {
+                        "text": "Add"
+                      },
+                      "css": {
+                        "layouts": {
+                          "all": {
+                            "width": "full",
+                            "paddingTop": "2",
+                            "paddingRight": "4",
+                            "paddingBottom": "2",
+                            "paddingLeft": "4"
+                          }
+                        },
+                        "typographies": {
+                          "all": {
+                            "textColor": {
+                              "color": "white"
+                            }
+                          }
+                        },
+                        "backgroundColors": {
+                          "all": {
+                            "color": "green-500",
+                            "hover": "green-700"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "props": {},
+                  "css": {
+                    "layouts": {
+                      "all": {
+                        "width": "full",
+                        "paddingTop": "1",
+                        "paddingRight": "1",
+                        "paddingBottom": "1",
+                        "paddingLeft": "1"
+                      },
+                      "medium": {
+                        "width": "1/2"
+                      },
+                      "large": {
+                        "width": "1/6"
+                      }
+                    },
+                    "contents": {
+                      "all": {
+                        "flexWrap": "wrap"
+                      }
+                    }
+                  }
+                },
+                {
+                  "typeName": "Column",
+                  "tagName": "div",
+                  "component": "div",
+                  "role": "Column",
+                  "children": [
+                    {
+                      "typeName": "Button",
+                      "tagName": "button",
+                      "component": "button",
+                      "children": [],
+                      "props": {
+                        "text": "Cancel"
+                      },
+                      "css": {
+                        "layouts": {
+                          "all": {
+                            "width": "full",
+                            "paddingTop": "2",
+                            "paddingRight": "4",
+                            "paddingBottom": "2",
+                            "paddingLeft": "4"
+                          }
+                        },
+                        "typographies": {
+                          "all": {
+                            "textColor": {
+                              "color": "white"
+                            }
+                          }
+                        },
+                        "backgroundColors": {
+                          "all": {
+                            "color": "gray-500",
+                            "hover": "gray-700"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "props": {},
+                  "css": {
+                    "layouts": {
+                      "all": {
+                        "width": "full",
+                        "paddingTop": "1",
+                        "paddingRight": "1",
+                        "paddingBottom": "1",
+                        "paddingLeft": "1"
+                      },
+                      "medium": {
+                        "width": "1/2"
+                      },
+                      "large": {
+                        "width": "1/6"
+                      }
+                    },
+                    "contents": {
+                      "all": {
+                        "flexWrap": "wrap"
+                      }
+                    }
+                  }
+                }
+              ],
+              "props": {},
+              "css": {
+                "layouts": {
+                  "all": {
+                    "width": "full"
+                  }
+                },
+                "contents": {
+                  "all": {
+                    "flexWrap": "wrap",
+                    "justify": "end"
+                  }
+                }
+              }
+            }
+          ],
+          "props": {},
+          "css": {
+            "layouts": {
+              "all": {
+                "width": "full",
+                "paddingTop": "1",
+                "paddingRight": "1",
+                "paddingBottom": "1",
+                "paddingLeft": "1"
+              }
+            },
+            "backgroundColors": {
+              "all": {
+                "color": "gray-200"
+              }
+            },
+            "contents": {
+              "all": {
+                "flexWrap": "wrap"
+              }
+            }
+          }
+        }
+      ],
+      "props": {},
+      "css": {
+        "layouts": {
+          "all": {
+            "width": "full"
+          }
+        },
+        "contents": {
+          "all": {
+            "flexWrap": "wrap"
+          }
+        }
+      }
+    }
+  ],
+  "props": {},
+  "css": {
+    "layouts": {
+      "all": {
+        "paddingTop": "2",
+        "paddingRight": "2",
+        "paddingBottom": "2",
+        "paddingLeft": "2"
+      }
+    }
+  }
+}
