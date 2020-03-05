@@ -125,7 +125,7 @@ export class ContentModel extends CssModel {
   get cssArray(): string[] {
     const result: string[] = [];
     if (this.flex)
-      result.push(`${this.prefix}flex`)
+      result.push(`${this.prefix}flex`);
     if (this.flexWrap)
       result.push(`${this.prefix}flex-${this.flexWrap}`);
     if (this.justify)
