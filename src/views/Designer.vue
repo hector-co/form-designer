@@ -267,6 +267,8 @@ export default class Designer extends Vue {
     if (this.$route.query['s']) {
       if (this.$route.query['s'] === 'example1')
         this.$store.commit('loadExample1');
+      else if (this.$route.query['s'] === 'example2')
+        this.$store.commit('loadExample2');
       this.$router.replace('/');
     } else this.$store.commit('loadState');
 

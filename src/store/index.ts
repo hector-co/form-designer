@@ -190,6 +190,10 @@ const store: StoreOptions<IDesignerState> = {
     loadExample1(state) {
       const example = require('@/examples/example1.json');
       loadState(state, example);
+    },
+    loadExample2(state) {
+      const example = require('@/examples/example2.json');
+      loadState(state, example);
     }
   }
 };
@@ -210,7 +214,6 @@ function addComponents(
       component.tagName = 'div';
       component.role = 'Grid';
       component.properties.addCustomCss('contents', mapWithResponsiveSizes((prefix) => new ContentModel(prefix)));
-      component.properties.baseCssClasses = 'flex';
 
       if (!addDefaultValues) break;
       (component.properties.customCss.get('contents').get(ResponsiveSizes.All) as ContentModel).flex = true;
