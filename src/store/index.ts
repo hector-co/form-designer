@@ -213,20 +213,19 @@ function addComponents(
       component.properties.baseCssClasses = 'flex';
 
       if (!addDefaultValues) break;
+      (component.properties.customCss.get('contents').get(ResponsiveSizes.All) as ContentModel).flex = true;
       component.properties.layouts.get(ResponsiveSizes.All)!.width = 'full';
       break;
     case 'column':
       if (!tagName) component.tagName = 'div';
-      component.properties.baseCssClasses = 'flex';
       component.properties.addCustomCss('contents', mapWithResponsiveSizes((prefix) => new ContentModel(prefix)));
       component.role = 'Column';
 
       if (!addDefaultValues) break;
-      (component.properties.customCss.get('contents').get(ResponsiveSizes.All) as ContentModel).flexWrap = 'wrap';
       component.properties.layouts.get(ResponsiveSizes.All)!.width = 'full';
       component.properties.layouts.get(ResponsiveSizes.All)!.paddingTop = '1';
       component.properties.layouts.get(ResponsiveSizes.All)!.paddingBottom = '1';
-      if (parent.parent && parent.parent.typeName === 'Column') break;
+      if ((parent && parent.typeName === 'Column') || (parent.parent && parent.parent.typeName === 'Column')) break;
       component.properties.layouts.get(ResponsiveSizes.All)!.paddingRight = '1';
       component.properties.layouts.get(ResponsiveSizes.All)!.paddingLeft = '1';
       break;

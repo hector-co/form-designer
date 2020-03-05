@@ -339,11 +339,7 @@
                                 "layouts": {
                                   "all": {
                                     "width": "16",
-                                    "height": "8",
-                                    "paddingTop": "2",
-                                    "paddingRight": "4",
-                                    "paddingBottom": "2",
-                                    "paddingLeft": "4"
+                                    "height": "8"
                                   }
                                 },
                                 "typographies": {
@@ -371,11 +367,7 @@
                                 "layouts": {
                                   "all": {
                                     "width": "16",
-                                    "height": "8",
-                                    "paddingTop": "2",
-                                    "paddingRight": "4",
-                                    "paddingBottom": "2",
-                                    "paddingLeft": "4"
+                                    "height": "8"
                                   }
                                 },
                                 "typographies": {
@@ -403,11 +395,7 @@
                                 "layouts": {
                                   "all": {
                                     "width": "16",
-                                    "height": "8",
-                                    "paddingTop": "2",
-                                    "paddingRight": "4",
-                                    "paddingBottom": "2",
-                                    "paddingLeft": "4"
+                                    "height": "8"
                                   }
                                 },
                                 "typographies": {
@@ -435,11 +423,7 @@
                                 "layouts": {
                                   "all": {
                                     "width": "16",
-                                    "height": "8",
-                                    "paddingTop": "2",
-                                    "paddingRight": "4",
-                                    "paddingBottom": "2",
-                                    "paddingLeft": "4"
+                                    "height": "8"
                                   }
                                 },
                                 "typographies": {
@@ -467,11 +451,7 @@
                                 "layouts": {
                                   "all": {
                                     "width": "16",
-                                    "height": "8",
-                                    "paddingTop": "2",
-                                    "paddingRight": "4",
-                                    "paddingBottom": "2",
-                                    "paddingLeft": "4"
+                                    "height": "8"
                                   }
                                 },
                                 "typographies": {
@@ -503,7 +483,7 @@
                             },
                             "contents": {
                               "all": {
-                                "flexWrap": "wrap",
+                                "flex": true,
                                 "justify": "between"
                               }
                             }
@@ -519,6 +499,7 @@
                         },
                         "contents": {
                           "all": {
+                            "flex": true,
                             "flexWrap": "wrap"
                           }
                         }
@@ -706,6 +687,7 @@
                 },
                 "contents": {
                   "all": {
+                    "flex": true,
                     "flexWrap": "wrap"
                   }
                 }
@@ -888,6 +870,7 @@
                 },
                 "contents": {
                   "all": {
+                    "flex": true,
                     "flexWrap": "wrap",
                     "justify": "end"
                   }
@@ -928,6 +911,7 @@
         },
         "contents": {
           "all": {
+            "flex": true,
             "flexWrap": "wrap"
           }
         }

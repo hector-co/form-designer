@@ -2,6 +2,18 @@
   <table v-if="contentProperties" class="table-fixed w-full">
     <tbody>
       <tr>
+        <td class="w-5/12 bg-gray-100 border px-4 text-xs">Flex</td>
+        <td class="w-7/12 border">
+          <select
+            v-model="contentProperties.flex"
+            class="w-full text-gray-700 px-2 py-2 text-xs"
+          >
+            <option :value="true">True</option>
+            <option :value="false">False</option>
+          </select>
+        </td>
+      </tr>
+      <tr v-if="contentProperties.flex">
         <td class="w-5/12 bg-gray-100 border px-4 text-xs">Flex wrap</td>
         <td class="w-7/12 border">
           <select
@@ -15,7 +27,7 @@
           </select>
         </td>
       </tr>
-      <tr>
+      <tr v-if="contentProperties.flex">
         <td class="bg-gray-100 border px-4 text-xs">Justify content</td>
         <td class="border">
           <select
@@ -31,7 +43,7 @@
           </select>
         </td>
       </tr>
-      <tr>
+      <tr v-if="contentProperties.flex">
         <td class="bg-gray-100 border px-4 text-xs">Align items</td>
         <td class="border">
           <select
@@ -63,7 +75,11 @@ export default class ContentProperties extends Vue {
   model!: ComponentModel;
 
   get contentProperties() {
-    if (!this.model || (this.model.typeName !== 'Grid' && this.model.typeName !== 'Column')) return null;
+    if (
+      !this.model ||
+      (this.model.typeName !== 'Grid' && this.model.typeName !== 'Column')
+    )
+      return null;
     const properties: PropertiesModel = this.model.properties;
     return properties.customCss.get('contents')!.get(this.size);
   }

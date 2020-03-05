@@ -44,18 +44,10 @@
           @click="addSpan"
           class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
         >span</button>
-        <!-- <button
-          @click="addInputWithLabel"
-          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >input+label</button>-->
         <button
           @click="addCheck"
           class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
         >check</button>
-        <!-- <button
-          @click="addCheckWithLabel"
-          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >Check+Label</button>-->
         <button
           @click="addButton"
           class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"

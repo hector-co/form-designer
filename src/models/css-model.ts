@@ -108,6 +108,7 @@ export class LayoutModel extends CssModel {
 
 export class ContentModel extends CssModel {
   responsiveSize: ResponsiveSizes;
+  flex: boolean;
   flexWrap: string;
   justify: string;
   alignItems: string;
@@ -115,6 +116,7 @@ export class ContentModel extends CssModel {
   constructor(responsiveSize: ResponsiveSizes) {
     super();
     this.responsiveSize = responsiveSize;
+    this.flex = false;
     this.flexWrap = '';
     this.justify = '';
     this.alignItems = '';
@@ -122,6 +124,8 @@ export class ContentModel extends CssModel {
 
   get cssArray(): string[] {
     const result: string[] = [];
+    if (this.flex)
+      result.push(`${this.prefix}flex`)
     if (this.flexWrap)
       result.push(`${this.prefix}flex-${this.flexWrap}`);
     if (this.justify)
