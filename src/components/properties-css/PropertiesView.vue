@@ -150,8 +150,8 @@
         </tr>
       </tbody>
     </table>
-    <ContentProperties :model="model" :size="responsiveSize"></ContentProperties>
-    <TypographyProperties :model="model" :size="responsiveSize"></TypographyProperties>
+    <ContentCss :model="model" :size="responsiveSize"></ContentCss>
+    <TypographyCss :model="model" :size="responsiveSize"></TypographyCss>
     <table class="table-fixed w-full">
       <tbody>
         <tr>
@@ -174,26 +174,26 @@
         </tr>
       </tbody>
     </table>
-    <BorderBgProperties :model="model" :size="responsiveSize"></BorderBgProperties>
-    <LayoutProperties :model="model" :size="responsiveSize"></LayoutProperties>
+    <BorderBgCss :model="model" :size="responsiveSize"></BorderBgCss>
+    <LayoutCss :model="model" :size="responsiveSize"></LayoutCss>
   </div>
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import BaseProperties from './BaseProperties.vue';
-import LayoutProperties from './LayoutProperties.vue';
-import ContentProperties from './ContentProperties.vue';
-import TypographyProperties from './TypographyProperties.vue';
-import BorderBgProperties from './BorderBgProperties.vue';
+import LayoutCss from './LayoutCss.vue';
+import ContentCss from './ContentCss.vue';
+import TypographyCss from './TypographyCss.vue';
+import BorderBgCss from './BorderBgCss.vue';
 import { ResponsiveSizes, ComponentModel } from '@/models';
 
 @Component({
   components: {
     BaseProperties,
-    LayoutProperties,
-    ContentProperties,
-    TypographyProperties,
-    BorderBgProperties
+    LayoutCss,
+    ContentCss,
+    TypographyCss,
+    BorderBgCss
   }
 })
 export default class PropertiesView extends Vue {

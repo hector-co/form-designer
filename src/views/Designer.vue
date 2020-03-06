@@ -144,7 +144,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import { mapState, mapMutations } from 'vuex';
 import { ComponentModel } from '@/models';
 import TreeView from '@/components/TreeView.vue';
-import PropertiesView from '@/components/properties/PropertiesView.vue';
+import PropertiesView from '@/components/properties-css/PropertiesView.vue';
 import DefaultComponent from '@/components/custom/DefaultComponent.vue';
 import CheckComponent from '@/components/custom/CheckComponent.vue';
 import InputComponent from '@/components/custom/InputComponent.vue';
