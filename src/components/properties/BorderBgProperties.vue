@@ -42,6 +42,20 @@
             ></SelectColorComponent>
           </td>
         </tr>
+        <tr>
+          <td class="bg-gray-100 border px-4 py-2 text-xs">Border radius</td>
+          <td class="border">
+            <select v-model="borderProperties.radius" class="w-full text-gray-700 px-2 py-2 text-xs">
+              <option value>(default)</option>
+              <option value="none">None</option>
+              <option value="1">Rounded</option>
+              <option value="sm">Small</option>
+              <option value="md">Medium</option>
+              <option value="lg">Large</option>
+              <option value="full">Full</option>
+            </select>
+          </td>
+        </tr>
       </tbody>
     </table>
     <table v-if="bgColorsProperties" class="table-fixed w-full mb-2">

@@ -81,7 +81,7 @@
           class="bg-green-500 hover:bg-green-700 text-white py-2 px-2 mx-1 my-1 text-xs"
         >down</button>
         <button
-          @click="deleteComponent"
+          @click="deleteSelected"
           class="bg-red-500 hover:bg-red-700 text-white py-2 px-2 mx-1 my-1 text-xs"
         >del</button>
         <button
@@ -170,7 +170,7 @@ Vue.component('TextareaComponent', TextareaComponent);
       'addDataCell',
       'moveUp',
       'moveDown',
-      'deleteComponent',
+      'deleteSelected',
       'clearState',
       'loadState'
     ])

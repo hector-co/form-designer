@@ -6,8 +6,12 @@ export enum ResponsiveSizes {
 }
 
 export abstract class CssModel {
-  abstract responsiveSize: ResponsiveSizes;
+  responsiveSize: ResponsiveSizes;
   abstract get cssArray(): string[];
+
+  constructor(responsiveSize: ResponsiveSizes) {
+    this.responsiveSize = responsiveSize;
+  }
 
   get prefix(): string {
     switch (this.responsiveSize) {
@@ -24,7 +28,6 @@ export abstract class CssModel {
 }
 
 export class LayoutModel extends CssModel {
-  responsiveSize: ResponsiveSizes;
   width: string;
   height: string;
   maxWidth: string;
@@ -39,8 +42,7 @@ export class LayoutModel extends CssModel {
   marginLeft: string;
 
   constructor(responsiveSize: ResponsiveSizes) {
-    super();
-    this.responsiveSize = responsiveSize;
+    super(responsiveSize);
     this.width = '';
     this.height = '';
     this.maxWidth = '';
@@ -107,15 +109,13 @@ export class LayoutModel extends CssModel {
 }
 
 export class ContentModel extends CssModel {
-  responsiveSize: ResponsiveSizes;
   flex: boolean;
   flexWrap: string;
   justify: string;
   alignItems: string;
 
   constructor(responsiveSize: ResponsiveSizes) {
-    super();
-    this.responsiveSize = responsiveSize;
+    super(responsiveSize);
     this.flex = false;
     this.flexWrap = '';
     this.justify = '';
@@ -138,7 +138,6 @@ export class ContentModel extends CssModel {
 }
 
 export class TypographyModel extends CssModel {
-  responsiveSize: ResponsiveSizes;
   textAlign: string;
   verticalAlign: string;
   textSize: string;
@@ -147,8 +146,7 @@ export class TypographyModel extends CssModel {
   fontStyle: string;
 
   constructor(responsiveSize: ResponsiveSizes) {
-    super();
-    this.responsiveSize = responsiveSize;
+    super(responsiveSize);
     this.textAlign = '';
     this.verticalAlign = '';
     this.textSize = '';
@@ -177,14 +175,12 @@ export class TypographyModel extends CssModel {
 }
 
 export class ColorModel extends CssModel {
-  responsiveSize: ResponsiveSizes;
   type: string;
   color: string;
   hover: string;
 
   constructor(responsiveSize: ResponsiveSizes, type: string) {
-    super();
-    this.responsiveSize = responsiveSize;
+    super(responsiveSize);
     this.type = type;
     this.color = '';
     this.hover = '';
@@ -203,17 +199,17 @@ export class ColorModel extends CssModel {
 }
 
 export class BorderModel extends CssModel {
-  responsiveSize: ResponsiveSizes;
   style: string;
   width: string;
   color: ColorModel;
+  radius: string;
 
   constructor(responsiveSize: ResponsiveSizes) {
-    super();
-    this.responsiveSize = responsiveSize;
+    super(responsiveSize);
     this.style = '';
     this.width = '';
     this.color = new ColorModel(responsiveSize, 'border');
+    this.radius = '';
   }
 
   get cssArray(): string[] {
@@ -223,7 +219,27 @@ export class BorderModel extends CssModel {
       result.push(`${this.prefix}border-${this.style}`);
     if (this.width)
       result.push(this.width === '1' ? `${this.prefix}border` : `${this.prefix}border-${this.width}`);
+    if (this.radius)
+      result.push(this.radius === '1' ? `${this.prefix}rounded` : `${this.prefix}rounded-${this.radius}`);
     result.push(...this.color.cssArray);
+
+    return result;
+  }
+}
+
+export class InteractivityModel extends CssModel {
+  cursor: string;
+
+  constructor(responsiveSize: ResponsiveSizes) {
+    super(responsiveSize);
+    this.cursor = '';
+  }
+
+  get cssArray(): string[] {
+    const result: string[] = [];
+
+    if (this.cursor)
+      result.push(`${this.prefix}cursor-${this.cursor}`);
 
     return result;
   }

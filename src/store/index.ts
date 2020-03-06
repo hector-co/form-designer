@@ -149,7 +149,7 @@ const store: StoreOptions<IDesignerState> = {
 
       addComponents(state.selected, 'DataCell', state.counter, 'td');
     },
-    delete(state) {
+    deleteSelected(state) {
       if (!state.selected || !state.selected.parent || state.selected.typeName === 'TableHead' ||
         state.selected.typeName === 'TableBody') return;
 
@@ -492,6 +492,8 @@ function applyCss(component: ComponentModel, css: any) {
       setCssValues(component.properties.backgroundColors, css.backgroundColors);
     else if (key === 'borders')
       setCssValues(component.properties.borders, css.borders);
+    else if (key === 'interactivities')
+      setCssValues(component.properties.interactivities, css.interactivities);
     else if (component.properties.customCss.has(key))
       setCssValues(component.properties.customCss.get(key), css[key]);
   });

@@ -152,6 +152,28 @@
     </table>
     <ContentProperties :model="model" :size="responsiveSize"></ContentProperties>
     <TypographyProperties :model="model" :size="responsiveSize"></TypographyProperties>
+    <table class="table-fixed w-full">
+      <tbody>
+        <tr>
+          <td class="w-5/12 bg-gray-100 border px-4 py-2 text-xs">Cursor</td>
+          <td class="w-7/12 border">
+            <select
+              v-model="interactivityProperties.cursor"
+              class="w-full text-gray-700 px-2 py-2 text-xs"
+            >
+              <option value>(Not specified)</option>
+              <option value="auto">Auto</option>
+              <option value="default">Default</option>
+              <option value="pointer">Pointer</option>
+              <option value="wait">Wait</option>
+              <option value="text">Text</option>
+              <option value="move">Move</option>
+              <option value="not-allowd">Not allowed</option>
+            </select>
+          </td>
+        </tr>
+      </tbody>
+    </table>
     <BorderBgProperties :model="model" :size="responsiveSize"></BorderBgProperties>
     <LayoutProperties :model="model" :size="responsiveSize"></LayoutProperties>
   </div>
@@ -195,6 +217,11 @@ export default class PropertiesView extends Vue {
       'HeaderCell',
       'Anchor'
     ];
+  }
+
+  get interactivityProperties() {
+    if (!this.model) return null;
+    return this.model.properties.interactivities.get(this.responsiveSize);
   }
 
   @Watch('model')

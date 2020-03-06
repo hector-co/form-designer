@@ -1,4 +1,6 @@
-import { ResponsiveSizes, LayoutModel, TypographyModel, CssModel, ColorModel, BorderModel, Dictionary } from '.';
+import {
+  ResponsiveSizes, LayoutModel, TypographyModel, CssModel, ColorModel, BorderModel, Dictionary, InteractivityModel
+} from '.';
 
 function getCss(cssMap: Dictionary<ResponsiveSizes, CssModel>): string[] {
   return [
@@ -27,6 +29,7 @@ export class PropertiesModel {
   typographies: Dictionary<ResponsiveSizes, TypographyModel>;
   backgroundColors: Dictionary<ResponsiveSizes, ColorModel>;
   borders: Dictionary<ResponsiveSizes, BorderModel>;
+  interactivities: Dictionary<ResponsiveSizes, InteractivityModel>;
   customProps: Dictionary<string,
     { attributeName: string, value: any, attributeMap: (value: any) => string | undefined, bindInDesigner: boolean }>;
   customCss: Dictionary<string, Dictionary<ResponsiveSizes, CssModel>>;
@@ -41,6 +44,7 @@ export class PropertiesModel {
     this.typographies = mapWithResponsiveSizes((prefix) => new TypographyModel(prefix));
     this.backgroundColors = mapWithResponsiveSizes((prefix) => new ColorModel(prefix, 'bg'));
     this.borders = mapWithResponsiveSizes((prefix) => new BorderModel(prefix));
+    this.interactivities = mapWithResponsiveSizes((prefix) => new InteractivityModel(prefix));
 
     this.customProps = new Dictionary<string,
       { attributeName: string, value: any, attributeMap: (value: any) => | undefined, bindInDesigner: boolean }>();
@@ -78,6 +82,7 @@ export class PropertiesModel {
     PropertiesModel.addCssToObject(css, 'typographies', this.typographies);
     PropertiesModel.addCssToObject(css, 'backgroundColors', this.backgroundColors);
     PropertiesModel.addCssToObject(css, 'borders', this.borders);
+    PropertiesModel.addCssToObject(css, 'interactivities', this.interactivities);
 
     this.customCss.tuples.forEach(c => {
       PropertiesModel.addCssToObject(css, c.key, c.value);
@@ -104,6 +109,7 @@ export class PropertiesModel {
     result.push(...getCss(this.typographies));
     result.push(...getCss(this.backgroundColors));
     result.push(...getCss(this.borders));
+    result.push(...getCss(this.interactivities));
 
     this.customCss.tuples.forEach(c => {
       result.push(...getCss(c.value));
