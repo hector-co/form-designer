@@ -25,7 +25,7 @@
                 "text": "Basic form designer using some tailwind css classes"
               },
               "css": {
-                "typographies": {
+                "typography": {
                   "all": {
                     "textSize": "lg",
                     "fontWeight": "bold"
@@ -36,7 +36,7 @@
           ],
           "props": {},
           "css": {
-            "layouts": {
+            "layout": {
               "all": {
                 "width": "full",
                 "paddingTop": "3",
@@ -46,7 +46,7 @@
                 "marginBottom": "2"
               }
             },
-            "backgroundColors": {
+            "backgroundColor": {
               "all": {
                 "color": "gray-200"
               }
@@ -56,12 +56,12 @@
       ],
       "props": {},
       "css": {
-        "layouts": {
+        "layout": {
           "all": {
             "width": "full"
           }
         },
-        "contents": {
+        "content": {
           "all": {
             "flex": true
           }
@@ -117,7 +117,7 @@
                           ],
                           "props": {},
                           "css": {
-                            "layouts": {
+                            "layout": {
                               "all": {
                                 "width": "4"
                               }
@@ -139,7 +139,7 @@
                                 "text": "div"
                               },
                               "css": {
-                                "typographies": {
+                                "typography": {
                                   "all": {
                                     "textSize": "sm",
                                     "fontWeight": "bold"
@@ -156,7 +156,7 @@
                                 "text": "Container"
                               },
                               "css": {
-                                "typographies": {
+                                "typography": {
                                   "all": {
                                     "textSize": "sm"
                                   }
@@ -166,12 +166,12 @@
                           ],
                           "props": {},
                           "css": {
-                            "layouts": {
+                            "layout": {
                               "all": {
                                 "width": "full"
                               }
                             },
-                            "backgroundColors": {
+                            "backgroundColor": {
                               "all": {
                                 "hover": "gray-200"
                               }
@@ -181,12 +181,12 @@
                       ],
                       "props": {},
                       "css": {
-                        "layouts": {
+                        "layout": {
                           "all": {
                             "width": "full"
                           }
                         },
-                        "contents": {
+                        "content": {
                           "all": {
                             "flex": true
                           }
@@ -207,7 +207,7 @@
                           "children": [],
                           "props": {},
                           "css": {
-                            "layouts": {
+                            "layout": {
                               "all": {
                                 "width": "4"
                               }
@@ -245,7 +245,7 @@
                                   ],
                                   "props": {},
                                   "css": {
-                                    "layouts": {
+                                    "layout": {
                                       "all": {
                                         "width": "4"
                                       }
@@ -267,7 +267,7 @@
                                         "text": "div"
                                       },
                                       "css": {
-                                        "typographies": {
+                                        "typography": {
                                           "all": {
                                             "textSize": "sm",
                                             "fontWeight": "bold"
@@ -284,7 +284,7 @@
                                         "text": "Grid"
                                       },
                                       "css": {
-                                        "typographies": {
+                                        "typography": {
                                           "all": {
                                             "textSize": "sm"
                                           }
@@ -294,12 +294,12 @@
                                   ],
                                   "props": {},
                                   "css": {
-                                    "layouts": {
+                                    "layout": {
                                       "all": {
                                         "width": "full"
                                       }
                                     },
-                                    "backgroundColors": {
+                                    "backgroundColor": {
                                       "all": {
                                         "hover": "gray-200"
                                       }
@@ -309,12 +309,12 @@
                               ],
                               "props": {},
                               "css": {
-                                "layouts": {
+                                "layout": {
                                   "all": {
                                     "width": "full"
                                   }
                                 },
-                                "contents": {
+                                "content": {
                                   "all": {
                                     "flex": true
                                   }
@@ -335,7 +335,7 @@
                                   "children": [],
                                   "props": {},
                                   "css": {
-                                    "layouts": {
+                                    "layout": {
                                       "all": {
                                         "width": "4"
                                       }
@@ -373,7 +373,7 @@
                                           ],
                                           "props": {},
                                           "css": {
-                                            "layouts": {
+                                            "layout": {
                                               "all": {
                                                 "width": "4"
                                               }
@@ -395,7 +395,7 @@
                                                 "text": "div"
                                               },
                                               "css": {
-                                                "typographies": {
+                                                "typography": {
                                                   "all": {
                                                     "textSize": "sm",
                                                     "fontWeight": "bold"
@@ -412,7 +412,7 @@
                                                 "text": "Column"
                                               },
                                               "css": {
-                                                "typographies": {
+                                                "typography": {
                                                   "all": {
                                                     "textSize": "sm"
                                                   }
@@ -422,12 +422,12 @@
                                           ],
                                           "props": {},
                                           "css": {
-                                            "layouts": {
+                                            "layout": {
                                               "all": {
                                                 "width": "full"
                                               }
                                             },
-                                            "backgroundColors": {
+                                            "backgroundColor": {
                                               "all": {
                                                 "hover": "gray-200"
                                               }
@@ -437,12 +437,12 @@
                                       ],
                                       "props": {},
                                       "css": {
-                                        "layouts": {
+                                        "layout": {
                                           "all": {
                                             "width": "full"
                                           }
                                         },
-                                        "contents": {
+                                        "content": {
                                           "all": {
                                             "flex": true
                                           }
@@ -452,7 +452,7 @@
                                   ],
                                   "props": {},
                                   "css": {
-                                    "layouts": {
+                                    "layout": {
                                       "all": {
                                         "width": "full"
                                       }
@@ -462,12 +462,12 @@
                               ],
                               "props": {},
                               "css": {
-                                "layouts": {
+                                "layout": {
                                   "all": {
                                     "width": "full"
                                   }
                                 },
-                                "contents": {
+                                "content": {
                                   "all": {
                                     "flex": true
                                   }
@@ -477,7 +477,7 @@
                           ],
                           "props": {},
                           "css": {
-                            "layouts": {
+                            "layout": {
                               "all": {
                                 "width": "full"
                               }
@@ -487,12 +487,12 @@
                       ],
                       "props": {},
                       "css": {
-                        "layouts": {
+                        "layout": {
                           "all": {
                             "width": "full"
                           }
                         },
-                        "contents": {
+                        "content": {
                           "all": {
                             "flex": true
                           }
@@ -504,7 +504,7 @@
                     "id": "tree-container"
                   },
                   "css": {
-                    "layouts": {
+                    "layout": {
                       "all": {
                         "width": "full",
                         "paddingTop": "1",
@@ -514,7 +514,7 @@
                         "marginBottom": "1"
                       }
                     },
-                    "borders": {
+                    "border": {
                       "all": {
                         "width": "1"
                       }
@@ -559,7 +559,7 @@
                                     "text": "Prop1"
                                   },
                                   "css": {
-                                    "layouts": {
+                                    "layout": {
                                       "all": {
                                         "width": "5/12",
                                         "paddingTop": "2",
@@ -568,17 +568,17 @@
                                         "paddingLeft": "4"
                                       }
                                     },
-                                    "typographies": {
+                                    "typography": {
                                       "all": {
                                         "textSize": "xs"
                                       }
                                     },
-                                    "backgroundColors": {
+                                    "backgroundColor": {
                                       "all": {
                                         "color": "gray-200"
                                       }
                                     },
-                                    "borders": {
+                                    "border": {
                                       "all": {
                                         "width": "1"
                                       }
@@ -600,7 +600,7 @@
                                         "type": "text"
                                       },
                                       "css": {
-                                        "layouts": {
+                                        "layout": {
                                           "all": {
                                             "width": "full",
                                             "paddingTop": "2",
@@ -609,7 +609,7 @@
                                             "paddingLeft": "3"
                                           }
                                         },
-                                        "typographies": {
+                                        "typography": {
                                           "all": {
                                             "textSize": "xs"
                                           }
@@ -619,12 +619,12 @@
                                   ],
                                   "props": {},
                                   "css": {
-                                    "layouts": {
+                                    "layout": {
                                       "all": {
                                         "width": "7/12"
                                       }
                                     },
-                                    "borders": {
+                                    "border": {
                                       "all": {
                                         "width": "1"
                                       }
@@ -649,7 +649,7 @@
                                     "text": "Prop2"
                                   },
                                   "css": {
-                                    "layouts": {
+                                    "layout": {
                                       "all": {
                                         "paddingTop": "2",
                                         "paddingRight": "4",
@@ -657,17 +657,17 @@
                                         "paddingLeft": "4"
                                       }
                                     },
-                                    "typographies": {
+                                    "typography": {
                                       "all": {
                                         "textSize": "xs"
                                       }
                                     },
-                                    "backgroundColors": {
+                                    "backgroundColor": {
                                       "all": {
                                         "color": "gray-200"
                                       }
                                     },
-                                    "borders": {
+                                    "border": {
                                       "all": {
                                         "width": "1"
                                       }
@@ -689,7 +689,7 @@
                                         "type": "text"
                                       },
                                       "css": {
-                                        "layouts": {
+                                        "layout": {
                                           "all": {
                                             "width": "full",
                                             "paddingTop": "2",
@@ -698,7 +698,7 @@
                                             "paddingLeft": "3"
                                           }
                                         },
-                                        "typographies": {
+                                        "typography": {
                                           "all": {
                                             "textSize": "xs"
                                           }
@@ -708,7 +708,7 @@
                                   ],
                                   "props": {},
                                   "css": {
-                                    "borders": {
+                                    "border": {
                                       "all": {
                                         "width": "1"
                                       }
@@ -733,7 +733,7 @@
                                     "text": "Prop3"
                                   },
                                   "css": {
-                                    "layouts": {
+                                    "layout": {
                                       "all": {
                                         "paddingTop": "2",
                                         "paddingRight": "4",
@@ -741,17 +741,17 @@
                                         "paddingLeft": "4"
                                       }
                                     },
-                                    "typographies": {
+                                    "typography": {
                                       "all": {
                                         "textSize": "xs"
                                       }
                                     },
-                                    "backgroundColors": {
+                                    "backgroundColor": {
                                       "all": {
                                         "color": "gray-200"
                                       }
                                     },
-                                    "borders": {
+                                    "border": {
                                       "all": {
                                         "width": "1"
                                       }
@@ -802,7 +802,7 @@
                                       ],
                                       "props": {},
                                       "css": {
-                                        "layouts": {
+                                        "layout": {
                                           "all": {
                                             "width": "full",
                                             "paddingTop": "2",
@@ -811,7 +811,7 @@
                                             "paddingLeft": "3"
                                           }
                                         },
-                                        "typographies": {
+                                        "typography": {
                                           "all": {
                                             "textSize": "xs"
                                           }
@@ -821,12 +821,12 @@
                                   ],
                                   "props": {},
                                   "css": {
-                                    "typographies": {
+                                    "typography": {
                                       "all": {
                                         "textSize": "xs"
                                       }
                                     },
-                                    "borders": {
+                                    "border": {
                                       "all": {
                                         "width": "1"
                                       }
@@ -844,7 +844,7 @@
                       ],
                       "props": {},
                       "css": {
-                        "layouts": {
+                        "layout": {
                           "all": {
                             "width": "full"
                           }
@@ -856,7 +856,7 @@
                     "id": "props-container"
                   },
                   "css": {
-                    "layouts": {
+                    "layout": {
                       "all": {
                         "width": "full"
                       }
@@ -866,12 +866,12 @@
               ],
               "props": {},
               "css": {
-                "layouts": {
+                "layout": {
                   "all": {
                     "width": "full"
                   }
                 },
-                "contents": {
+                "content": {
                   "all": {
                     "flex": true,
                     "flexWrap": "wrap"
@@ -882,12 +882,12 @@
           ],
           "props": {},
           "css": {
-            "layouts": {
+            "layout": {
               "all": {
                 "width": "auto"
               }
             },
-            "borders": {
+            "border": {
               "all": {
                 "color": {
                   "color": "gray-200"
@@ -911,7 +911,7 @@
                 "text": "grid"
               },
               "css": {
-                "layouts": {
+                "layout": {
                   "all": {
                     "width": "full",
                     "paddingTop": "1",
@@ -921,7 +921,7 @@
                     "marginBottom": "1"
                   }
                 },
-                "typographies": {
+                "typography": {
                   "all": {
                     "textSize": "sm",
                     "textColor": {
@@ -929,7 +929,7 @@
                     }
                   }
                 },
-                "backgroundColors": {
+                "backgroundColor": {
                   "all": {
                     "color": "blue-500",
                     "hover": "blue-700"
@@ -946,7 +946,7 @@
                 "text": "column"
               },
               "css": {
-                "layouts": {
+                "layout": {
                   "all": {
                     "width": "full",
                     "paddingTop": "1",
@@ -956,7 +956,7 @@
                     "marginBottom": "1"
                   }
                 },
-                "typographies": {
+                "typography": {
                   "all": {
                     "textSize": "sm",
                     "textColor": {
@@ -964,7 +964,7 @@
                     }
                   }
                 },
-                "backgroundColors": {
+                "backgroundColor": {
                   "all": {
                     "color": "blue-500",
                     "hover": "blue-700"
@@ -981,7 +981,7 @@
                 "text": "label"
               },
               "css": {
-                "layouts": {
+                "layout": {
                   "all": {
                     "width": "full",
                     "paddingTop": "1",
@@ -991,7 +991,7 @@
                     "marginBottom": "1"
                   }
                 },
-                "typographies": {
+                "typography": {
                   "all": {
                     "textSize": "sm",
                     "textColor": {
@@ -999,7 +999,7 @@
                     }
                   }
                 },
-                "backgroundColors": {
+                "backgroundColor": {
                   "all": {
                     "color": "blue-500",
                     "hover": "blue-700"
@@ -1016,7 +1016,7 @@
                 "text": "input"
               },
               "css": {
-                "layouts": {
+                "layout": {
                   "all": {
                     "width": "full",
                     "paddingTop": "1",
@@ -1026,7 +1026,7 @@
                     "marginBottom": "1"
                   }
                 },
-                "typographies": {
+                "typography": {
                   "all": {
                     "textSize": "sm",
                     "textColor": {
@@ -1034,7 +1034,7 @@
                     }
                   }
                 },
-                "backgroundColors": {
+                "backgroundColor": {
                   "all": {
                     "color": "blue-500",
                     "hover": "blue-700"
@@ -1051,7 +1051,7 @@
                 "text": "textarea"
               },
               "css": {
-                "layouts": {
+                "layout": {
                   "all": {
                     "width": "full",
                     "paddingTop": "1",
@@ -1061,7 +1061,7 @@
                     "marginBottom": "1"
                   }
                 },
-                "typographies": {
+                "typography": {
                   "all": {
                     "textSize": "sm",
                     "textColor": {
@@ -1069,7 +1069,7 @@
                     }
                   }
                 },
-                "backgroundColors": {
+                "backgroundColor": {
                   "all": {
                     "color": "blue-500",
                     "hover": "blue-700"
@@ -1086,7 +1086,7 @@
                 "text": "select"
               },
               "css": {
-                "layouts": {
+                "layout": {
                   "all": {
                     "width": "full",
                     "paddingTop": "1",
@@ -1096,7 +1096,7 @@
                     "marginBottom": "1"
                   }
                 },
-                "typographies": {
+                "typography": {
                   "all": {
                     "textSize": "sm",
                     "textColor": {
@@ -1104,7 +1104,7 @@
                     }
                   }
                 },
-                "backgroundColors": {
+                "backgroundColor": {
                   "all": {
                     "color": "blue-500",
                     "hover": "blue-700"
@@ -1121,7 +1121,7 @@
                 "text": "option"
               },
               "css": {
-                "layouts": {
+                "layout": {
                   "all": {
                     "width": "full",
                     "paddingTop": "1",
@@ -1131,7 +1131,7 @@
                     "marginBottom": "1"
                   }
                 },
-                "typographies": {
+                "typography": {
                   "all": {
                     "textSize": "sm",
                     "textColor": {
@@ -1139,7 +1139,7 @@
                     }
                   }
                 },
-                "backgroundColors": {
+                "backgroundColor": {
                   "all": {
                     "color": "orange-500",
                     "hover": "orange-700"
@@ -1150,7 +1150,7 @@
           ],
           "props": {},
           "css": {
-            "layouts": {
+            "layout": {
               "all": {
                 "width": "24",
                 "marginRight": "1",
@@ -1186,7 +1186,7 @@
                         "text": "up"
                       },
                       "css": {
-                        "layouts": {
+                        "layout": {
                           "all": {
                             "width": "16",
                             "paddingTop": "1",
@@ -1196,7 +1196,7 @@
                             "marginRight": "1"
                           }
                         },
-                        "typographies": {
+                        "typography": {
                           "all": {
                             "textSize": "sm",
                             "textColor": {
@@ -1204,7 +1204,7 @@
                             }
                           }
                         },
-                        "backgroundColors": {
+                        "backgroundColor": {
                           "all": {
                             "color": "green-500",
                             "hover": "green-700"
@@ -1221,7 +1221,7 @@
                         "text": "down"
                       },
                       "css": {
-                        "layouts": {
+                        "layout": {
                           "all": {
                             "width": "16",
                             "paddingTop": "1",
@@ -1231,7 +1231,7 @@
                             "marginRight": "1"
                           }
                         },
-                        "typographies": {
+                        "typography": {
                           "all": {
                             "textSize": "sm",
                             "textColor": {
@@ -1239,7 +1239,7 @@
                             }
                           }
                         },
-                        "backgroundColors": {
+                        "backgroundColor": {
                           "all": {
                             "color": "green-500",
                             "hover": "green-700"
@@ -1256,7 +1256,7 @@
                         "text": "del"
                       },
                       "css": {
-                        "layouts": {
+                        "layout": {
                           "all": {
                             "width": "16",
                             "paddingTop": "1",
@@ -1266,7 +1266,7 @@
                             "marginRight": "1"
                           }
                         },
-                        "typographies": {
+                        "typography": {
                           "all": {
                             "textSize": "sm",
                             "textColor": {
@@ -1274,7 +1274,7 @@
                             }
                           }
                         },
-                        "backgroundColors": {
+                        "backgroundColor": {
                           "all": {
                             "color": "red-500",
                             "hover": "red-700"
@@ -1291,7 +1291,7 @@
                         "text": "clear"
                       },
                       "css": {
-                        "layouts": {
+                        "layout": {
                           "all": {
                             "width": "16",
                             "paddingTop": "1",
@@ -1301,7 +1301,7 @@
                             "marginRight": "1"
                           }
                         },
-                        "typographies": {
+                        "typography": {
                           "all": {
                             "textSize": "sm",
                             "textColor": {
@@ -1309,7 +1309,7 @@
                             }
                           }
                         },
-                        "backgroundColors": {
+                        "backgroundColor": {
                           "all": {
                             "color": "red-500",
                             "hover": "red-700"
@@ -1320,7 +1320,7 @@
                   ],
                   "props": {},
                   "css": {
-                    "layouts": {
+                    "layout": {
                       "all": {
                         "width": "full"
                       }
@@ -1335,7 +1335,7 @@
                   "children": [],
                   "props": {},
                   "css": {
-                    "layouts": {
+                    "layout": {
                       "all": {
                         "width": "full",
                         "paddingTop": "1",
@@ -1343,7 +1343,7 @@
                         "marginTop": "1"
                       }
                     },
-                    "borders": {
+                    "border": {
                       "all": {
                         "width": "1"
                       }
@@ -1353,12 +1353,12 @@
               ],
               "props": {},
               "css": {
-                "layouts": {
+                "layout": {
                   "all": {
                     "width": "full"
                   }
                 },
-                "contents": {
+                "content": {
                   "all": {
                     "flex": true,
                     "flexWrap": "wrap"
@@ -1369,7 +1369,7 @@
           ],
           "props": {},
           "css": {
-            "layouts": {
+            "layout": {
               "all": {
                 "width": "full"
               }
@@ -1379,12 +1379,12 @@
       ],
       "props": {},
       "css": {
-        "layouts": {
+        "layout": {
           "all": {
             "width": "full"
           }
         },
-        "contents": {
+        "content": {
           "all": {
             "flex": true
           }

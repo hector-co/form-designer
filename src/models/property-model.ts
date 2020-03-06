@@ -1,0 +1,24 @@
+export class PropertyModel {
+  name: string;
+  value: any;
+  attributeName: string;
+  attributeMap: (value: any) => string | undefined;
+  bindInDesigner: boolean;
+
+  constructor(
+    name: string, value?: any, attributeName?: string, attributeMap?: (value: any) => string | undefined,
+    bindInDesigner: boolean = false) {
+    this.name = name;
+    this.value = value;
+    this.attributeName = attributeName ? attributeName : name;
+    this.attributeMap = attributeMap ? attributeMap : () => undefined;
+    this.bindInDesigner = bindInDesigner;
+  }
+
+  get calculated(): any {
+    const mapped = this.attributeMap(this.value);
+    if (mapped !== undefined)
+      return mapped;
+    return this.value;
+  }
+}
