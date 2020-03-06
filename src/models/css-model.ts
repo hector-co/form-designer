@@ -1,8 +1,20 @@
+import { Dictionary } from '.';
+
 export enum ResponsiveSizes {
   All,
   Small,
   Medium,
   Large
+}
+
+export function mapWithResponsiveSizes<T>(factory: (prefix: ResponsiveSizes) => T): Dictionary<ResponsiveSizes, T> {
+  const dict = new Dictionary<ResponsiveSizes, T>();
+  dict.add(ResponsiveSizes.All, factory(ResponsiveSizes.All));
+  dict.add(ResponsiveSizes.Small, factory(ResponsiveSizes.Small));
+  dict.add(ResponsiveSizes.Medium, factory(ResponsiveSizes.Medium));
+  dict.add(ResponsiveSizes.Large, factory(ResponsiveSizes.Large));
+
+  return dict;
 }
 
 export abstract class CssModel {

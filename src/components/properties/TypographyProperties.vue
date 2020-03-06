@@ -1,13 +1,10 @@
 <template>
-  <table v-if="typographyProperties" class="table-fixed w-full">
+  <table v-if="typographyCss" class="table-fixed w-full">
     <tbody>
       <tr>
         <td class="w-5/12 bg-gray-100 border px-4 py-2 text-xs">Text align</td>
         <td class="w-7/12 border">
-          <select
-            v-model="typographyProperties.textAlign"
-            class="w-full text-gray-700 px-2 py-2 text-xs"
-          >
+          <select v-model="typographyCss.textAlign" class="w-full text-gray-700 px-2 py-2 text-xs">
             <option value>(default)</option>
             <option value="left">Left</option>
             <option value="center">Center</option>
@@ -19,10 +16,7 @@
       <tr>
         <td class="w-5/12 bg-gray-100 border px-4 py-2 text-xs">Text size</td>
         <td class="w-7/12 border">
-          <select
-            v-model="typographyProperties.textSize"
-            class="w-full text-gray-700 px-2 py-2 text-xs"
-          >
+          <select v-model="typographyCss.textSize" class="w-full text-gray-700 px-2 py-2 text-xs">
             <option value>(default)</option>
             <option value="xs">XSmall</option>
             <option value="sm">Small</option>
@@ -34,10 +28,7 @@
       <tr>
         <td class="w-5/12 bg-gray-100 border px-4 py-2 text-xs">Font weight</td>
         <td class="w-7/12 border">
-          <select
-            v-model="typographyProperties.fontWeight"
-            class="w-full text-gray-700 px-2 py-2 text-xs"
-          >
+          <select v-model="typographyCss.fontWeight" class="w-full text-gray-700 px-2 py-2 text-xs">
             <option value>(default)</option>
             <option value="thin">Thin</option>
             <option value="medium">Medium</option>
@@ -49,7 +40,7 @@
         <td class="w-5/12 bg-gray-100 border px-4 py-2 text-xs">Text color</td>
         <td class="w-7/12 border">
           <SelectColorComponent
-            v-model="typographyProperties.textColor.color"
+            v-model="typographyCss.textColor.color"
             @color-selected="setTextColor"
           ></SelectColorComponent>
         </td>
@@ -58,7 +49,7 @@
         <td class="w-5/12 bg-gray-100 border px-4 py-2 text-xs">Text hover color</td>
         <td class="w-7/12 border">
           <SelectColorComponent
-            v-model="typographyProperties.textColor.hover"
+            v-model="typographyCss.textColor.hover"
             @color-selected="setHoverColor"
           ></SelectColorComponent>
         </td>
@@ -66,10 +57,7 @@
       <tr>
         <td class="w-5/12 bg-gray-100 border px-4 py-2 text-xs">Font style</td>
         <td class="w-7/12 border">
-          <select
-            v-model="typographyProperties.fontStyle"
-            class="w-full text-gray-700 px-2 py-2 text-xs"
-          >
+          <select v-model="typographyCss.fontStyle" class="w-full text-gray-700 px-2 py-2 text-xs">
             <option value>(none)</option>
             <option value="italic">Italic</option>
             <option value="not-italic">Not italic</option>
@@ -94,7 +82,7 @@ import {
     SelectColorComponent
   }
 })
-export default class TypographyProperties extends Vue {
+export default class TypographyCss extends Vue {
   @Prop()
   size!: ResponsiveSizes;
 
@@ -108,11 +96,10 @@ export default class TypographyProperties extends Vue {
     this.invalidTypes = ['Check', 'Column', 'Container', 'Grid'];
   }
 
-  get typographyProperties() {
+  get typographyCss() {
     if (!this.model || !this.isValidModel) return null;
-    const typographies: Dictionary<ResponsiveSizes, TypographyModel> = this
-      .model.properties.typographies;
-    return typographies.get(this.size);
+
+    return this.model.getCss<TypographyModel>('typography', this.size);
   }
 
   get isValidModel(): boolean {
@@ -120,11 +107,11 @@ export default class TypographyProperties extends Vue {
   }
 
   setTextColor(color: string) {
-    this.typographyProperties!.textColor.color = color;
+    this.typographyCss!.textColor.color = color;
   }
 
   setHoverColor(color: string) {
-    this.typographyProperties!.textColor.hover = color;
+    this.typographyCss!.textColor.hover = color;
   }
 }
 </script>

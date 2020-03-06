@@ -1,11 +1,11 @@
 <template>
-  <table v-if="layoutProperties" class="table-fixed w-full">
+  <table v-if="layoutCss" class="table-fixed w-full">
     <tbody>
       <tr>
         <td class="w-5/12 bg-gray-100 border px-4 py-2 text-xs">Width</td>
         <td class="w-7/12 border">
           <input
-            v-model="layoutProperties.width"
+            v-model="layoutCss.width"
             class="w-full py-2 px-3 text-gray-700 leading-tight text-xs"
             type="text"
           />
@@ -15,7 +15,7 @@
         <td class="bg-gray-100 border px-4 py-2 text-xs">Height</td>
         <td class="border">
           <input
-            v-model="layoutProperties.height"
+            v-model="layoutCss.height"
             class="w-full py-2 px-3 text-gray-700 leading-tight text-xs"
             type="text"
           />
@@ -24,10 +24,7 @@
       <tr>
         <td class="bg-gray-100 border px-4 text-xs">Max width</td>
         <td class="border">
-          <select
-            v-model="layoutProperties.maxWidth"
-            class="w-full text-gray-700 px-2 py-2 text-xs"
-          >
+          <select v-model="layoutCss.maxWidth" class="w-full text-gray-700 px-2 py-2 text-xs">
             <option value>(none)</option>
             <option value="xs">xs</option>
             <option value="sm">sm</option>
@@ -41,10 +38,7 @@
       <tr>
         <td class="bg-gray-100 border px-4 text-xs">Max height</td>
         <td class="border">
-          <select
-            v-model="layoutProperties.maxHeight"
-            class="w-full text-gray-700 px-2 py-2 text-xs"
-          >
+          <select v-model="layoutCss.maxHeight" class="w-full text-gray-700 px-2 py-2 text-xs">
             <option value>(none)</option>
             <option value="sm">sm</option>
             <option value="md">md</option>
@@ -58,7 +52,7 @@
         <td class="bg-gray-100 border px-4 py-2 text-xs">Padding top</td>
         <td class="border">
           <input
-            v-model="layoutProperties.paddingTop"
+            v-model="layoutCss.paddingTop"
             class="w-full py-2 px-3 text-gray-700 leading-tight text-xs"
             type="text"
           />
@@ -68,7 +62,7 @@
         <td class="bg-gray-100 border px-4 py-2 text-xs">Padding right</td>
         <td class="border">
           <input
-            v-model="layoutProperties.paddingRight"
+            v-model="layoutCss.paddingRight"
             class="w-full py-2 px-3 text-gray-700 leading-tight text-xs"
             type="text"
           />
@@ -78,7 +72,7 @@
         <td class="bg-gray-100 border px-4 py-2 text-xs">Padding bottom</td>
         <td class="border">
           <input
-            v-model="layoutProperties.paddingBottom"
+            v-model="layoutCss.paddingBottom"
             class="w-full py-2 px-3 text-gray-700 leading-tight text-xs"
             type="text"
           />
@@ -88,7 +82,7 @@
         <td class="bg-gray-100 border px-4 py-2 text-xs">Padding left</td>
         <td class="border">
           <input
-            v-model="layoutProperties.paddingLeft"
+            v-model="layoutCss.paddingLeft"
             class="w-full py-2 px-3 text-gray-700 leading-tight text-xs"
             type="text"
           />
@@ -99,7 +93,7 @@
         <td class="bg-gray-100 border px-4 py-2 text-xs">Margin top</td>
         <td class="border">
           <input
-            v-model="layoutProperties.marginTop"
+            v-model="layoutCss.marginTop"
             class="w-full py-2 px-3 text-gray-700 leading-tight text-xs"
             type="text"
           />
@@ -109,7 +103,7 @@
         <td class="bg-gray-100 border px-4 py-2 text-xs">Margin right</td>
         <td class="border">
           <input
-            v-model="layoutProperties.marginRight"
+            v-model="layoutCss.marginRight"
             class="w-full py-2 px-3 text-gray-700 leading-tight text-xs"
             type="text"
           />
@@ -119,7 +113,7 @@
         <td class="bg-gray-100 border px-4 py-2 text-xs">Margin bottom</td>
         <td class="border">
           <input
-            v-model="layoutProperties.marginBottom"
+            v-model="layoutCss.marginBottom"
             class="w-full py-2 px-3 text-gray-700 leading-tight text-xs"
             type="text"
           />
@@ -129,7 +123,7 @@
         <td class="bg-gray-100 border px-4 py-2 text-xs">Margin left</td>
         <td class="border">
           <input
-            v-model="layoutProperties.marginLeft"
+            v-model="layoutCss.marginLeft"
             class="w-full py-2 px-3 text-gray-700 leading-tight text-xs"
             type="text"
           />
@@ -140,19 +134,19 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import { ResponsiveSizes, ComponentModel, PropertiesModel } from '@/models';
+import { ResponsiveSizes, ComponentModel } from '@/models';
 
 @Component
-export default class LayoutProperties extends Vue {
+export default class LayoutCss extends Vue {
   @Prop()
   size!: ResponsiveSizes;
 
   @Prop()
   model!: ComponentModel;
 
-  get layoutProperties() {
+  get layoutCss() {
     if (!this.model) return null;
-    return this.model.properties.layouts.get(this.size);
+    return this.model.getCss('layout', this.size);
   }
 }
 </script>

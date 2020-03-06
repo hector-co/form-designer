@@ -2,13 +2,12 @@
   <component
     v-if="model"
     :model="model"
-    v-bind="model.properties.getAttributes()"
     @click.self="select"
     :is="model.component"
     class="design-component"
-    :class="layoutCss"
+    :class="cssArray"
   >
-    {{model.properties.text}}
+    {{model.properties.get('text').value}}
     <DefaultComponent v-for="child in model.children" :key="child.id" :model="child"></DefaultComponent>
   </component>
 </template>

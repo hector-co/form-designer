@@ -1,9 +1,9 @@
 <template>
   <input
     @click.self="select"
-    :type="model.properties.customProps.get('type').value"
-    :class="layoutCss"
-    :value="model.properties.customProps.get('value').value"
+    :type="model.properties.get('type').value"
+    :class="cssArray"
+    :value="model.properties.get('value').value"
     readonly
   />
 </template>

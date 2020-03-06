@@ -1,5 +1,5 @@
 <template>
-  <select @click.self="select" :class="layoutCss" class="select-component design-component"></select>
+  <select @click.self="select" :class="cssArray" class="select-component design-component"></select>
 </template>
 <script lang="ts">
 import { Component } from 'vue-property-decorator';

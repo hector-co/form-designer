@@ -31,7 +31,7 @@
           <td class="w-5/12 bg-gray-100 border px-4 py-2 text-xs">Id</td>
           <td class="w-7/12 border">
             <input
-              v-model="model.properties.id"
+              v-model="model.properties.get('id').value"
               class="w-full py-2 px-3 text-gray-700 leading-tight text-xs"
               type="text"
             />
@@ -41,7 +41,7 @@
           <td class="bg-gray-100 border px-4 py-2 text-xs">Name</td>
           <td class="border">
             <input
-              v-model="model.properties.name"
+              v-model="model.properties.get('name').value"
               class="w-full py-2 px-3 text-gray-700 leading-tight text-xs"
               type="text"
             />

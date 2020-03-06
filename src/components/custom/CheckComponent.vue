@@ -1,12 +1,12 @@
 <template>
   <input
     @click.self="select"
-    :type="model.properties.customProps.get('type').value"
-    :name="model.properties.name"
-    :class="layoutCss"
+    :type="model.properties.get('type').value"
+    :name="model.properties.get('name').value"
+    :class="cssArray"
     class="check-component design-component"
-    :value="model.properties.customProps.get('value').value"
-    v-model="model.properties.customProps.get('checked').value"
+    :value="model.properties.get('value').value"
+    v-model="model.properties.get('checked').value"
   />
 </template>
 <script lang="ts">

@@ -1,11 +1,11 @@
 <template>
   <div>
-    <table v-if="borderProperties" class="table-fixed w-full mb-2">
+    <table v-if="borderCss" class="table-fixed w-full mb-2">
       <tbody>
         <tr>
           <td class="w-5/12 bg-gray-100 border px-4 py-2 text-xs">Border style</td>
           <td class="w-7/12 border">
-            <select v-model="borderProperties.style" class="w-full text-gray-700 px-2 py-2 text-xs">
+            <select v-model="borderCss.style" class="w-full text-gray-700 px-2 py-2 text-xs">
               <option value>Solid</option>
               <option value="dashed">Dashed</option>
               <option value="dotted">Dotted</option>
@@ -16,7 +16,7 @@
         <tr>
           <td class="bg-gray-100 border px-4 py-2 text-xs">Border width</td>
           <td class="border">
-            <select v-model="borderProperties.width" class="w-full text-gray-700 px-2 py-2 text-xs">
+            <select v-model="borderCss.width" class="w-full text-gray-700 px-2 py-2 text-xs">
               <option value>(none)</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -27,17 +27,14 @@
         <tr>
           <td class="bg-gray-100 border px-4 py-2 text-xs">Border color</td>
           <td class="border">
-            <SelectColorComponent
-              v-model="borderProperties.color.color"
-              @color-selected="setBorderColor"
-            ></SelectColorComponent>
+            <SelectColorComponent v-model="borderCss.color.color" @color-selected="setBorderColor"></SelectColorComponent>
           </td>
         </tr>
         <tr>
           <td class="bg-gray-100 border px-4 py-2 text-xs">Border hover color</td>
           <td class="border">
             <SelectColorComponent
-              v-model="borderProperties.color.hover"
+              v-model="borderCss.color.hover"
               @color-selected="setBorderHoverColor"
             ></SelectColorComponent>
           </td>
@@ -45,7 +42,7 @@
         <tr>
           <td class="bg-gray-100 border px-4 py-2 text-xs">Border radius</td>
           <td class="border">
-            <select v-model="borderProperties.radius" class="w-full text-gray-700 px-2 py-2 text-xs">
+            <select v-model="borderCss.radius" class="w-full text-gray-700 px-2 py-2 text-xs">
               <option value>(default)</option>
               <option value="none">None</option>
               <option value="1">Rounded</option>
@@ -58,21 +55,18 @@
         </tr>
       </tbody>
     </table>
-    <table v-if="bgColorsProperties" class="table-fixed w-full mb-2">
+    <table v-if="bgColorCss" class="table-fixed w-full mb-2">
       <tbody>
         <tr>
           <td class="w-5/12 bg-gray-100 border px-4 py-2 text-xs">Bg color</td>
           <td class="w-7/12 border">
-            <SelectColorComponent v-model="bgColorsProperties.color" @color-selected="setBgColor"></SelectColorComponent>
+            <SelectColorComponent v-model="bgColorCss.color" @color-selected="setBgColor"></SelectColorComponent>
           </td>
         </tr>
         <tr>
           <td class="bg-gray-100 border px-4 py-2 text-xs">Bg hover color</td>
           <td class="border">
-            <SelectColorComponent
-              v-model="bgColorsProperties.hover"
-              @color-selected="setBgHoverColor"
-            ></SelectColorComponent>
+            <SelectColorComponent v-model="bgColorCss.hover" @color-selected="setBgHoverColor"></SelectColorComponent>
           </td>
         </tr>
       </tbody>
@@ -82,7 +76,6 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import {
-  PropertiesModel,
   ResponsiveSizes,
   ComponentModel,
   BorderModel,
@@ -95,39 +88,37 @@ import SelectColorComponent from './SelectColorComponent.vue';
     SelectColorComponent
   }
 })
-export default class BorderBgProperties extends Vue {
+export default class BorderBgCss extends Vue {
   @Prop()
   size!: ResponsiveSizes;
 
   @Prop()
   model!: ComponentModel;
 
-  get borderProperties(): BorderModel | undefined {
+  get borderCss(): BorderModel | undefined {
     if (!this.model) return undefined;
-    const properties: PropertiesModel = (this.model as any).properties;
-    return properties.borders.get(this.size);
+    return this.model.getCss<BorderModel>('border', this.size);
   }
 
-  get bgColorsProperties(): ColorModel | undefined {
+  get bgColorCss(): ColorModel | undefined {
     if (!this.model) return undefined;
-    const properties: PropertiesModel = (this.model as any).properties;
-    return properties.backgroundColors.get(this.size);
+    return this.model.getCss<ColorModel>('backgroundColor', this.size);
   }
 
   setBorderColor(color: string) {
-    this.borderProperties!.color.color = color;
+    this.borderCss!.color.color = color;
   }
 
   setBorderHoverColor(color: string) {
-    this.borderProperties!.color.hover = color;
+    this.borderCss!.color.hover = color;
   }
 
   setBgColor(color: string) {
-    this.bgColorsProperties!.color = color;
+    this.bgColorCss!.color = color;
   }
 
   setBgHoverColor(color: string) {
-    this.bgColorsProperties!.hover = color;
+    this.bgColorCss!.hover = color;
   }
 }
 </script>

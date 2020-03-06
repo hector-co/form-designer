@@ -1,9 +1,9 @@
 <template>
   <textarea
     @click.self="select"
-    v-model="model.properties.text"
-    :rows="model.properties.customProps.get('rows').value"
-    :class="layoutCss"
+    v-model="model.properties.get('text').value"
+    :rows="model.properties.get('rows').value"
+    :class="cssArray"
     class="textarea-component design-component"
     readonly
     style="resize: none;"

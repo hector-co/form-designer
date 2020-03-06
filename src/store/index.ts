@@ -6,8 +6,12 @@ import {
   ComponentModel,
   mapWithResponsiveSizes,
   Dictionary,
-  PropertiesModel,
-  CssModel
+  CssModel,
+  LayoutModel,
+  BorderModel,
+  TypographyModel,
+  ColorModel,
+  PropertyModel
 } from '@/models';
 
 Vue.use(Vuex);
@@ -22,7 +26,7 @@ interface IDesignerState {
 
 const container = new ComponentModel(null, 'Container', 'div');
 container.role = 'Container';
-container.properties.baseCssClasses = 'mx-auto';
+container.baseCssClasses = 'mx-auto';
 
 const store: StoreOptions<IDesignerState> = {
   // strict: true,
@@ -78,46 +82,10 @@ const store: StoreOptions<IDesignerState> = {
 
       addComponents(state.selected, 'Option', state.counter);
     },
-    addInputWithLabel(state) {
-      if (!state.selected) return;
-
-      const grid = addComponents(state.selected, 'Grid', state.counter, 'div');
-      grid.properties.layouts.get(ResponsiveSizes.All)!.marginBottom = '2';
-      const contentCss = grid.properties.customCss.get('contents')!.get(ResponsiveSizes.All) as ContentModel;
-      contentCss.flexWrap = '';
-      contentCss.alignItems = 'center';
-
-      const column1 = addComponents(grid, 'Column', state.counter);
-      column1.properties.layouts.get(ResponsiveSizes.Medium)!.width = '1/3';
-
-      const column2 = addComponents(grid, 'Column', state.counter);
-      column2.properties.layouts.get(ResponsiveSizes.Medium)!.width = '2/3';
-
-      const label = addComponents(column1, 'Label', state.counter);
-      label.properties.layouts.get(ResponsiveSizes.Medium)!.marginRight = '2';
-      label.properties.typographies.get(ResponsiveSizes.Medium)!.textAlign = 'right';
-
-      const input = addComponents(column2, 'Input', state.counter);
-      input.properties.id = input.id;
-      label.properties.customProps.get('forId')!.value = input.properties.id;
-    },
     addCheck(state) {
       if (!state.selected) return;
 
       addComponents(state.selected, 'Check', state.counter);
-    },
-    addCheckWithLabel(state) {
-      if (!state.selected) return;
-
-      const label = addComponents(state.selected, 'Label', state.counter);
-      label.properties.text = '';
-
-      const check = addComponents(label, 'Check', state.counter);
-      check.properties.layouts.get(ResponsiveSizes.All)!.marginRight = '2';
-      check.properties.layouts.get(ResponsiveSizes.All)!.marginTop = '4';
-      check.properties.layouts.get(ResponsiveSizes.All)!.marginBottom = '3';
-
-      addComponents(label, 'Span', state.counter);
     },
     addButton(state) {
       if (!state.selected) return;
@@ -254,11 +222,12 @@ function isAncestorOf(parent: ComponentModel, child: ComponentModel) {
 
 function addComponents(
   parent: ComponentModel, typeName: string, counter: Dictionary<string, number>,
-  tagName: string = '', autoCloseTag: boolean = false, addDefaultValues: boolean = true): ComponentModel {
+  tagName: string = '', baseCssClasses: string = '', autoCloseTag: boolean = false,
+  addDefaultValues: boolean = true): ComponentModel {
   if (!counter.has(typeName)) counter.add(typeName, 0);
   const counterValue = counter.get(typeName)! + 1;
 
-  const component = new ComponentModel(parent, typeName, tagName, autoCloseTag);
+  const component = new ComponentModel(parent, typeName, tagName, baseCssClasses, autoCloseTag);
   component.id = `${typeName}_${counterValue}`;
   component.parent = parent;
   parent.children.push(component);
@@ -267,105 +236,106 @@ function addComponents(
     case 'grid':
       component.tagName = 'div';
       component.role = 'Grid';
-      component.properties.addCustomCss('contents', mapWithResponsiveSizes((prefix) => new ContentModel(prefix)));
+      component.css.add('content', mapWithResponsiveSizes((prefix) => new ContentModel(prefix)));
 
       if (!addDefaultValues) break;
-      (component.properties.customCss.get('contents').get(ResponsiveSizes.All) as ContentModel).flex = true;
-      component.properties.layouts.get(ResponsiveSizes.All)!.width = 'full';
+      component.getCss<LayoutModel>('layout', ResponsiveSizes.All).width = 'full';
+      component.getCss<ContentModel>('content', ResponsiveSizes.All).flex = true;
       break;
     case 'column':
       if (!tagName) component.tagName = 'div';
-      component.properties.addCustomCss('contents', mapWithResponsiveSizes((prefix) => new ContentModel(prefix)));
+      component.css.add('content', mapWithResponsiveSizes((prefix) => new ContentModel(prefix)));
       component.role = 'Column';
 
       if (!addDefaultValues) break;
-      component.properties.layouts.get(ResponsiveSizes.All)!.width = 'full';
-      component.properties.layouts.get(ResponsiveSizes.All)!.paddingTop = '1';
-      component.properties.layouts.get(ResponsiveSizes.All)!.paddingBottom = '1';
+      component.getCss<LayoutModel>('layout', ResponsiveSizes.All).width = 'full';
+      component.getCss<LayoutModel>('layout', ResponsiveSizes.All).paddingTop = '1';
+      component.getCss<LayoutModel>('layout', ResponsiveSizes.All).paddingBottom = '1';
+
       if ((parent && parent.typeName === 'Column') || (parent.parent && parent.parent.typeName === 'Column')) break;
-      component.properties.layouts.get(ResponsiveSizes.All)!.paddingRight = '1';
-      component.properties.layouts.get(ResponsiveSizes.All)!.paddingLeft = '1';
+      component.getCss<LayoutModel>('layout', ResponsiveSizes.All).paddingRight = '1';
+      component.getCss<LayoutModel>('layout', ResponsiveSizes.All).paddingLeft = '1';
       break;
     case 'label':
-      component.properties.baseCssClasses = 'block';
-      component.properties.addCustomProperty('forId', '', 'for', undefined, false);
+      component.baseCssClasses = 'block';
+      component.addProperty('for', '');
 
       if (!addDefaultValues) break;
-      component.properties.text = `${typeName}_${counterValue}`;
+      component.properties.get('text').value = `${typeName}_${counterValue}`;
       break;
     case 'span':
       if (!addDefaultValues) break;
-      component.properties.text = `${typeName}_${counterValue}`;
+      component.properties.get('text').value = `${typeName}_${counterValue}`;
       break;
     case 'input':
       component.autoCloseTag = true;
       component.component = 'InputComponent';
-      component.properties.addCustomProperty('type', 'text');
-      component.properties.addCustomProperty('value', '');
+      component.addProperty('type', 'text');
+      component.addProperty('value', '');
 
       if (!addDefaultValues) break;
-      component.properties.layouts.get(ResponsiveSizes.All)!.paddingTop = '2';
-      component.properties.layouts.get(ResponsiveSizes.All)!.paddingBottom = '2';
-      component.properties.layouts.get(ResponsiveSizes.All)!.paddingLeft = '2';
-      component.properties.layouts.get(ResponsiveSizes.All)!.paddingRight = '2';
-      component.properties.layouts.get(ResponsiveSizes.All)!.width = 'full';
-      component.properties.borders.get(ResponsiveSizes.All)!.width = '1';
+      component.getCss<LayoutModel>('layout', ResponsiveSizes.All).paddingTop = '2';
+      component.getCss<LayoutModel>('layout', ResponsiveSizes.All).paddingBottom = '2';
+      component.getCss<LayoutModel>('layout', ResponsiveSizes.All).paddingLeft = '2';
+      component.getCss<LayoutModel>('layout', ResponsiveSizes.All).paddingRight = '2';
+      component.getCss<LayoutModel>('layout', ResponsiveSizes.All).width = 'full';
+      component.getCss<BorderModel>('border', ResponsiveSizes.All).width = '1';
       break;
     case 'textarea':
-      component.properties.baseCssClasses = 'block';
+      component.baseCssClasses = 'block';
       component.component = 'TextareaComponent';
-      component.properties.addCustomProperty('rows', '');
+      component.addProperty('rows', '');
 
       if (!addDefaultValues) break;
-      component.properties.layouts.get(ResponsiveSizes.All)!.paddingTop = '2';
-      component.properties.layouts.get(ResponsiveSizes.All)!.paddingBottom = '2';
-      component.properties.layouts.get(ResponsiveSizes.All)!.paddingLeft = '2';
-      component.properties.layouts.get(ResponsiveSizes.All)!.paddingRight = '2';
-      component.properties.layouts.get(ResponsiveSizes.All)!.width = 'full';
-      component.properties.borders.get(ResponsiveSizes.All)!.width = '1';
+      component.getCss<LayoutModel>('layout', ResponsiveSizes.All).paddingTop = '2';
+      component.getCss<LayoutModel>('layout', ResponsiveSizes.All).paddingBottom = '2';
+      component.getCss<LayoutModel>('layout', ResponsiveSizes.All).paddingLeft = '2';
+      component.getCss<LayoutModel>('layout', ResponsiveSizes.All).paddingRight = '2';
+      component.getCss<LayoutModel>('layout', ResponsiveSizes.All).width = 'full';
+      component.getCss<BorderModel>('border', ResponsiveSizes.All).width = '1';
       break;
     case 'select':
       component.component = 'SelectComponent';
 
       if (!addDefaultValues) break;
-      component.properties.layouts.get(ResponsiveSizes.All)!.paddingTop = '2';
-      component.properties.layouts.get(ResponsiveSizes.All)!.paddingBottom = '2';
-      component.properties.layouts.get(ResponsiveSizes.All)!.paddingLeft = '2';
-      component.properties.layouts.get(ResponsiveSizes.All)!.paddingRight = '2';
-      component.properties.layouts.get(ResponsiveSizes.All)!.width = 'full';
-      component.properties.borders.get(ResponsiveSizes.All)!.width = '1';
+      component.getCss<LayoutModel>('layout', ResponsiveSizes.All).paddingTop = '2';
+      component.getCss<LayoutModel>('layout', ResponsiveSizes.All).paddingBottom = '2';
+      component.getCss<LayoutModel>('layout', ResponsiveSizes.All).paddingLeft = '2';
+      component.getCss<LayoutModel>('layout', ResponsiveSizes.All).paddingRight = '2';
+      component.getCss<LayoutModel>('layout', ResponsiveSizes.All).width = 'full';
+      component.getCss<BorderModel>('border', ResponsiveSizes.All).width = '1';
       break;
     case 'option':
-      component.properties.addCustomProperty('value', '');
-      component.properties.addCustomProperty('selected', false, 'selected',
+      component.addProperty('value', '');
+      component.addProperty('selected', false, 'selected',
         (value) => value ? 'selected' : undefined);
       break;
     case 'check':
       component.tagName = 'input';
       component.component = 'CheckComponent';
       component.autoCloseTag = true;
-      component.properties.addCustomProperty('type', 'checkbox');
-      component.properties.addCustomProperty('value', '');
-      component.properties.addCustomProperty('checked', false, 'checked',
+      component.addProperty('type', 'checkbox');
+      component.addProperty('value', '');
+      component.addProperty('checked', false, 'checked',
         (value) => value ? 'checked' : undefined);
       break;
     case 'button':
       if (!addDefaultValues) break;
-      component.properties.text = `${typeName}_${counterValue}`;
-      component.properties.typographies.get(ResponsiveSizes.All)!.textColor.color = 'white';
-      component.properties.backgroundColors.get(ResponsiveSizes.All)!.color = 'blue-500';
-      component.properties.backgroundColors.get(ResponsiveSizes.All)!.hover = 'blue-700';
-      component.properties.layouts.get(ResponsiveSizes.All)!.paddingTop = '2';
-      component.properties.layouts.get(ResponsiveSizes.All)!.paddingBottom = '2';
-      component.properties.layouts.get(ResponsiveSizes.All)!.paddingLeft = '4';
-      component.properties.layouts.get(ResponsiveSizes.All)!.paddingRight = '4';
+      component.properties.get('text').value = `${typeName}_${counterValue}`;
+      component.getCss<TypographyModel>('typography', ResponsiveSizes.All).textColor.color = 'white';
+      component.getCss<ColorModel>('backgroundColor', ResponsiveSizes.All).color = 'blue-500';
+      component.getCss<ColorModel>('backgroundColor', ResponsiveSizes.All).hover = 'blue-700';
+      component.getCss<LayoutModel>('layout', ResponsiveSizes.All).paddingTop = '2';
+      component.getCss<LayoutModel>('layout', ResponsiveSizes.All).paddingBottom = '2';
+      component.getCss<LayoutModel>('layout', ResponsiveSizes.All).paddingLeft = '4';
+      component.getCss<LayoutModel>('layout', ResponsiveSizes.All).paddingRight = '4';
       break;
     case 'anchor':
-      component.properties.addCustomProperty('href', '', 'href', undefined, false);
-      component.properties.addCustomProperty('target', '', 'target',
+      component.addProperty('href', '', 'href', undefined, false);
+      component.addProperty('target', '', 'target',
         (value) => value === '' ? undefined : '_blank', false);
       if (!addDefaultValues) break;
-      component.properties.text = `${typeName}_${counterValue}`;
+      component.properties.get('text').value = `${typeName}_${counterValue}`;
       break;
   }
 
@@ -381,41 +351,35 @@ function getSpaces(count: number): string {
 
 function toHtml(
   component: ComponentModel, level: number = 0) {
-  let html = `${getSpaces(level)}<${component.tagName} ${propsToHtmlAttributes(component.properties).trim()}`;
+  let html = `${getSpaces(level)}<${component.tagName} ${htmlAttributes(component)}`;
   if (component.autoCloseTag) return `${html} />`;
   else html += '>';
 
-  if ((!component.children || !component.children.length) && !component.properties.text)
+  if ((!component.children || !component.children.length) && !component.properties.get('text').value)
     return `${html}</${component.tagName}>`;
 
   if (component.children && component.children.length)
     html += '\n' + component.children.map(c => toHtml(c, level + 1)).join('\n');
 
-  if (component.properties.text)
-    html += '\n' + `${getSpaces(level + 1)}${component.properties.text}`;
+  if (component.properties.get('text').value)
+    html += '\n' + `${getSpaces(level + 1)}${component.properties.get('text').value}`;
 
   return `${html}\n${getSpaces(level)}</${component.tagName}>`;
 }
 
-function propToHtmlString(name: string, value: string) {
-  if (!value || !value.trim()) return '';
-  return `${name}="${value.trim()}" `;
+function htmlAttributes(component: ComponentModel): string {
+  const propAtrs = component.properties.tuples.map(t => t.value)
+    .map(p => toHtmlAttr(p.attributeName, p.calculated))
+    .filter(v => v)
+    .join(' ');
+  const cssClasses = toHtmlAttr('class', component.cssArray.join(' '));
+
+  return (`${cssClasses} ${propAtrs}`).trim();
 }
 
-function propsToHtmlAttributes(properties: PropertiesModel) {
-  let customAttrValues = '';
-  properties.customProps.tuples.forEach(p => {
-    const mapped = p.value.attributeMap(p.value.value);
-    if (mapped !== undefined)
-      customAttrValues += propToHtmlString(p.value.attributeName, mapped);
-    else if (p.value)
-      customAttrValues += propToHtmlString(p.value.attributeName, p.value.value);
-  });
-
-  return propToHtmlString('id', properties.id) +
-    propToHtmlString('name', properties.name) +
-    propToHtmlString('class', properties.cssArray.join(' ')) +
-    customAttrValues;
+function toHtmlAttr(name: string, value: string) {
+  if (!value || !value.trim()) return '';
+  return `${name}="${value.trim()}" `;
 }
 
 function toJson(component: ComponentModel): string {
@@ -454,12 +418,12 @@ function removeEmptyValues(obj: any, fieldsToIncludeAlways: string[] = [], field
 
 function jsonPrepare(component: ComponentModel): string {
   const newComp = removeEmptyValues(component, [], ['id', 'parent', 'children', 'properties']);
-  newComp.children = [];
-  component.children.forEach(c => {
-    newComp.children.push(jsonPrepare(c));
-  });
-  newComp.props = removeEmptyValues(component.properties.getAttributes(true, true));
-  newComp.css = removeEmptyValues(component.properties.getCss(), [], ['responsiveSize', 'type', 'cssArray']);
+  // newComp.children = [];
+  // component.children.forEach(c => {
+  //   newComp.children.push(jsonPrepare(c));
+  // });
+  // newComp.props = removeEmptyValues(component.properties.getAttributes(true, true));
+  // newComp.css = removeEmptyValues(component.properties.getCss(), [], ['responsiveSize', 'type', 'cssArray']);
 
   return newComp;
 }
@@ -467,7 +431,7 @@ function jsonPrepare(component: ComponentModel): string {
 function clearState(state: IDesignerState) {
   const stateContainer = new ComponentModel(null, 'Container', 'div');
   stateContainer.role = 'Container';
-  stateContainer.properties.baseCssClasses = 'mx-auto';
+  stateContainer.baseCssClasses = 'mx-auto';
 
   state.root = stateContainer;
   state.selected = null;
@@ -484,7 +448,7 @@ function loadState(state: IDesignerState, currentState: any) {
 function loadComponents(parent: ComponentModel, children: Array<any>, counter: Dictionary<string, number>) {
   if (!children) return;
   children.forEach(c => {
-    const newComp = addComponents(parent, c.typeName, counter, c.tagName, !!c.autoCloseTag, false);
+    const newComp = addComponents(parent, c.typeName, counter, c.tagName, c.baseCssClasses, !!c.autoCloseTag, false);
     applyProperties(newComp, c.props);
     applyCss(newComp, c.css);
 
@@ -495,22 +459,12 @@ function loadComponents(parent: ComponentModel, children: Array<any>, counter: D
 function applyProperties(component: ComponentModel, props: any) {
   if (props == null) return;
   Object.keys(props).forEach(key => {
-    if (key === 'id')
-      component.properties.id = props.id;
-    else if (key === 'name')
-      component.properties.name = props.name;
-    else if (key === 'text')
-      component.properties.text = props.text;
-    else if (key === 'baseCssClasses')
-      component.properties.baseCssClasses = props.baseCssClasses;
-    else {
-      if (component.properties.customProps.has(key)) {
-        component.properties.customProps.get(key).value = props[key];
-      } else {
-        const tuple = component.properties.customProps.tuples.find(t => t.value.attributeName === key);
-        if (!tuple) return;
-        tuple.value.value = props[key];
-      }
+    if (component.properties.has(key)) {
+      component.properties.get(key).value = props[key];
+    } else {
+      const tuple = component.properties.tuples.find(t => t.value.attributeName === key);
+      if (!tuple) return;
+      tuple.value.value = props[key];
     }
   });
 }
@@ -533,18 +487,8 @@ function stringToResponsiveSize(value: string): ResponsiveSizes {
 function applyCss(component: ComponentModel, css: any) {
   if (css == null) return;
   Object.keys(css).forEach(key => {
-    if (key === 'layouts')
-      setCssValues(component.properties.layouts, css.layouts);
-    else if (key === 'typographies')
-      setCssValues(component.properties.typographies, css.typographies);
-    else if (key === 'backgroundColors')
-      setCssValues(component.properties.backgroundColors, css.backgroundColors);
-    else if (key === 'borders')
-      setCssValues(component.properties.borders, css.borders);
-    else if (key === 'interactivities')
-      setCssValues(component.properties.interactivities, css.interactivities);
-    else if (component.properties.customCss.has(key))
-      setCssValues(component.properties.customCss.get(key), css[key]);
+    if (component.css.has(key))
+      setCssValues(component.css.get(key), css[key]);
   });
 }
 
