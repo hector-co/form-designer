@@ -188,7 +188,7 @@ const store: StoreOptions<IDesignerState> = {
     loadState(state) {
       clearState(state);
       const currentState = window.localStorage.getItem('designer-state')!;
-      utils.fromStateJson(state.root, currentState, state.counter);
+      utils.fromStateJson(state.root, JSON.parse(currentState), state.counter);
     },
     clearState(state) {
       clearState(state);
