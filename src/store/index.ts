@@ -98,12 +98,12 @@ const store: StoreOptions<IDesignerState> = {
       label.properties.customProps.get('forId')!.value = input.properties.id;
     },
     addCheck(state) {
-      if (!state.selected || !(state.selected instanceof ComponentModel)) return;
+      if (!state.selected) return;
 
       addComponents(state.selected, 'Check', state.counter);
     },
     addCheckWithLabel(state) {
-      if (!state.selected || !(state.selected instanceof ComponentModel)) return;
+      if (!state.selected) return;
 
       const label = addComponents(state.selected, 'Label', state.counter);
       label.properties.text = '';
@@ -116,12 +116,17 @@ const store: StoreOptions<IDesignerState> = {
       addComponents(label, 'Span', state.counter);
     },
     addButton(state) {
-      if (!state.selected || !(state.selected instanceof ComponentModel)) return;
+      if (!state.selected) return;
 
       addComponents(state.selected, 'Button', state.counter);
     },
+    addAnchor(state) {
+      if (!state.selected) return;
+
+      addComponents(state.selected, 'Anchor', state.counter, 'a');
+    },
     addTable(state) {
-      if (!state.selected || !(state.selected instanceof ComponentModel)) return;
+      if (!state.selected) return;
 
       const table = addComponents(state.selected, 'Table', state.counter);
 
@@ -130,17 +135,17 @@ const store: StoreOptions<IDesignerState> = {
       addComponents(table, 'TableBody', state.counter, 'tbody');
     },
     addTableRow(state) {
-      if (!state.selected || !(state.selected instanceof ComponentModel)) return;
+      if (!state.selected) return;
 
       addComponents(state.selected, 'TableRow', state.counter, 'tr');
     },
     addHeaderCell(state) {
-      if (!state.selected || !(state.selected instanceof ComponentModel)) return;
+      if (!state.selected) return;
 
       addComponents(state.selected, 'HeaderCell', state.counter, 'th');
     },
     addDataCell(state) {
-      if (!state.selected || !(state.selected instanceof ComponentModel)) return;
+      if (!state.selected) return;
 
       addComponents(state.selected, 'DataCell', state.counter, 'td');
     },
@@ -305,6 +310,13 @@ function addComponents(
       component.properties.layouts.get(ResponsiveSizes.All)!.paddingBottom = '2';
       component.properties.layouts.get(ResponsiveSizes.All)!.paddingLeft = '4';
       component.properties.layouts.get(ResponsiveSizes.All)!.paddingRight = '4';
+      break;
+    case 'anchor':
+      component.properties.addCustomProperty('href', '', 'href', undefined, false);
+      component.properties.addCustomProperty('target', '', 'target',
+        (value) => value === '' ? undefined : '_blank', false);
+      if (!addDefaultValues) break;
+      component.properties.text = `${typeName}_${counterValue}`;
       break;
   }
 

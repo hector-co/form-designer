@@ -53,6 +53,10 @@
           class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
         >button</button>
         <button
+          @click="addAnchor"
+          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+        >a</button>
+        <button
           @click="addTable"
           class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
         >table</button>
@@ -125,7 +129,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 import { ComponentModel } from '@/models';
 import TreeView from '@/components/TreeView.vue';
 import PropertiesView from '@/components/properties/PropertiesView.vue';
@@ -146,6 +150,30 @@ Vue.component('TextareaComponent', TextareaComponent);
 @Component({
   computed: {
     ...mapState(['root', 'selected'])
+  },
+  methods: {
+    ...mapMutations([
+      'addGrid',
+      'addColumn',
+      'addLabel',
+      'addSpan',
+      'addInput',
+      'addTextarea',
+      'addSelect',
+      'addOption',
+      'addCheck',
+      'addButton',
+      'addAnchor',
+      'addTable',
+      'addTableRow',
+      'addHeaderCell',
+      'addDataCell',
+      'moveUp',
+      'moveDown',
+      'deleteComponent',
+      'clearState',
+      'loadState'
+    ])
   }
 })
 export default class Designer extends Vue {
@@ -156,90 +184,6 @@ export default class Designer extends Vue {
   constructor() {
     super();
     this.htmlCode = '';
-  }
-
-  addGrid() {
-    this.$store.commit('addGrid');
-  }
-
-  addColumn() {
-    this.$store.commit('addColumn');
-  }
-
-  addLabel() {
-    this.$store.commit('addLabel');
-  }
-
-  addSpan() {
-    this.$store.commit('addSpan');
-  }
-
-  addInput() {
-    this.$store.commit('addInput');
-  }
-
-  addTextarea() {
-    this.$store.commit('addTextarea');
-  }
-
-  addSelect() {
-    this.$store.commit('addSelect');
-  }
-
-  addOption() {
-    this.$store.commit('addOption');
-  }
-
-  addInputWithLabel() {
-    this.$store.commit('addInputWithLabel');
-  }
-
-  addCheck() {
-    this.$store.commit('addCheck');
-  }
-
-  addCheckWithLabel() {
-    this.$store.commit('addCheckWithLabel');
-  }
-
-  addButton() {
-    this.$store.commit('addButton');
-  }
-
-  addTable() {
-    this.$store.commit('addTable');
-  }
-
-  addTableRow() {
-    this.$store.commit('addTableRow');
-  }
-
-  addHeaderCell() {
-    this.$store.commit('addHeaderCell');
-  }
-
-  addDataCell() {
-    this.$store.commit('addDataCell');
-  }
-
-  moveUp() {
-    this.$store.commit('moveUp');
-  }
-
-  moveDown() {
-    this.$store.commit('moveDown');
-  }
-
-  deleteComponent() {
-    this.$store.commit('delete');
-  }
-
-  clearState() {
-    this.$store.commit('clearState');
-  }
-
-  loadState() {
-    this.$store.commit('loadState');
   }
 
   saveState() {

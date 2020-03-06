@@ -71,6 +71,30 @@
           </td>
         </tr>
       </template>
+      <template v-if="isAnchor">
+        <tr>
+          <td class="w-5/12 bg-gray-100 border px-4 py-2 text-xs">HRef</td>
+          <td class="w-7/12 border">
+            <input
+              v-model="model.properties.customProps.get('href').value"
+              class="w-full py-2 px-3 text-gray-700 leading-tight text-xs"
+              type="text"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td class="w-5/12 bg-gray-100 border px-4 py-2 text-xs">Target</td>
+          <td class="w-7/12 border">
+            <select
+              v-model="model.properties.customProps.get('target').value"
+              class="w-full text-gray-700 px-2 py-2 text-xs"
+            >
+              <option value>Self</option>
+              <option value="_blank">Blank</option>
+            </select>
+          </td>
+        </tr>
+      </template>
       <template v-if="hasText">
         <tr>
           <td class="w-5/12 bg-gray-100 border px-4 py-2 text-xs">Text</td>
@@ -168,7 +192,8 @@ export default class PropertiesView extends Vue {
       'Button',
       'Option',
       'DataCell',
-      'HeaderCell'
+      'HeaderCell',
+      'Anchor'
     ];
   }
 
@@ -211,6 +236,10 @@ export default class PropertiesView extends Vue {
 
   get isOption(): boolean {
     return this.model.typeName === 'Option';
+  }
+
+  get isAnchor(): boolean {
+    return this.model.typeName === 'Anchor';
   }
 }
 </script>
