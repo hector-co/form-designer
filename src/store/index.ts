@@ -15,6 +15,8 @@ Vue.use(Vuex);
 interface IDesignerState {
   root: ComponentModel;
   selected: ComponentModel | null;
+  selectedFor: ComponentModel | null;
+  operation: string;
   counter: Dictionary<string, number>;
 }
 
@@ -27,7 +29,9 @@ const store: StoreOptions<IDesignerState> = {
   state: {
     root: container,
     selected: null,
-    counter: new Dictionary<string, number>()
+    selectedFor: null,
+    operation: '',
+    counter: new Dictionary<string, number>(),
   },
   mutations: {
     select(state, component) {
@@ -153,11 +157,47 @@ const store: StoreOptions<IDesignerState> = {
       if (!state.selected || !state.selected.parent || state.selected.typeName === 'TableHead' ||
         state.selected.typeName === 'TableBody') return;
 
+      if (state.selected === state.selectedFor) {
+        state.selectedFor = null;
+        state.operation = '';
+      }
+
       const parent = state.selected.parent;
       const index = parent!.children.indexOf(state.selected);
       parent!.children.splice(index, 1);
 
       state.selected = parent;
+    },
+    copySelected(state) {
+      if (!state.selected) return;
+
+      state.selectedFor = state.selected;
+      state.operation = 'paste';
+    },
+    cutSelected(state) {
+      if (!state.selected) return;
+
+      state.selectedFor = state.selected;
+      state.operation = 'cut';
+    },
+    pasteToSelected(state) {
+      if (!state.selected || !state.selectedFor) return;
+
+      const selectedFor = state.selectedFor;
+      const parent = selectedFor.parent!;
+      const newParent = state.selected!;
+
+      if (state.operation === 'cut' && state.selected !== state.selectedFor && !isAncestorOf(selectedFor, newParent)) {
+        const index = parent.children.indexOf(selectedFor!);
+        parent.children.splice(index, 1);
+        selectedFor.parent = newParent;
+        newParent.children.push(selectedFor!);
+        state.selectedFor = null;
+        state.operation = '';
+      } else if (state.operation === 'paste') {
+        const jsonComp = toJson(state.selectedFor);
+        loadComponents(state.selected, [JSON.parse(jsonComp)], state.counter);
+      }
     },
     moveDown(state) {
       if (!state.selected || !state.selected.parent || state.selected.typeName === 'TableHead' ||
@@ -202,6 +242,15 @@ const store: StoreOptions<IDesignerState> = {
     }
   }
 };
+
+function isAncestorOf(parent: ComponentModel, child: ComponentModel) {
+  while (child.parent != null) {
+    if (child.parent === parent)
+      return true;
+    child = child.parent;
+  }
+  return false;
+}
 
 function addComponents(
   parent: ComponentModel, typeName: string, counter: Dictionary<string, number>,

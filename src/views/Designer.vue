@@ -73,6 +73,18 @@
           class="bg-orange-500 hover:bg-orange-700 text-white py-2 px-2 mx-1 my-1 text-xs"
         >td</button>
         <button
+          @click="copySelected"
+          class="bg-green-500 hover:bg-green-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+        >copy</button>
+        <button
+          @click="cutSelected"
+          class="bg-green-500 hover:bg-green-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+        >cut</button>
+        <button
+          @click="pasteToSelected"
+          class="bg-green-500 hover:bg-green-700 text-white py-2 px-2 mx-1 my-1 text-xs"
+        >paste</button>
+        <button
           @click="moveDown"
           class="bg-green-500 hover:bg-green-700 text-white py-2 px-2 mx-1 my-1 text-xs"
         >up</button>
@@ -168,6 +180,9 @@ Vue.component('TextareaComponent', TextareaComponent);
       'addTableRow',
       'addHeaderCell',
       'addDataCell',
+      'copySelected',
+      'cutSelected',
+      'pasteToSelected',
       'moveUp',
       'moveDown',
       'deleteSelected',
