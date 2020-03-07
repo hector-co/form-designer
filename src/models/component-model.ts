@@ -77,6 +77,37 @@ export class ComponentModel implements ComponentModel {
     return result;
   }
 
+  get cssArraySmall() {
+    const result: string[] = [];
+
+    if (this.baseCssClasses)
+      result.push(this.baseCssClasses);
+
+    this.css.tuples.forEach(cs => {
+      result.push(...cs.value.get(ResponsiveSizes.All).cssArray);
+    });
+
+    return result;
+  }
+
+  get cssArrayMedium() {
+    const result: string[] = [];
+
+    if (this.baseCssClasses)
+      result.push(this.baseCssClasses);
+
+    this.css.tuples.forEach(cs => {
+      result.push(...cs.value.get(ResponsiveSizes.All).cssArray);
+      result.push(...cs.value.get(ResponsiveSizes.Medium).cssArray);
+    });
+
+    return result;
+  }
+
+  get cssArrayLarge() {
+    return this.cssArray;
+  }
+
   private cssModelToArray(cssMap: Dictionary<ResponsiveSizes, CssModel>): string[] {
     return [
       ...cssMap.get(ResponsiveSizes.All)!.cssArray,

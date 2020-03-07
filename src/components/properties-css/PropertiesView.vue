@@ -140,9 +140,12 @@
         <tr>
           <th class="w-5/12 bg-gray-100 border px-4 text-xs">Layout</th>
           <td class="w-7/12 border">
-            <select v-model="responsiveSize" class="w-full text-gray-700 px-2 py-2 text-xs">
-              <option :value="0">All</option>
-              <option :value="1">Small</option>
+            <select
+              :value="responsiveSize"
+              @change="sizeSelected"
+              class="w-full text-gray-700 px-2 py-2 text-xs"
+            >
+              <option :value="0">Small</option>
               <option :value="2">Medium</option>
               <option :value="3">Large</option>
             </select>
@@ -199,14 +202,13 @@ import { ResponsiveSizes, ComponentModel } from '@/models';
 export default class PropertiesView extends Vue {
   @Prop()
   model!: ComponentModel;
+  @Prop()
+  responsiveSize!: ResponsiveSizes;
 
   typesWithText: string[];
 
-  responsiveSize!: ResponsiveSizes;
-
   constructor() {
     super();
-    this.responsiveSize = ResponsiveSizes.All;
     this.typesWithText = [
       'Label',
       'Span',
@@ -219,14 +221,14 @@ export default class PropertiesView extends Vue {
     ];
   }
 
+  sizeSelected(event: any) {
+    const value = parseInt(event.target.value, 10);
+    this.$emit('sizeSelected', value);
+  }
+
   get interactivityProperties() {
     if (!this.model) return null;
     return this.model.getCss('interactivity', this.responsiveSize);
-  }
-
-  @Watch('model')
-  onModelChange() {
-    this.responsiveSize = ResponsiveSizes.All;
   }
 
   get hasText(): boolean {

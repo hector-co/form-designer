@@ -8,7 +8,7 @@
     :class="cssArray"
   >
     {{model.properties.get('text').value}}
-    <DefaultComponent v-for="child in model.children" :key="child.id" :model="child"></DefaultComponent>
+    <DefaultComponent v-for="child in model.children" :key="child.id" :model="child" :responsiveSize="responsiveSize"></DefaultComponent>
   </component>
 </template>
 

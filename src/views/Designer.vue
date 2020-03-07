@@ -27,7 +27,7 @@
             ref="propsContainer"
             class="w-full mb-1 md:w-7/12 lg:w-full overflow-y-auto"
           >
-            <PropertiesView :model="selected"></PropertiesView>
+            <PropertiesView :model="selected" :responsiveSize="responsiveSize" @sizeSelected="setSize"></PropertiesView>
           </div>
         </div>
       </div>
@@ -97,22 +97,79 @@
         <div class="w-full pr-1">
           <div class="w-full flex flex-wrap">
             <div class="w-full px-1 mb-2 md:w-2/3 md:mb-1 lg:pl-0">
-              <button @click="copySelected" class="w-12 p-1 mr-1 text-sm text-white bg-green-500 hover:bg-green-700">copy</button>
-              <button @click="cutSelected" class="w-12 p-1 mr-1 text-sm text-white bg-green-500 hover:bg-green-700">cut</button>
-              <button @click="pasteToSelected" class="w-12 p-1 mr-1 text-sm text-white bg-green-500 hover:bg-green-700">paste</button>
-              <button @click="moveUp" class="w-12 p-1 mr-1 text-sm text-white bg-green-500 hover:bg-green-700">up</button>
-              <button @click="moveDown" class="w-12 p-1 mr-1 text-sm text-white bg-green-500 hover:bg-green-700">down</button>
-              <button @click="deleteSelected" class="w-12 p-1 mr-1 text-sm text-white bg-red-500 hover:bg-red-700">del</button>
-              <button @click="clearState" class="w-12 p-1 mr-1 text-sm text-white bg-red-500 hover:bg-red-700">clear</button>
+              <button
+                @click="copySelected"
+                class="w-12 p-1 mr-1 text-sm text-white bg-green-500 hover:bg-green-700"
+              >copy</button>
+              <button
+                @click="cutSelected"
+                class="w-12 p-1 mr-1 text-sm text-white bg-green-500 hover:bg-green-700"
+              >cut</button>
+              <button
+                @click="pasteToSelected"
+                class="w-12 p-1 mr-1 text-sm text-white bg-green-500 hover:bg-green-700"
+              >paste</button>
+              <button
+                @click="moveUp"
+                class="w-12 p-1 mr-1 text-sm text-white bg-green-500 hover:bg-green-700"
+              >up</button>
+              <button
+                @click="moveDown"
+                class="w-12 p-1 mr-1 text-sm text-white bg-green-500 hover:bg-green-700"
+              >down</button>
+              <button
+                @click="deleteSelected"
+                class="w-12 p-1 mr-1 text-sm text-white bg-red-500 hover:bg-red-700"
+              >del</button>
+              <button
+                @click="clearState"
+                class="w-12 p-1 mr-1 text-sm text-white bg-red-500 hover:bg-red-700"
+              >clear</button>
             </div>
             <div class="w-full pl-1 mb-1 md:w-1/3 md:mb-1 flex md:justify-end">
-              <button @click="saveState" class="w-12 p-1 mr-1 text-sm text-white bg-teal-500 hover:bg-teal-700">save</button>
-              <button @click="loadState" class="w-12 p-1 mr-1 text-sm text-white bg-teal-500 hover:bg-teal-700">load</button>
-              <button @click="preview" class="w-12 p-1 mr-1 text-sm text-white bg-teal-500 hover:bg-teal-700">view</button>
-              <button @click="copyHtmlCode" class="w-12 p-1 text-sm text-white bg-teal-500 hover:bg-teal-700">html</button>
+              <button
+                @click="saveState"
+                class="w-12 p-1 mr-1 text-sm text-white bg-teal-500 hover:bg-teal-700"
+              >save</button>
+              <button
+                @click="loadState"
+                class="w-12 p-1 mr-1 text-sm text-white bg-teal-500 hover:bg-teal-700"
+              >load</button>
+              <button
+                @click="preview"
+                class="w-12 p-1 mr-1 text-sm text-white bg-teal-500 hover:bg-teal-700"
+              >view</button>
+              <button
+                @click="copyHtmlCode"
+                class="w-12 p-1 text-sm text-white bg-teal-500 hover:bg-teal-700"
+              >html</button>
             </div>
-            <div ref="compsContainer" class="w-full p-1 ml-1 lg:ml-0 border-2 overflow-y-auto">
-              <DefaultComponent :model="root"></DefaultComponent>
+            <div
+              ref="compsContainer"
+              class="w-full p-1 ml-1 lg:ml-0 border-2 bg-teal-100 overflow-x-auto overflow-y-auto"
+            >
+              <div class="flex flex-wrap hidden md:block">
+                <div class="w-full p-1 flex justify-center mb-2">
+                  <button
+                    class="w-24 py-1 px-2 mr-1 text-sm text-white bg-gray-500 hover:bg-blue-600"
+                    @click="setSize(0)"
+                    :class="{'bg-blue-700':responsiveSize==0}"
+                  >small</button>
+                  <button
+                    class="w-24 py-1 px-2 mr-1 text-sm text-white bg-gray-500 hover:bg-blue-600"
+                    @click="setSize(2)"
+                    :class="{'bg-blue-700':responsiveSize==2}"
+                  >medium</button>
+                  <button
+                    class="w-24 py-1 px-2 mr-1 text-sm text-white bg-gray-500 hover:bg-blue-600 md:hidden lg:block"
+                    @click="setSize(3)"
+                    :class="{'bg-blue-700':responsiveSize==3}"
+                  >large</button>
+                </div>
+              </div>
+              <div ref="compsLayout" class="mx-auto w-full bg-white">
+                <DefaultComponent :model="root" :responsiveSize="responsiveSize"></DefaultComponent>
+              </div>
             </div>
           </div>
         </div>
@@ -124,7 +181,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState, mapMutations } from 'vuex';
-import { ComponentModel } from '@/models';
+import { ComponentModel, ResponsiveSizes } from '@/models';
 import TreeView from '@/components/TreeView.vue';
 import PropertiesView from '@/components/properties-css/PropertiesView.vue';
 import DefaultComponent from '@/components/custom/DefaultComponent.vue';
@@ -177,10 +234,19 @@ export default class Designer extends Vue {
   root!: ComponentModel;
   selected!: ComponentModel;
   htmlCode: string;
+  responsiveSize: ResponsiveSizes;
+  maxWidth: number;
 
   constructor() {
     super();
     this.htmlCode = '';
+    this.responsiveSize = ResponsiveSizes.All;
+    this.maxWidth = 768;
+  }
+
+  setSize(responsiveSize: ResponsiveSizes) {
+    this.responsiveSize = responsiveSize;
+    this.adjustSizes();
   }
 
   saveState() {
@@ -217,11 +283,33 @@ export default class Designer extends Vue {
     this.adjustSizes();
   }
 
+  getResponsiveSizePixels() {
+    switch (this.responsiveSize) {
+      case ResponsiveSizes.All:
+      case ResponsiveSizes.Small:
+        return 640;
+      case ResponsiveSizes.Medium:
+        return 768;
+      case ResponsiveSizes.Large:
+        return 1024;
+        break;
+    }
+  }
+
   adjustSizes() {
     const screenwidth = document.documentElement.clientWidth;
-    if (screenwidth < 1024) {
+    const width = this.getResponsiveSizePixels();
+
+    (this.$refs.compsLayout as HTMLElement).style.width = `${
+      screenwidth < width ? screenwidth : width
+    }px`;
+    if (screenwidth < 768) {
+      (this.$refs.compsContainer as HTMLElement).style.width = `auto`;
+    } else if (screenwidth < 1024) {
       (this.$refs.propsContainer as HTMLElement).style.maxHeight = '16rem';
       (this.$refs.compsContainer as HTMLElement).style.maxHeight = 'auto';
+      (this.$refs.compsContainer as HTMLElement).style.width = `${screenwidth -
+        80}px`;
     } else {
       const maxHeight = document.documentElement.clientHeight;
       (this.$refs
@@ -231,6 +319,8 @@ export default class Designer extends Vue {
       (this.$refs
         .compsContainer as HTMLElement).style.maxHeight = `${maxHeight -
         120}px`;
+      (this.$refs.compsContainer as HTMLElement).style.width = `${screenwidth -
+        404}px`;
     }
   }
 }
