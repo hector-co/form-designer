@@ -1,138 +1,120 @@
 <template>
-  <div class="designer">
-    <div class="flex flex-wrap">
-      <div class="w-full mb-2 p-4 bg-gray-100">
+  <div class="mx-auto">
+    <div class="w-full flex">
+      <div class="w-full p-4 mb-2 bg-gray-100">
         <label class="block text-2xl font-bold">
-          Basic form designer using some
+          <span>Basic form designer using some</span>
           <a
-            class="text-blue-500"
-            target="_blank"
             href="https://tailwindcss.com/"
-          >tailwind css</a> classes
+            target="_blank"
+            class="text-blue-500 cursor-pointer mx-1"
+          >tailwind css</a>
+          <span>classes</span>
         </label>
       </div>
-      <div class="w-full">
-        <button
-          @click="addGrid"
-          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >grid</button>
-        <button
-          @click="addColumn"
-          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >column</button>
-        <button
-          @click="addLabel"
-          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >label</button>
-        <button
-          @click="addInput"
-          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >input</button>
-        <button
-          @click="addTextarea"
-          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >textarea</button>
-        <button
-          @click="addSelect"
-          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >select</button>
-        <button
-          @click="addOption"
-          class="bg-orange-500 hover:bg-orange-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >option</button>
-        <button
-          @click="addSpan"
-          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >span</button>
-        <button
-          @click="addCheck"
-          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >check</button>
-        <button
-          @click="addButton"
-          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >button</button>
-        <button
-          @click="addAnchor"
-          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >a</button>
-        <button
-          @click="addTable"
-          class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >table</button>
-        <button
-          @click="addTableRow"
-          class="bg-orange-500 hover:bg-orange-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >tr</button>
-        <button
-          @click="addHeaderCell"
-          class="bg-orange-500 hover:bg-orange-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >th</button>
-        <button
-          @click="addDataCell"
-          class="bg-orange-500 hover:bg-orange-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >td</button>
-        <button
-          @click="copySelected"
-          class="bg-green-500 hover:bg-green-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >copy</button>
-        <button
-          @click="cutSelected"
-          class="bg-green-500 hover:bg-green-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >cut</button>
-        <button
-          @click="pasteToSelected"
-          class="bg-green-500 hover:bg-green-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >paste</button>
-        <button
-          @click="moveDown"
-          class="bg-green-500 hover:bg-green-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >up</button>
-        <button
-          @click="moveUp"
-          class="bg-green-500 hover:bg-green-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >down</button>
-        <button
-          @click="deleteSelected"
-          class="bg-red-500 hover:bg-red-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >del</button>
-        <button
-          @click="clearState"
-          class="bg-red-500 hover:bg-red-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >clear</button>
-        <button
-          @click="loadState"
-          class="bg-teal-500 hover:bg-teal-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >loadState</button>
-        <button
-          @click="saveState"
-          class="bg-teal-500 hover:bg-teal-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >saveState</button>
-        <button
-          @click="preview"
-          class="bg-teal-500 hover:bg-teal-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >preview</button>
-        <button
-          @click="copyHtmlCode"
-          class="bg-teal-500 hover:bg-teal-700 text-white py-2 px-2 mx-1 my-1 text-xs"
-        >copyHtml</button>
-      </div>
     </div>
-    <div class="flex flex-wrap lg:flex-no-wrap">
-      <div class="left-panel flex flex-wrap w-full lg:w-0">
-        <div class="tree-container lg:mb-2 border w-full md:w-1/2 lg:w-full overflow-y-auto">
-          <TreeView :model="root"></TreeView>
-        </div>
-        <div
-          ref="propsContainer"
-          class="properties-container w-full md:w-1/2 lg:w-full overflow-y-auto"
-        >
-          <PropertiesView :model="selected"></PropertiesView>
+    <div class="w-full flex flex-wrap lg:flex-no-wrap">
+      <div class="w-full mb-2 lg:w-auto border-gray-200">
+        <div class="left-panel w-full flex flex-wrap md:flex-no-wrap lg:flex-wrap">
+          <div
+            id="tree-container"
+            class="tree-container w-full p-1 mb-1 md:w-5/12 lg:w-full border overflow-y-auto"
+          >
+            <TreeView :model="root"></TreeView>
+          </div>
+          <div
+            id="props-container"
+            ref="propsContainer"
+            class="w-full mb-1 md:w-7/12 lg:w-full overflow-y-auto"
+          >
+            <PropertiesView :model="selected"></PropertiesView>
+          </div>
         </div>
       </div>
-      <div class="w-full">
-        <div ref="compsContainer" class="mx-1 px-1 mt-2 lg:mt-0 py-1 border overflow-y-auto">
-          <DefaultComponent :model="root"></DefaultComponent>
+      <div class="w-full flex flex-wrap md:flex-no-wrap">
+        <div class="w-full px-1 mb-1 md:w-20">
+          <button
+            @click="addGrid"
+            class="w-16 py-1 px-2 mb-1 mr-1 md:mr-0 text-sm text-white bg-blue-500 hover:bg-blue-700"
+          >grid</button>
+          <button
+            @click="addColumn"
+            class="w-16 py-1 px-2 mb-1 mr-1 md:mr-0 text-sm text-white bg-blue-500 hover:bg-blue-700"
+          >column</button>
+          <button
+            @click="addLabel"
+            class="w-16 py-1 px-2 mb-1 mr-1 md:mr-0 text-sm text-white bg-blue-500 hover:bg-blue-700"
+          >label</button>
+          <button
+            @click="addSpan"
+            class="w-16 py-1 px-2 mb-1 mr-1 md:mr-0 text-sm text-white bg-blue-500 hover:bg-blue-700"
+          >span</button>
+          <button
+            @click="addInput"
+            class="w-16 py-1 px-2 mb-1 mr-1 md:mr-0 text-sm text-white bg-blue-500 hover:bg-blue-700"
+          >input</button>
+          <button
+            @click="addTextarea"
+            class="w-16 py-1 px-2 mb-1 mr-1 md:mr-0 text-sm text-white bg-blue-500 hover:bg-blue-700"
+          >textarea</button>
+          <button
+            @click="addCheck"
+            class="w-16 py-1 px-2 mb-1 mr-1 md:mr-0 text-sm text-white bg-blue-500 hover:bg-blue-700"
+          >check</button>
+          <button
+            @click="addSelect"
+            class="w-16 py-1 px-2 mb-1 mr-1 md:mr-0 text-sm text-white bg-blue-500 hover:bg-blue-700"
+          >select</button>
+          <button
+            @click="addOption"
+            class="w-16 py-1 px-2 mb-1 mr-1 md:mr-0 text-sm text-white bg-orange-500 hover:bg-orange-700"
+          >option</button>
+          <button
+            @click="addButton"
+            class="w-16 py-1 px-2 mb-1 mr-1 md:mr-0 text-sm text-white bg-blue-500 hover:bg-blue-700"
+          >button</button>
+          <button
+            @click="addAnchor"
+            class="w-16 py-1 px-2 mb-1 mr-1 md:mr-0 text-sm text-white bg-blue-500 hover:bg-blue-700"
+          >a</button>
+          <button
+            @click="addTable"
+            class="w-16 py-1 px-2 mb-1 mr-1 md:mr-0 text-sm text-white bg-blue-500 hover:bg-blue-700"
+          >table</button>
+          <button
+            @click="addTableRow"
+            class="w-16 py-1 px-2 mb-1 mr-1 md:mr-0 text-sm text-white bg-orange-500 hover:bg-orange-700"
+          >tr</button>
+          <button
+            @click="addHeaderCell"
+            class="w-16 py-1 px-2 mb-1 mr-1 md:mr-0 text-sm text-white bg-orange-500 hover:bg-orange-700"
+          >th</button>
+          <button
+            @click="addDataCell"
+            class="w-16 py-1 px-2 mb-1 mr-1 md:mr-0 text-sm text-white bg-orange-500 hover:bg-orange-700"
+          >td</button>
+        </div>
+        <div class="w-full pr-1">
+          <div class="w-full flex flex-wrap">
+            <div class="w-full px-1 mb-2 md:w-2/3 md:mb-1 lg:pl-0">
+              <button @click="copySelected" class="w-12 p-1 mr-1 text-sm text-white bg-green-500 hover:bg-green-700">copy</button>
+              <button @click="cutSelected" class="w-12 p-1 mr-1 text-sm text-white bg-green-500 hover:bg-green-700">cut</button>
+              <button @click="pasteToSelected" class="w-12 p-1 mr-1 text-sm text-white bg-green-500 hover:bg-green-700">paste</button>
+              <button @click="moveUp" class="w-12 p-1 mr-1 text-sm text-white bg-green-500 hover:bg-green-700">up</button>
+              <button @click="moveDown" class="w-12 p-1 mr-1 text-sm text-white bg-green-500 hover:bg-green-700">down</button>
+              <button @click="deleteSelected" class="w-12 p-1 mr-1 text-sm text-white bg-red-500 hover:bg-red-700">del</button>
+              <button @click="clearState" class="w-12 p-1 mr-1 text-sm text-white bg-red-500 hover:bg-red-700">clear</button>
+            </div>
+            <div class="w-full pl-1 mb-1 md:w-1/3 md:mb-1 flex md:justify-end">
+              <button @click="saveState" class="w-12 p-1 mr-1 text-sm text-white bg-teal-500 hover:bg-teal-700">save</button>
+              <button @click="loadState" class="w-12 p-1 mr-1 text-sm text-white bg-teal-500 hover:bg-teal-700">load</button>
+              <button @click="preview" class="w-12 p-1 mr-1 text-sm text-white bg-teal-500 hover:bg-teal-700">view</button>
+              <button @click="copyHtmlCode" class="w-12 p-1 text-sm text-white bg-teal-500 hover:bg-teal-700">html</button>
+            </div>
+            <div ref="compsContainer" class="w-full p-1 ml-1 lg:ml-0 border-2 overflow-y-auto">
+              <DefaultComponent :model="root"></DefaultComponent>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -245,10 +227,10 @@ export default class Designer extends Vue {
       (this.$refs
         .propsContainer as HTMLElement).style.maxHeight = `${maxHeight -
         256 -
-        135}px`;
+        93}px`;
       (this.$refs
         .compsContainer as HTMLElement).style.maxHeight = `${maxHeight -
-        127}px`;
+        120}px`;
     }
   }
 }
@@ -263,42 +245,16 @@ export default class Designer extends Vue {
   background: hsla(210, 100%, 80%, 0.5) !important;
 }
 
+.left-panel {
+  @media (min-width: 1024px) {
+    width: 20rem !important;
+    min-width: 20rem;
+  }
+}
+
 .tree-container,
 .properties-container {
   max-height: 16rem;
   min-height: 16rem;
-}
-
-.left-panel {
-  @media (min-width: 1024px) {
-    width: 24rem;
-    min-width: 24rem;
-  }
-}
-
-.github-corner:hover .octo-arm {
-  animation: octocat-wave 560ms ease-in-out;
-}
-@keyframes octocat-wave {
-  0%,
-  100% {
-    transform: rotate(0);
-  }
-  20%,
-  60% {
-    transform: rotate(-25deg);
-  }
-  40%,
-  80% {
-    transform: rotate(10deg);
-  }
-}
-@media (max-width: 500px) {
-  .github-corner:hover .octo-arm {
-    animation: none;
-  }
-  .github-corner .octo-arm {
-    animation: octocat-wave 560ms ease-in-out;
-  }
 }
 </style>
