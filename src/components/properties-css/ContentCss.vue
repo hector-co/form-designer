@@ -4,13 +4,18 @@
       <tr>
         <td class="w-5/12 bg-gray-100 border px-4 text-xs">Flex</td>
         <td class="w-7/12 border">
-          <select v-model="contentCss.flex" class="w-full text-gray-700 px-2 py-2 text-xs">
+          <select
+            v-model="flexCssValue.flex"
+            class="w-full text-gray-700 px-2 py-2 text-xs"
+            :class="{'bg-gray-200': size!=0}"
+            :disabled="size!=0"
+          >
             <option :value="true">True</option>
             <option :value="false">False</option>
           </select>
         </td>
       </tr>
-      <tr v-if="contentCss.flex">
+      <tr v-if="flexCssValue.flex">
         <td class="w-5/12 bg-gray-100 border px-4 text-xs">Flex wrap</td>
         <td class="w-7/12 border">
           <select v-model="contentCss.flexWrap" class="w-full text-gray-700 px-2 py-2 text-xs">
@@ -21,7 +26,7 @@
           </select>
         </td>
       </tr>
-      <tr v-if="contentCss.flex">
+      <tr v-if="flexCssValue.flex">
         <td class="bg-gray-100 border px-4 text-xs">Justify content</td>
         <td class="border">
           <select v-model="contentCss.justify" class="w-full text-gray-700 px-2 py-2 text-xs">
@@ -34,7 +39,7 @@
           </select>
         </td>
       </tr>
-      <tr v-if="contentCss.flex">
+      <tr v-if="flexCssValue.flex">
         <td class="bg-gray-100 border px-4 text-xs">Align items</td>
         <td class="border">
           <select v-model="contentCss.alignItems" class="w-full text-gray-700 px-2 py-2 text-xs">
@@ -52,11 +57,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import {
-  ResponsiveSizes,
-  ComponentModel,
-  ContentModel
-} from '@/models';
+import { ResponsiveSizes, ComponentModel, ContentModel } from '@/models';
 
 @Component
 export default class ContentCss extends Vue {
@@ -73,6 +74,15 @@ export default class ContentCss extends Vue {
     )
       return undefined;
     return this.model.getCss<ContentModel>('content', this.size);
+  }
+
+  get flexCssValue() {
+    if (
+      !this.model ||
+      (this.model.typeName !== 'Grid' && this.model.typeName !== 'Column')
+    )
+      return undefined;
+    return this.model.getCss<ContentModel>('content', ResponsiveSizes.All);
   }
 }
 </script>

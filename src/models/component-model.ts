@@ -38,9 +38,9 @@ export class ComponentModel implements ComponentModel {
     this.children = [];
 
     this.properties = new Dictionary<string, PropertyModel>();
-    this.properties.add('id', new PropertyModel('id'));
-    this.properties.add('name', new PropertyModel('name'));
-    this.properties.add('text', new PropertyModel('text'));
+    this.properties.add('id', new PropertyModel('id', ''));
+    this.properties.add('name', new PropertyModel('name', ''));
+    this.properties.add('text', new PropertyModel('text', '', undefined, undefined, false));
 
     this.css = new Dictionary<string, Dictionary<ResponsiveSizes, CssModel>>();
     this.css.add('layout', mapWithResponsiveSizes((prefix) => new LayoutModel(prefix)));
@@ -60,8 +60,8 @@ export class ComponentModel implements ComponentModel {
 
   addProperty(
     name: string, value?: any, attributeName?: string, attributeMap?: (value: any) => string | undefined,
-    bindInDesigner: boolean = false) {
-    this.properties.add(name, new PropertyModel(name, value, attributeName, attributeMap, bindInDesigner));
+    forHtml: boolean = true, bindInDesigner: boolean = false) {
+    this.properties.add(name, new PropertyModel(name, value, attributeName, attributeMap, forHtml, bindInDesigner));
   }
 
   get cssArray() {

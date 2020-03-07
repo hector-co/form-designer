@@ -22,13 +22,13 @@ function getSpaces(count: number): string {
 }
 
 function htmlAttributes(component: ComponentModel): string {
-  const propAtrs = component.properties.tuples.map(t => t.value)
+  const propAtrs = component.properties.tuples.map(t => t.value).filter(p => p.forHtml)
     .map(p => toHtmlAttr(p.attributeName, p.calculated))
     .filter(v => v)
     .join(' ');
   const cssClasses = toHtmlAttr('class', component.cssArray.join(' '));
 
-  return (`${cssClasses} ${propAtrs}`).trim();
+  return (`${propAtrs}${cssClasses}`).trim();
 }
 
 function toHtmlAttr(name: string, value: string) {

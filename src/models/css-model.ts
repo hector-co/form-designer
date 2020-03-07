@@ -136,7 +136,7 @@ export class ContentModel extends CssModel {
 
   get cssArray(): string[] {
     const result: string[] = [];
-    if (this.flex)
+    if (this.flex && this.responsiveSize === ResponsiveSizes.All)
       result.push(`${this.prefix}flex`);
     if (this.flexWrap)
       result.push(`${this.prefix}flex-${this.flexWrap}`);

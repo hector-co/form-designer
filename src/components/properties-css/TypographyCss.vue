@@ -20,8 +20,14 @@
             <option value>(default)</option>
             <option value="xs">XSmall</option>
             <option value="sm">Small</option>
+            <option value="Base">Bae</option>
             <option value="lg">Large</option>
             <option value="xl">XLarge</option>
+            <option value="2xl">2XLarge</option>
+            <option value="3xl">3XLarge</option>
+            <option value="4xl">4XLarge</option>
+            <option value="5xl">5XLarge</option>
+            <option value="6xl">6XLarge</option>
           </select>
         </td>
       </tr>

@@ -3,15 +3,17 @@ export class PropertyModel {
   value: any;
   attributeName: string;
   attributeMap: (value: any) => string | undefined;
+  forHtml: boolean;
   bindInDesigner: boolean;
 
   constructor(
     name: string, value?: any, attributeName?: string, attributeMap?: (value: any) => string | undefined,
-    bindInDesigner: boolean = false) {
+    forHtml: boolean = true, bindInDesigner: boolean = false) {
     this.name = name;
     this.value = value;
     this.attributeName = attributeName ? attributeName : name;
     this.attributeMap = attributeMap ? attributeMap : () => undefined;
+    this.forHtml = forHtml;
     this.bindInDesigner = bindInDesigner;
   }
 

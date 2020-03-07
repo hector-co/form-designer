@@ -121,9 +121,9 @@ export function addComponent(
       component.getCss<LayoutModel>('layout', ResponsiveSizes.All).paddingRight = '4';
       break;
     case 'anchor':
-      component.addProperty('href', '', 'href', undefined, false);
+      component.addProperty('href', '', 'href');
       component.addProperty('target', '', 'target',
-        (value) => value === '' ? undefined : '_blank', false);
+        (value) => value === '' ? undefined : '_blank');
       if (!addDefaultValues) break;
       component.properties.get('text').value = `${typeName}_${counterValue}`;
       break;

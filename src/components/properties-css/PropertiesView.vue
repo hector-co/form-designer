@@ -100,7 +100,7 @@
           <td class="w-5/12 bg-gray-100 border px-4 py-2 text-xs">Text</td>
           <td class="w-7/12 border">
             <input
-              v-model="model.properties.text"
+              v-model="model.properties.get('text').value"
               class="w-full py-2 px-3 text-gray-700 leading-tight text-xs"
               type="text"
             />

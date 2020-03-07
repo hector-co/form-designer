@@ -1,8 +1,8 @@
 <template>
   <div class="designer">
     <div class="flex flex-wrap">
-      <div class="w-full mb-2 p-3 bg-gray-100">
-        <label class="block text-xl font-bold">
+      <div class="w-full mb-2 p-4 bg-gray-100">
+        <label class="block text-2xl font-bold">
           Basic form designer using some
           <a
             class="text-blue-500"
@@ -245,10 +245,10 @@ export default class Designer extends Vue {
       (this.$refs
         .propsContainer as HTMLElement).style.maxHeight = `${maxHeight -
         256 -
-        120}px`;
+        135}px`;
       (this.$refs
         .compsContainer as HTMLElement).style.maxHeight = `${maxHeight -
-        112}px`;
+        127}px`;
     }
   }
 }
