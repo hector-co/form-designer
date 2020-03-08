@@ -223,7 +223,7 @@ export default class PropertiesView extends Vue {
 
   sizeSelected(event: any) {
     const value = parseInt(event.target.value, 10);
-    this.$emit('sizeSelected', value);
+    this.$store.commit('setResponsiveSize', value);
   }
 
   get interactivityProperties() {

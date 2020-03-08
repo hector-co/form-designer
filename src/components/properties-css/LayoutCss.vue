@@ -25,13 +25,22 @@
         <td class="bg-gray-100 border px-4 text-xs">Max width</td>
         <td class="border">
           <select v-model="layoutCss.maxWidth" class="w-full text-gray-700 px-2 py-2 text-xs">
-            <option value>(none)</option>
+            <option value>(default)</option>
+            <option value="none">None</option>
             <option value="xs">xs</option>
             <option value="sm">sm</option>
             <option value="md">md</option>
             <option value="lg">lg</option>
             <option value="xl">xl</option>
+            <option value="2xl">2xl</option>
+            <option value="3xl">3xl</option>
+            <option value="4xl">4xl</option>
+            <option value="5xl">5xl</option>
+            <option value="6xl">6xl</option>
             <option value="full">full</option>
+            <option value="screen-sm">screen small</option>
+            <option value="screen-md">screen medium</option>
+            <option value="screen-lg">screen large</option>
           </select>
         </td>
       </tr>

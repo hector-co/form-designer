@@ -2,7 +2,8 @@ import Vue from 'vue';
 import Vuex, { StoreOptions } from 'vuex';
 import {
   ComponentModel,
-  Dictionary
+  Dictionary,
+  ResponsiveSizes
 } from '@/models';
 import utils from '@/utils';
 
@@ -14,6 +15,7 @@ interface IDesignerState {
   selectedFor: ComponentModel | null;
   operation: string;
   counter: Dictionary<string, number>;
+  responsiveSize: ResponsiveSizes;
 }
 
 const container = new ComponentModel(null, 'Container', 'div');
@@ -28,8 +30,12 @@ const store: StoreOptions<IDesignerState> = {
     selectedFor: null,
     operation: '',
     counter: new Dictionary<string, number>(),
+    responsiveSize: ResponsiveSizes.All
   },
   mutations: {
+    setResponsiveSize(state, responsiveSize: ResponsiveSizes) {
+      state.responsiveSize = responsiveSize;
+    },
     select(state, component) {
       state.selected = component;
     },

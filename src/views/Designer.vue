@@ -27,7 +27,7 @@
             ref="propsContainer"
             class="w-full mb-1 md:w-7/12 lg:w-full overflow-y-auto"
           >
-            <PropertiesView :model="selected" :responsiveSize="responsiveSize" @sizeSelected="setSize"></PropertiesView>
+            <PropertiesView :model="selected" :responsiveSize="responsiveSize"></PropertiesView>
           </div>
         </div>
       </div>
@@ -179,7 +179,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import { mapState, mapMutations } from 'vuex';
 import { ComponentModel, ResponsiveSizes } from '@/models';
 import TreeView from '@/components/TreeView.vue';
@@ -200,7 +200,7 @@ Vue.component('TextareaComponent', TextareaComponent);
 
 @Component({
   computed: {
-    ...mapState(['root', 'selected'])
+    ...mapState(['root', 'selected', 'responsiveSize'])
   },
   methods: {
     ...mapMutations([
@@ -233,19 +233,23 @@ Vue.component('TextareaComponent', TextareaComponent);
 export default class Designer extends Vue {
   root!: ComponentModel;
   selected!: ComponentModel;
+  responsiveSize!: ResponsiveSizes;
   htmlCode: string;
-  responsiveSize: ResponsiveSizes;
   maxWidth: number;
 
   constructor() {
     super();
     this.htmlCode = '';
-    this.responsiveSize = ResponsiveSizes.All;
     this.maxWidth = 768;
   }
 
   setSize(responsiveSize: ResponsiveSizes) {
-    this.responsiveSize = responsiveSize;
+    this.$store.commit('setResponsiveSize', responsiveSize);
+    this.adjustSizes();
+  }
+
+  @Watch('responsiveSize')
+  responsiveSizeChange() {
     this.adjustSizes();
   }
 
