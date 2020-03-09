@@ -2,39 +2,43 @@
   "typeName": "Container",
   "tagName": "div",
   "component": "div",
+  "baseCssClasses": "mx-auto",
   "role": "Container",
+  "css": {
+    "layout": {
+      "all": {
+        "paddingTop": "2",
+        "paddingRight": "2",
+        "paddingBottom": "2",
+        "paddingLeft": "2"
+      }
+    }
+  },
   "children": [
     {
       "typeName": "Grid",
       "tagName": "div",
       "component": "div",
       "role": "Grid",
+      "css": {
+        "layout": {
+          "all": {
+            "width": "full"
+          }
+        },
+        "content": {
+          "all": {
+            "flex": true,
+            "flexWrap": "wrap"
+          }
+        }
+      },
       "children": [
         {
           "typeName": "Column",
           "tagName": "div",
           "component": "div",
           "role": "Column",
-          "children": [
-            {
-              "typeName": "Label",
-              "tagName": "label",
-              "component": "label",
-              "children": [],
-              "props": {
-                "text": "Add card"
-              },
-              "css": {
-                "typography": {
-                  "all": {
-                    "textSize": "lg",
-                    "fontWeight": "medium"
-                  }
-                }
-              }
-            }
-          ],
-          "props": {},
           "css": {
             "layout": {
               "all": {
@@ -55,43 +59,116 @@
                 "flexWrap": "wrap"
               }
             }
-          }
+          },
+          "children": [
+            {
+              "typeName": "Label",
+              "tagName": "label",
+              "component": "label",
+              "baseCssClasses": "block",
+              "props": {
+                "text": "Add card"
+              },
+              "css": {
+                "typography": {
+                  "all": {
+                    "textSize": "lg",
+                    "fontWeight": "medium"
+                  }
+                }
+              }
+            }
+          ]
         },
         {
           "typeName": "Column",
           "tagName": "div",
           "component": "div",
           "role": "Column",
+          "css": {
+            "layout": {
+              "all": {
+                "width": "full",
+                "paddingTop": "1",
+                "paddingRight": "3",
+                "paddingBottom": "1",
+                "paddingLeft": "3"
+              }
+            },
+            "border": {
+              "all": {
+                "width": "1",
+                "color": {
+                  "color": "gray-200"
+                }
+              }
+            },
+            "content": {
+              "all": {
+                "flexWrap": "wrap"
+              }
+            }
+          },
           "children": [
             {
               "typeName": "Grid",
               "tagName": "div",
               "component": "div",
               "role": "Grid",
+              "css": {
+                "layout": {
+                  "all": {
+                    "width": "full"
+                  }
+                },
+                "content": {
+                  "all": {
+                    "flex": true,
+                    "flexWrap": "wrap"
+                  }
+                }
+              },
               "children": [
                 {
                   "typeName": "Column",
                   "tagName": "div",
                   "component": "div",
                   "role": "Column",
+                  "css": {
+                    "layout": {
+                      "all": {
+                        "width": "full",
+                        "paddingTop": "1",
+                        "paddingRight": "1",
+                        "paddingBottom": "1",
+                        "paddingLeft": "1"
+                      },
+                      "large": {
+                        "width": "1/2"
+                      }
+                    },
+                    "content": {
+                      "all": {
+                        "flexWrap": "wrap"
+                      }
+                    }
+                  },
                   "children": [
                     {
                       "typeName": "Label",
                       "tagName": "label",
                       "component": "label",
-                      "children": [],
+                      "baseCssClasses": "block",
                       "props": {
                         "text": "Code",
                         "for": "tx-code"
-                      },
-                      "css": {}
+                      }
                     },
                     {
                       "typeName": "Input",
                       "tagName": "input",
                       "component": "InputComponent",
                       "autoCloseTag": true,
-                      "children": [],
                       "props": {
                         "id": "tx-code",
                         "type": "text"
@@ -113,14 +190,24 @@
                         }
                       }
                     }
-                  ],
-                  "props": {},
+                  ]
+                },
+                {
+                  "typeName": "Column",
+                  "tagName": "div",
+                  "component": "div",
+                  "role": "Column",
                   "css": {
                     "layout": {
                       "all": {
                         "width": "full",
                         "paddingTop": "1",
-                        "paddingBottom": "1"
+                        "paddingRight": "1",
+                        "paddingBottom": "1",
+                        "paddingLeft": "1"
+                      },
+                      "large": {
+                        "width": "1/2"
                       }
                     },
                     "content": {
@@ -128,31 +215,23 @@
                         "flexWrap": "wrap"
                       }
                     }
-                  }
-                },
-                {
-                  "typeName": "Column",
-                  "tagName": "div",
-                  "component": "div",
-                  "role": "Column",
+                  },
                   "children": [
                     {
                       "typeName": "Label",
                       "tagName": "label",
                       "component": "label",
-                      "children": [],
+                      "baseCssClasses": "block",
                       "props": {
                         "text": "Name",
                         "for": "tx-name"
-                      },
-                      "css": {}
+                      }
                     },
                     {
                       "typeName": "Input",
                       "tagName": "input",
                       "component": "InputComponent",
                       "autoCloseTag": true,
-                      "children": [],
                       "props": {
                         "id": "tx-name",
                         "type": "text"
@@ -174,14 +253,21 @@
                         }
                       }
                     }
-                  ],
-                  "props": {},
+                  ]
+                },
+                {
+                  "typeName": "Column",
+                  "tagName": "div",
+                  "component": "div",
+                  "role": "Column",
                   "css": {
                     "layout": {
                       "all": {
                         "width": "full",
                         "paddingTop": "1",
-                        "paddingBottom": "1"
+                        "paddingRight": "1",
+                        "paddingBottom": "1",
+                        "paddingLeft": "1"
                       }
                     },
                     "content": {
@@ -189,30 +275,23 @@
                         "flexWrap": "wrap"
                       }
                     }
-                  }
-                },
-                {
-                  "typeName": "Column",
-                  "tagName": "div",
-                  "component": "div",
-                  "role": "Column",
+                  },
                   "children": [
                     {
                       "typeName": "Label",
                       "tagName": "label",
                       "component": "label",
-                      "children": [],
+                      "baseCssClasses": "block",
                       "props": {
                         "text": "Description",
                         "for": "tx-description"
-                      },
-                      "css": {}
+                      }
                     },
                     {
                       "typeName": "Textarea",
                       "tagName": "textarea",
                       "component": "TextareaComponent",
-                      "children": [],
+                      "baseCssClasses": "block",
                       "props": {
                         "id": "tx-description"
                       },
@@ -233,14 +312,21 @@
                         }
                       }
                     }
-                  ],
-                  "props": {},
+                  ]
+                },
+                {
+                  "typeName": "Column",
+                  "tagName": "div",
+                  "component": "div",
+                  "role": "Column",
                   "css": {
                     "layout": {
                       "all": {
                         "width": "full",
                         "paddingTop": "1",
-                        "paddingBottom": "1"
+                        "paddingRight": "1",
+                        "paddingBottom": "1",
+                        "paddingLeft": "1"
                       }
                     },
                     "content": {
@@ -248,38 +334,32 @@
                         "flexWrap": "wrap"
                       }
                     }
-                  }
-                },
-                {
-                  "typeName": "Column",
-                  "tagName": "div",
-                  "component": "div",
-                  "role": "Column",
+                  },
                   "children": [
                     {
                       "typeName": "Grid",
                       "tagName": "div",
                       "component": "div",
                       "role": "Grid",
+                      "css": {
+                        "layout": {
+                          "all": {
+                            "width": "full"
+                          }
+                        },
+                        "content": {
+                          "all": {
+                            "flex": true,
+                            "flexWrap": "wrap"
+                          }
+                        }
+                      },
                       "children": [
                         {
                           "typeName": "Column",
                           "tagName": "div",
                           "component": "div",
                           "role": "Column",
-                          "children": [
-                            {
-                              "typeName": "Label",
-                              "tagName": "label",
-                              "component": "label",
-                              "children": [],
-                              "props": {
-                                "text": "Color"
-                              },
-                              "css": {}
-                            }
-                          ],
-                          "props": {},
                           "css": {
                             "layout": {
                               "all": {
@@ -291,19 +371,46 @@
                                 "flexWrap": "wrap"
                               }
                             }
-                          }
+                          },
+                          "children": [
+                            {
+                              "typeName": "Label",
+                              "tagName": "label",
+                              "component": "label",
+                              "baseCssClasses": "block",
+                              "props": {
+                                "text": "Color"
+                              }
+                            }
+                          ]
                         },
                         {
                           "typeName": "Column",
                           "tagName": "div",
                           "component": "div",
                           "role": "Column",
+                          "css": {
+                            "layout": {
+                              "all": {
+                                "width": "full"
+                              },
+                              "medium": {
+                                "paddingRight": "8",
+                                "paddingLeft": "8"
+                              }
+                            },
+                            "content": {
+                              "all": {
+                                "flex": true,
+                                "justify": "between"
+                              }
+                            }
+                          },
                           "children": [
                             {
                               "typeName": "Button",
                               "tagName": "button",
                               "component": "button",
-                              "children": [],
                               "props": {
                                 "text": "x"
                               },
@@ -333,8 +440,6 @@
                               "typeName": "Button",
                               "tagName": "button",
                               "component": "button",
-                              "children": [],
-                              "props": {},
                               "css": {
                                 "layout": {
                                   "all": {
@@ -361,8 +466,6 @@
                               "typeName": "Button",
                               "tagName": "button",
                               "component": "button",
-                              "children": [],
-                              "props": {},
                               "css": {
                                 "layout": {
                                   "all": {
@@ -389,8 +492,6 @@
                               "typeName": "Button",
                               "tagName": "button",
                               "component": "button",
-                              "children": [],
-                              "props": {},
                               "css": {
                                 "layout": {
                                   "all": {
@@ -417,8 +518,6 @@
                               "typeName": "Button",
                               "tagName": "button",
                               "component": "button",
-                              "children": [],
-                              "props": {},
                               "css": {
                                 "layout": {
                                   "all": {
@@ -445,8 +544,6 @@
                               "typeName": "Button",
                               "tagName": "button",
                               "component": "button",
-                              "children": [],
-                              "props": {},
                               "css": {
                                 "layout": {
                                   "all": {
@@ -469,50 +566,28 @@
                                 }
                               }
                             }
-                          ],
-                          "props": {},
-                          "css": {
-                            "layout": {
-                              "all": {
-                                "width": "full"
-                              },
-                              "medium": {
-                                "paddingRight": "8",
-                                "paddingLeft": "8"
-                              }
-                            },
-                            "content": {
-                              "all": {
-                                "flex": true,
-                                "justify": "between"
-                              }
-                            }
-                          }
+                          ]
                         }
-                      ],
-                      "props": {},
-                      "css": {
-                        "layout": {
-                          "all": {
-                            "width": "full"
-                          }
-                        },
-                        "content": {
-                          "all": {
-                            "flex": true,
-                            "flexWrap": "wrap"
-                          }
-                        }
-                      }
+                      ]
                     }
-                  ],
-                  "props": {},
+                  ]
+                },
+                {
+                  "typeName": "Column",
+                  "tagName": "div",
+                  "component": "div",
+                  "role": "Column",
                   "css": {
                     "layout": {
                       "all": {
                         "width": "full",
                         "paddingTop": "1",
-                        "paddingBottom": "1"
+                        "paddingRight": "1",
+                        "paddingBottom": "1",
+                        "paddingLeft": "1"
+                      },
+                      "large": {
+                        "width": "1/2"
                       }
                     },
                     "content": {
@@ -520,65 +595,22 @@
                         "flexWrap": "wrap"
                       }
                     }
-                  }
-                },
-                {
-                  "typeName": "Column",
-                  "tagName": "div",
-                  "component": "div",
-                  "role": "Column",
+                  },
                   "children": [
                     {
                       "typeName": "Label",
                       "tagName": "label",
                       "component": "label",
-                      "children": [],
+                      "baseCssClasses": "block",
                       "props": {
                         "text": "Priority",
                         "for": "dd-priority"
-                      },
-                      "css": {}
+                      }
                     },
                     {
                       "typeName": "Select",
                       "tagName": "select",
                       "component": "SelectComponent",
-                      "children": [
-                        {
-                          "typeName": "Option",
-                          "tagName": "option",
-                          "component": "option",
-                          "children": [],
-                          "props": {
-                            "text": "Low",
-                            "value": "0"
-                          },
-                          "css": {}
-                        },
-                        {
-                          "typeName": "Option",
-                          "tagName": "option",
-                          "component": "option",
-                          "children": [],
-                          "props": {
-                            "text": "Medium",
-                            "value": "1",
-                            "selected": "selected"
-                          },
-                          "css": {}
-                        },
-                        {
-                          "typeName": "Option",
-                          "tagName": "option",
-                          "component": "option",
-                          "children": [],
-                          "props": {
-                            "text": "High",
-                            "value": "2"
-                          },
-                          "css": {}
-                        }
-                      ],
                       "props": {
                         "id": "dd-priority"
                       },
@@ -597,16 +629,56 @@
                             "width": "1"
                           }
                         }
-                      }
+                      },
+                      "children": [
+                        {
+                          "typeName": "Option",
+                          "tagName": "option",
+                          "component": "option",
+                          "props": {
+                            "text": "Low",
+                            "value": "0"
+                          }
+                        },
+                        {
+                          "typeName": "Option",
+                          "tagName": "option",
+                          "component": "option",
+                          "props": {
+                            "text": "Medium",
+                            "value": "1",
+                            "selected": "selected"
+                          }
+                        },
+                        {
+                          "typeName": "Option",
+                          "tagName": "option",
+                          "component": "option",
+                          "props": {
+                            "text": "High",
+                            "value": "2"
+                          }
+                        }
+                      ]
                     }
-                  ],
-                  "props": {},
+                  ]
+                },
+                {
+                  "typeName": "Column",
+                  "tagName": "div",
+                  "component": "div",
+                  "role": "Column",
                   "css": {
                     "layout": {
                       "all": {
                         "width": "full",
                         "paddingTop": "1",
-                        "paddingBottom": "1"
+                        "paddingRight": "1",
+                        "paddingBottom": "1",
+                        "paddingLeft": "1"
+                      },
+                      "large": {
+                        "width": "1/2"
                       }
                     },
                     "content": {
@@ -614,31 +686,23 @@
                         "flexWrap": "wrap"
                       }
                     }
-                  }
-                },
-                {
-                  "typeName": "Column",
-                  "tagName": "div",
-                  "component": "div",
-                  "role": "Column",
+                  },
                   "children": [
                     {
                       "typeName": "Label",
                       "tagName": "label",
                       "component": "label",
-                      "children": [],
+                      "baseCssClasses": "block",
                       "props": {
                         "text": "Estimated points",
                         "for": "tx-estimated-points"
-                      },
-                      "css": {}
+                      }
                     },
                     {
                       "typeName": "Input",
                       "tagName": "input",
                       "component": "InputComponent",
                       "autoCloseTag": true,
-                      "children": [],
                       "props": {
                         "id": "tx-estimated-points",
                         "type": "number"
@@ -660,25 +724,44 @@
                         }
                       }
                     }
-                  ],
-                  "props": {},
-                  "css": {
-                    "layout": {
-                      "all": {
-                        "width": "full",
-                        "paddingTop": "1",
-                        "paddingBottom": "1"
-                      }
-                    },
-                    "content": {
-                      "all": {
-                        "flexWrap": "wrap"
-                      }
-                    }
-                  }
+                  ]
                 }
-              ],
-              "props": {},
+              ]
+            }
+          ]
+        },
+        {
+          "typeName": "Column",
+          "tagName": "div",
+          "component": "div",
+          "role": "Column",
+          "css": {
+            "layout": {
+              "all": {
+                "width": "full",
+                "paddingTop": "1",
+                "paddingRight": "1",
+                "paddingBottom": "1",
+                "paddingLeft": "1"
+              }
+            },
+            "backgroundColor": {
+              "all": {
+                "color": "gray-200"
+              }
+            },
+            "content": {
+              "all": {
+                "flexWrap": "wrap"
+              }
+            }
+          },
+          "children": [
+            {
+              "typeName": "Grid",
+              "tagName": "div",
+              "component": "div",
+              "role": "Grid",
               "css": {
                 "layout": {
                   "all": {
@@ -688,61 +771,44 @@
                 "content": {
                   "all": {
                     "flex": true,
-                    "flexWrap": "wrap"
+                    "flexWrap": "wrap",
+                    "justify": "end"
                   }
                 }
-              }
-            }
-          ],
-          "props": {},
-          "css": {
-            "layout": {
-              "all": {
-                "width": "full",
-                "paddingTop": "1",
-                "paddingRight": "3",
-                "paddingBottom": "1",
-                "paddingLeft": "3"
-              }
-            },
-            "border": {
-              "all": {
-                "width": "1",
-                "color": {
-                  "color": "gray-200"
-                }
-              }
-            },
-            "content": {
-              "all": {
-                "flexWrap": "wrap"
-              }
-            }
-          }
-        },
-        {
-          "typeName": "Column",
-          "tagName": "div",
-          "component": "div",
-          "role": "Column",
-          "children": [
-            {
-              "typeName": "Grid",
-              "tagName": "div",
-              "component": "div",
-              "role": "Grid",
+              },
               "children": [
                 {
                   "typeName": "Column",
                   "tagName": "div",
                   "component": "div",
                   "role": "Column",
+                  "css": {
+                    "layout": {
+                      "all": {
+                        "width": "full",
+                        "paddingTop": "1",
+                        "paddingRight": "1",
+                        "paddingBottom": "1",
+                        "paddingLeft": "1"
+                      },
+                      "medium": {
+                        "width": "1/2"
+                      },
+                      "large": {
+                        "width": "1/6"
+                      }
+                    },
+                    "content": {
+                      "all": {
+                        "flexWrap": "wrap"
+                      }
+                    }
+                  },
                   "children": [
                     {
                       "typeName": "Button",
                       "tagName": "button",
                       "component": "button",
-                      "children": [],
                       "props": {
                         "text": "Add"
                       },
@@ -771,8 +837,13 @@
                         }
                       }
                     }
-                  ],
-                  "props": {},
+                  ]
+                },
+                {
+                  "typeName": "Column",
+                  "tagName": "div",
+                  "component": "div",
+                  "role": "Column",
                   "css": {
                     "layout": {
                       "all": {
@@ -794,19 +865,12 @@
                         "flexWrap": "wrap"
                       }
                     }
-                  }
-                },
-                {
-                  "typeName": "Column",
-                  "tagName": "div",
-                  "component": "div",
-                  "role": "Column",
+                  },
                   "children": [
                     {
                       "typeName": "Button",
                       "tagName": "button",
                       "component": "button",
-                      "children": [],
                       "props": {
                         "text": "Cancel"
                       },
@@ -835,98 +899,13 @@
                         }
                       }
                     }
-                  ],
-                  "props": {},
-                  "css": {
-                    "layout": {
-                      "all": {
-                        "width": "full",
-                        "paddingTop": "1",
-                        "paddingRight": "1",
-                        "paddingBottom": "1",
-                        "paddingLeft": "1"
-                      },
-                      "medium": {
-                        "width": "1/2"
-                      },
-                      "large": {
-                        "width": "1/6"
-                      }
-                    },
-                    "content": {
-                      "all": {
-                        "flexWrap": "wrap"
-                      }
-                    }
-                  }
+                  ]
                 }
-              ],
-              "props": {},
-              "css": {
-                "layout": {
-                  "all": {
-                    "width": "full"
-                  }
-                },
-                "content": {
-                  "all": {
-                    "flex": true,
-                    "flexWrap": "wrap",
-                    "justify": "end"
-                  }
-                }
-              }
+              ]
             }
-          ],
-          "props": {},
-          "css": {
-            "layout": {
-              "all": {
-                "width": "full",
-                "paddingTop": "1",
-                "paddingRight": "1",
-                "paddingBottom": "1",
-                "paddingLeft": "1"
-              }
-            },
-            "backgroundColor": {
-              "all": {
-                "color": "gray-200"
-              }
-            },
-            "content": {
-              "all": {
-                "flexWrap": "wrap"
-              }
-            }
-          }
+          ]
         }
-      ],
-      "props": {},
-      "css": {
-        "layout": {
-          "all": {
-            "width": "full"
-          }
-        },
-        "content": {
-          "all": {
-            "flex": true,
-            "flexWrap": "wrap"
-          }
-        }
-      }
+      ]
     }
-  ],
-  "props": {},
-  "css": {
-    "layout": {
-      "all": {
-        "paddingTop": "2",
-        "paddingRight": "2",
-        "paddingBottom": "2",
-        "paddingLeft": "2"
-      }
-    }
-  }
+  ]
 }

@@ -20,7 +20,7 @@
             <option value>(default)</option>
             <option value="xs">XSmall</option>
             <option value="sm">Small</option>
-            <option value="Base">Bae</option>
+            <option value="Base">Base</option>
             <option value="lg">Large</option>
             <option value="xl">XLarge</option>
             <option value="2xl">2XLarge</option>

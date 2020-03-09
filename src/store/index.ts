@@ -165,7 +165,7 @@ const store: StoreOptions<IDesignerState> = {
         utils.addFromStateJson(state.selected, [JSON.parse(jsonComp)], state.counter);
       }
     },
-    moveDown(state) {
+    moveUp(state) {
       if (!state.selected || !state.selected.parent || state.selected.typeName === 'TableHead' ||
         state.selected.typeName === 'TableBody') return;
 
@@ -175,7 +175,7 @@ const store: StoreOptions<IDesignerState> = {
       parent!.children.splice(index, 1);
       parent!.children.splice(index - 1, 0, state.selected);
     },
-    moveUp(state) {
+    moveDown(state) {
       if (!state.selected || !state.selected.parent || state.selected.typeName === 'TableHead' ||
         state.selected.typeName === 'TableBody') return;
 
